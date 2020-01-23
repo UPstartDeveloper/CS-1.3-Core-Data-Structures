@@ -83,12 +83,13 @@ def decode(digits, base):
     return decode_from_any_base(digits, base)
 
 
-def binary_num_length(number):
+def get_num_length(number, base):
     """Given length of a decimal number, return the length of
        binary equivalent.
 
        Parameters:
        number: int -- string representation of binary number
+       base: int -- base to convert to
 
        Return:
        bi_length: int
@@ -99,51 +100,52 @@ def binary_num_length(number):
     # count the number of powers of the base needed to exceed the number
     while power < number:
         exponent += 1
-        power = math.pow(2, exponent)
-        print(exponent)
+        power = math.pow(base, exponent)
     # the exponent shows the amount of place values in the number being encoded
     return (exponent)
 
 
-def get_binary_equivalent(number, bi_length):
+def get_equivalent(number, base, new_num_length):
     """Return the binary equivalent of a decimal number.
 
        Parameters:
        number: int -- integer representation of number (in base 10)
+       base: int -- base to convert to
        bi_length: int -- amount of bits in the binary equivalent of number
 
        Return: str -- string representation of number in binary
 
     """
     # initialize a return value
-    binary = ''
+    new_value = ''
     # figure out the bit to place at each index in the binary number
-    for i in range(bi_length):
+    for i in range(new_num_length):
         # the power of 2 at this index in the binary number
-        power = math.pow(2, (bi_length - (i + 1)))
+        power = math.pow(base, (new_num_length - (i + 1)))
         # the digit to add
         next_digit = int(number // power)
         # adding the digit to the binary number
-        binary += str(next_digit)
+        new_value += str(next_digit)
         # decrement the number, so the change reflects on the next iteration
         number -= next_digit * power
-    return binary
+    return new_value
 
 
-def encode_into_b2(number):
+def encode_into_any_base(number, base):
     """Encode number in binary (base 2).
 
        Parameters:
        number: int -- integer representation of number (in base 10)
+       base: int -- base to convert to
 
        Return: str -- string representation of number in binary
 
     """
     # figure out the length of the binary version of the number
-    bi_length = binary_num_length(number)
+    new_num_length = get_num_length(number, base)
     # figure out the specific bits of the binary number
-    binary_equiv = get_binary_equivalent(number, bi_length)
-    return binary_equiv
+    equivalent_value = get_equivalent(number, base, new_num_length)
+    return equivalent_value
 
 
 def encode(number, base):
@@ -158,12 +160,15 @@ def encode(number, base):
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
+    return encode_into_any_base(number, base)
+    """
     if base == 2:
         return encode_into_b2(number)
     # TODO: Encode number in hexadecimal (base 16)
     # ...
     # TODO: Encode number in any base (2 up to 36)
     # ...
+    """
 
 
 def convert(digits, base1, base2):
