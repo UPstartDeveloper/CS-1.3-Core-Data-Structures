@@ -10,16 +10,26 @@ import string
 # string.printable is digits + ascii_letters + punctuation + whitespace
 
 
-def decode_from_b2(digits):
+def decode_from_b2(binary):
     """Decode digits from binary (base 2).
 
        Parameters:
-       digits: str -- string representation of binary number
+       binary: str -- string representation of binary number
 
        Return: int -- integer representation of number (in base 10)
 
     """
-    pass
+    # init a return value
+    decimal_val = 0
+    # compute the the bases of 2 used in the binary number
+    length = len(binary)
+    ascending_powers_of_2 = list(range(length))
+    # acculmulate the value of the decimal equivalent using binary digits
+    for power in ascending_powers_of_2:
+        decimal_val += (2 ^ length - 1) * binary[power]
+        # move down the exponent for the next iteration
+        length -= 1
+    return decimal_val
 
 
 def decode_from_b16(digits):
