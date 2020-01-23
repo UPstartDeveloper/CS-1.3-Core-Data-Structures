@@ -83,23 +83,21 @@ def decode(digits, base):
     return decode_from_any_base(digits, base)
 
 
-def binary_num_length(digits):
+def binary_num_length(number):
     """Given length of a decimal number, return the length of
        binary equivalent.
 
        Parameters:
-       digits: str -- string representation of binary number
+       number: int -- string representation of binary number
 
        Return:
        bi_length: int
 
     """
     # get the length of digits
-    dec_length = len(str(digits))
-    # convert digits to an int
-    decimal_val = int(digits)
+    dec_length = len(str(number))
     # return the length of the binary equivalent
-    return decimal_val % (2 ^ (dec_length - 1))
+    return int(number % math.pow(2, dec_length - 1))
 
 
 def get_binary_equivalent(number, bi_length):
