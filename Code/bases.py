@@ -44,6 +44,33 @@ def decode_from_b16(digits):
     pass
 
 
+def convert_digit_to_decimal(digit):
+    '''Compute the base-10 version of a digit from a non-base 10 number.'''
+    pass
+
+
+def compute_decimal_val(ascending_powers, digits, base):
+    """Return the representation of a number in the base 10 system.
+
+       Parameters:
+       ascending_powers: list -- a collection of the exponents used in place
+                                values of the digits number
+       digits: str -- string representation of number (in given base)
+       base: int -- base of given number
+
+       Return: int -- integer representation of number (in base 10)
+    """
+    # init a return value
+    decimal_value_of_whole_num = 0
+    for power in ascending_powers:
+        decimal_value_of_single_digit = convert_digit_to_decimal(digits[power])
+        decimal_value_of_whole_num += (
+            (base ^ length - 1) * decimal_value_of_single_digit)
+        # move down the exponent for the next iteration
+        length -= 1
+    return decimal_value_of_whole_num
+
+
 def decode_from_any_base(digits, base):
     """Decode digits from any base (2 up to 36).
 
@@ -54,7 +81,11 @@ def decode_from_any_base(digits, base):
         Return: int -- integer representation of number (in base 10)
 
     """
-    pass
+    # compute the the bases of 2 used in the binary number
+    length = len(digits)
+    ascending_powers = list(range(length))
+    # acculmulate the value of the decimal equivalent using binary digits
+    return compute_decimal_val(ascending_powers, digits, base)
 
 
 def decode(digits, base):
