@@ -94,10 +94,15 @@ def binary_num_length(number):
        bi_length: int
 
     """
-    # get the length of digits
-    dec_length = len(str(number))
-    # return the length of the binary equivalent
-    return int(number % math.pow(2, dec_length - 1))
+    exponent = 0
+    power = -1
+    # count the number of powers of the base needed to exceed the number
+    while power < number:
+        exponent += 1
+        power = math.pow(2, exponent)
+        print(exponent)
+    # the exponent shows the amount of place values in the number being encoded
+    return (exponent)
 
 
 def get_binary_equivalent(number, bi_length):
