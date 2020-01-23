@@ -11,6 +11,11 @@ import math
 # string.printable is digits + ascii_letters + punctuation + whitespace
 
 
+"""
+Decoding functions
+"""
+
+
 def convert_digit_to_decimal(digit):
     """Compute the base-10 representation of a digit from a non-base 10 number.
 
@@ -81,6 +86,11 @@ def decode(digits, base):
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     return decode_from_any_base(digits, base)
+
+
+"""
+Encoding functions
+"""
 
 
 def get_num_length(number, base):
@@ -168,14 +178,11 @@ def encode(number, base):
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
     return encode_into_any_base(number, base)
-    """
-    if base == 2:
-        return encode_into_b2(number)
-    # TODO: Encode number in hexadecimal (base 16)
-    # ...
-    # TODO: Encode number in any base (2 up to 36)
-    # ...
-    """
+
+
+"""
+Converting functions
+"""
 
 
 def convert(digits, base1, base2):
