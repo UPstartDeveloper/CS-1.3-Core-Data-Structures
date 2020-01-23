@@ -1,6 +1,7 @@
 #!python
 
 import string
+import math
 # Hint: Use these string constants to encode/decode hexadecimal digits and more
 # string.digits is '0123456789'
 # string.hexdigits is '0123456789abcdefABCDEF'
@@ -58,14 +59,14 @@ def convert_digit_to_decimal(digit):
         digit_val = int(digit)
         return digit_val
     # other return the sum of 10, plus the index of the letter in alphabet
-    except TypeError:
+    except ValueError:
         alpha = list(string.ascii_lowercase)  # list of all English letters
         for i in range(len(alpha)):
             if digit_val.lower() == alpha[i]:
                 return 10 + i
 
 
-def compute_decimal_val(ascending_powers, digits, base):
+def compute_decimal_val(ascending_powers, digits, base, length):
     """Return the representation of a number in the base 10 system.
 
        Parameters:
@@ -73,6 +74,7 @@ def compute_decimal_val(ascending_powers, digits, base):
                                 values of the digits number
        digits: str -- string representation of number (in given base)
        base: int -- base of given number
+       length: int -- the length of the part of digits, left to be decoded
 
        Return: int -- integer representation of number (in base 10)
     """
@@ -81,7 +83,7 @@ def compute_decimal_val(ascending_powers, digits, base):
     for power in ascending_powers:
         decimal_value_of_single_digit = convert_digit_to_decimal(digits[power])
         decimal_value_of_whole_num += (
-            (base ^ length - 1) * decimal_value_of_single_digit)
+            math.pow(base, (length - 1)) * decimal_value_of_single_digit)
         # move down the exponent for the next iteration
         length -= 1
     return decimal_value_of_whole_num
@@ -101,7 +103,7 @@ def decode_from_any_base(digits, base):
     length = len(digits)
     ascending_powers = list(range(length))
     # acculmulate the value of the decimal equivalent using binary digits
-    return compute_decimal_val(ascending_powers, digits, base)
+    return compute_decimal_val(ascending_powers, digits, base, length)
 
 
 def decode(digits, base):
@@ -111,12 +113,15 @@ def decode(digits, base):
     return: int -- integer representation of number (in base 10)"""
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
+    return decode_from_any_base(digits, base)
+    '''
     if base == 2:
         return decode_from_b2(digits)
     elif base == 16:
         return decode_from_b16(digits)
     else:
         return decode_from_any_base(digits, base)
+    '''
 
 
 def binary_num_length(digits):
