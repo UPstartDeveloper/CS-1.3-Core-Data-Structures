@@ -54,16 +54,17 @@ def convert_digit_to_decimal(digit):
 
        Return: int -- the decimal representation of the value of digit
     """
-    try:
-        # if the digit is 0-9, it's decimal representation is no different
-        digit_val = int(digit)
-        return digit_val
-    # other return the sum of 10, plus the index of the letter in alphabet
-    except ValueError:
-        alpha = list(string.ascii_lowercase)  # list of all English letters
+    # list of all English letters
+    alpha = list(string.ascii_lowercase)
+    # if digit a letter
+    if digit in alpha:
         for i in range(len(alpha)):
-            if digit_val.lower() == alpha[i]:
+            if digit.lower() == alpha[i]:
+                # return the sum of 10, and the index of the letter in alphabet
                 return 10 + i
+    # if the number is 0-9, it's decimnal representation is no different
+    else:
+        return int(digit)
 
 
 def compute_decimal_val(ascending_powers, digits, base, length):
