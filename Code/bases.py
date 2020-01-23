@@ -26,7 +26,7 @@ def decode_from_b2(binary):
     ascending_powers_of_2 = list(range(length))
     # acculmulate the value of the decimal equivalent using binary digits
     for power in ascending_powers_of_2:
-        decimal_val += (2 ^ length - 1) * binary[power]
+        decimal_val += (2 ^ length - 1) * int(binary[power])
         # move down the exponent for the next iteration
         length -= 1
     return decimal_val
@@ -45,8 +45,24 @@ def decode_from_b16(digits):
 
 
 def convert_digit_to_decimal(digit):
-    '''Compute the base-10 version of a digit from a non-base 10 number.'''
-    pass
+    """Compute the base-10 representation of a digit from a non-base 10 number.
+
+       Parameters:
+       digit: str -- can be any symbol used to represent a digit in a number,
+                     base 2-36
+
+       Return: int -- the decimal representation of the value of digit
+    """
+    try:
+        # if the digit is 0-9, it's decimal representation is no different
+        digit_val = int(digit)
+        return digit_val
+    # other return the sum of 10, plus the index of the letter in alphabet
+    except TypeError:
+        alpha = list(string.ascii_lowercase)  # list of all English letters
+        for i in range(len(alpha)):
+            if digit_val.lower() == alpha[i]:
+                return 10 + i
 
 
 def compute_decimal_val(ascending_powers, digits, base):
