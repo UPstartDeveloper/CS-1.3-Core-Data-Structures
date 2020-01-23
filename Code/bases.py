@@ -10,25 +10,6 @@ import string
 # string.printable is digits + ascii_letters + punctuation + whitespace
 
 
-def binary_num_length(digits):
-    """Given length of a decimal number, return the length of
-       binary equivalent.
-
-       Parameters:
-       digits: str -- string representation of binary number
-
-       Return:
-       bi_length: int
-
-    """
-    # get the length of digits
-    dec_length = len(digits)
-    # convert digits to an int
-    decimal_val = int(digits)
-    # return the length of the binary equivalent
-    return decimal_val % (2 ^ (dec_length - 1))
-
-
 def decode_from_b2(digits):
     """Decode digits from binary (base 2).
 
@@ -38,9 +19,6 @@ def decode_from_b2(digits):
        Return: int -- integer representation of number (in base 10)
 
     """
-    # figure out the length of the binary version of the number
-    bi_length = binary_num_length(digits, dec_length)
-    # figure out the specific bits of the binary number
     pass
 
 
@@ -84,6 +62,40 @@ def decode(digits, base):
         return decode_from_any_base(digits, base)
 
 
+def binary_num_length(digits):
+    """Given length of a decimal number, return the length of
+       binary equivalent.
+
+       Parameters:
+       digits: str -- string representation of binary number
+
+       Return:
+       bi_length: int
+
+    """
+    # get the length of digits
+    dec_length = len(digits)
+    # convert digits to an int
+    decimal_val = int(digits)
+    # return the length of the binary equivalent
+    return decimal_val % (2 ^ (dec_length - 1))
+
+
+def encode_into_b2(number):
+    """Encode number in binary (base 2).
+
+       Parameters:
+       number: int -- integer representation of number (in base 10)
+
+       Return: str -- string representation of number (in given base
+
+    """
+    # figure out the length of the binary version of the number
+    bi_length = binary_num_length(digits, dec_length)
+    # figure out the specific bits of the binary number
+    pass
+
+
 def encode(number, base):
     """Encode given number in base 10 to digits in given base.
     number: int -- integer representation of number (in base 10)
@@ -93,8 +105,8 @@ def encode(number, base):
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
-    # TODO: Encode number in binary (base 2)
-    # ...
+    if base == 2:
+        return encode_into_b2(number)
     # TODO: Encode number in hexadecimal (base 16)
     # ...
     # TODO: Encode number in any base (2 up to 36)
