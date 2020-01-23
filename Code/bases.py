@@ -115,9 +115,9 @@ def get_binary_equivalent(number, bi_length):
     # figure out the bit to place at each index in the binary number
     for i in range(bi_length):
         # the power of 2 at this index in the binary number
-        power = 2 ^ (bi_length - (i + 1))
+        power = math.pow(2, (bi_length - (i + 1)))
         # the digit to add
-        next_digit = number % power
+        next_digit = int(number // power)
         # adding the digit to the binary number
         binary += str(next_digit)
         # decrement the number, so the change reflects on the next iteration
