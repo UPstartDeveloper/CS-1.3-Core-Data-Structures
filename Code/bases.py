@@ -11,40 +11,6 @@ import math
 # string.printable is digits + ascii_letters + punctuation + whitespace
 
 
-def decode_from_b2(binary):
-    """Decode digits from binary (base 2).
-
-       Parameters:
-       binary: str -- string representation of binary number
-
-       Return: int -- integer representation of number (in base 10)
-
-    """
-    # init a return value
-    decimal_val = 0
-    # compute the the bases of 2 used in the binary number
-    length = len(binary)
-    ascending_powers_of_2 = list(range(length))
-    # acculmulate the value of the decimal equivalent using binary digits
-    for power in ascending_powers_of_2:
-        decimal_val += (2 ^ length - 1) * int(binary[power])
-        # move down the exponent for the next iteration
-        length -= 1
-    return decimal_val
-
-
-def decode_from_b16(digits):
-    """Decode digits from hexadecimal (base 16).
-
-       Parameters:
-       digits: str -- string representation of a hexadecimal number
-
-       Return: int -- integer representation of number (in base 10)
-
-    """
-    pass
-
-
 def convert_digit_to_decimal(digit):
     """Compute the base-10 representation of a digit from a non-base 10 number.
 
@@ -115,14 +81,6 @@ def decode(digits, base):
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     return decode_from_any_base(digits, base)
-    '''
-    if base == 2:
-        return decode_from_b2(digits)
-    elif base == 16:
-        return decode_from_b16(digits)
-    else:
-        return decode_from_any_base(digits, base)
-    '''
 
 
 def binary_num_length(digits):
