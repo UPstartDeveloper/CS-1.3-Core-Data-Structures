@@ -95,7 +95,7 @@ def binary_num_length(digits):
 
     """
     # get the length of digits
-    dec_length = len(digits)
+    dec_length = len(str(digits))
     # convert digits to an int
     decimal_val = int(digits)
     # return the length of the binary equivalent
@@ -137,7 +137,7 @@ def encode_into_b2(number):
 
     """
     # figure out the length of the binary version of the number
-    bi_length = binary_num_length(digits, dec_length)
+    bi_length = binary_num_length(number)
     # figure out the specific bits of the binary number
     binary_equiv = get_binary_equivalent(number, bi_length)
     return binary_equiv
