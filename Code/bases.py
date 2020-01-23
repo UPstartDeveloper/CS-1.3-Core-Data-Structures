@@ -81,26 +81,55 @@ def binary_num_length(digits):
     return decimal_val % (2 ^ (dec_length - 1))
 
 
+def get_binary_equivalent(number, bi_length):
+    """Return the binary equivalent of a decimal number.
+
+       Parameters:
+       number: int -- integer representation of number (in base 10)
+       bi_length: int -- amount of bits in the binary equivalent of number
+
+       Return: str -- string representation of number in binary
+
+    """
+    # initialize a return value
+    binary = ''
+    # figure out the bit to place at each index in the binary number
+    for i in range(bi_length):
+        # the power of 2 at this index in the binary number
+        power = 2 ^ (bi_length - i)
+        # the digit to add
+        next_digit = number % power
+        # adding the digit to the binary number
+        binary += str(next_digit)
+        # decrement the number, so the change reflects on the next iteration
+        number -= next_digit * power
+    return binary
+
+
 def encode_into_b2(number):
     """Encode number in binary (base 2).
 
        Parameters:
        number: int -- integer representation of number (in base 10)
 
-       Return: str -- string representation of number (in given base
+       Return: str -- string representation of number in binary
 
     """
     # figure out the length of the binary version of the number
     bi_length = binary_num_length(digits, dec_length)
     # figure out the specific bits of the binary number
-    pass
+    binary_equiv = get_binary_equivalent(number, bi_length)
+    return binary_equiv
 
 
 def encode(number, base):
     """Encode given number in base 10 to digits in given base.
-    number: int -- integer representation of number (in base 10)
-    base: int -- base to convert to
-    return: str -- string representation of number (in given base)"""
+       number: int -- integer representation of number (in base 10)
+       base: int -- base to convert to
+
+       return: str -- string representation of number (in given base)
+
+    """
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # Handle unsigned numbers only for now
