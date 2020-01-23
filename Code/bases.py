@@ -10,6 +10,25 @@ import string
 # string.printable is digits + ascii_letters + punctuation + whitespace
 
 
+def binary_num_length(digits):
+    """Given length of a decimal number, return the length of
+       binary equivalent.
+
+       Parameters:
+       digits: str -- string representation of binary number
+
+       Return:
+       bi_length: int
+
+    """
+    # get the length of digits
+    dec_length = len(digits)
+    # convert digits to an int
+    decimal_val = int(digits)
+    # return the length of the binary equivalent
+    return decimal_val % (2 ^ (dec_length - 1))
+
+
 def decode_from_b2(digits):
     """Decode digits from binary (base 2).
 
@@ -19,6 +38,9 @@ def decode_from_b2(digits):
        Return: int -- integer representation of number (in base 10)
 
     """
+    # figure out the length of the binary version of the number
+    bi_length = binary_num_length(digits, dec_length)
+    # figure out the specific bits of the binary number
     pass
 
 
