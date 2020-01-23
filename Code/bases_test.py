@@ -23,6 +23,10 @@ class BasesDecodeTest(unittest.TestCase):
         assert decode('1101', 2) == 13
         assert decode('1110', 2) == 14
         assert decode('1111', 2) == 15
+        assert decode('10011010010', 2) == 1234
+
+    def test_decode_octal(self):
+        assert decode('2322', 8) == 1234
 
     def test_decode_decimal(self):
         assert decode('5', 10) == 5
@@ -37,6 +41,7 @@ class BasesDecodeTest(unittest.TestCase):
         assert decode('6789', 10) == 6789
         assert decode('13579', 10) == 13579
         assert decode('24680', 10) == 24680
+        assert decode('67343524', 10) == 67343524
 
     def test_decode_hexadecimal(self):
         assert decode('a', 16) == 10
@@ -138,6 +143,7 @@ class BasesEncodeTest(unittest.TestCase):
         assert encode(1234, 5) == '14414'
         assert encode(1234, 8) == '2322'
         assert encode(1234, 10) == '1234'
+        assert encode(1234, 15) == '574'
         assert encode(1234, 16) == '4d2'
         assert encode(1234, 32) == '16i'
 
@@ -170,6 +176,7 @@ class BasesEncodeTest(unittest.TestCase):
         assert encode(15650, 25) == '1010'
         assert encode(32800, 32) == '1010'
         assert encode(46692, 36) == '1010'
+        assert encode(3390, 15) == '1010'
 
     def test_encode_into_101101(self):
         assert encode(45, 2) == '101101'
@@ -263,6 +270,13 @@ class BasesConvertTest(unittest.TestCase):
         assert convert('1101100101010001', 2, 16) == 'd951'
         assert convert('1110101001100010', 2, 16) == 'ea62'
         assert convert('1111101101110011', 2, 16) == 'fb73'
+
+    def test_convert_octal_to_hexadecimal(self):
+        assert convert('7674', 8, 16) == 'fbc'
+        assert convert('7674', 8, 16) == 'fbc'
+
+    def test_convert_hexadecimal_to_octal(self):
+        assert convert('2e', 16, 8) == '56'
 
 
 if __name__ == '__main__':
