@@ -98,7 +98,7 @@ def get_num_length(number, base):
     exponent = 0
     power = -1
     # count the number of powers of the base needed to exceed the number
-    while power < number:
+    while power <= number:
         exponent += 1
         power = math.pow(base, exponent)
     # the exponent shows the amount of place values in the number being encoded
