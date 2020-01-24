@@ -130,21 +130,21 @@ def get_equivalent(number, base, new_num_length):
     new_value = ''
     # list of all English letters
     alpha = list(string.ascii_lowercase)
-    # figure out the bit to place at each index in the binary number
+    # figure out the bit to place at each index in the new number
     for i in range(new_num_length):
-        # the power of 2 at this index in the binary number
-        power = math.pow(base, (new_num_length - (i + 1)))
+        # the power of the new base, at this index in the new number
+        place_value = math.pow(base, (new_num_length - (i + 1)))
         # the decimal representation of the digit to add
-        next_digit = int(number // power)
+        next_digit = int(number // place_value)
         # convert to representation of that value for the appropiate base
         if next_digit > 9:
             index_of_digit = next_digit - 10
-            # adding the digit to the binary number
+            # adding the digit to the new  number
             new_value += alpha[index_of_digit]
         else:
             new_value += str(next_digit)
         # decrement the number, so the change reflects on the next iteration
-        number -= next_digit * power
+        number -= next_digit * place_value
     return new_value
 
 
