@@ -170,11 +170,17 @@ def encode_whole_number(number, base):
     return equivalent_value
 
 
-def get_sig_figs(number):
-    '''Return the number of digits to include after the radix point.'''
-    num_as_str = str(number)
-    index_of_point = num_as_str.index('.')
-    digits_after_point = len(num_as_str[(index_of_point + 1):])
+def get_sig_figs(num, index_of_point):
+    """Return the number of digits to include after the radix point.
+
+      Parameters:
+       num: str -- representation of number (in base 10)
+       index_of_point: int -- index position of the radix point in num
+
+      Return: int -- number of digits appearing after the point in number
+
+    """
+    digits_after_point = len(num[(index_of_point + 1):])
     return digits_after_point
 
 
@@ -196,11 +202,14 @@ def encode_into_any_base(number, base):
         # init return value
         new_num = ''
         # add the digits that come before the radix point
+        num_as_str = str(number)
+        index_of_point = num_as_str.index('.')
+        num_before_point = pass
         new_num += pass
         # add the radix point
         new_num += '.'
         # the answer will have same number of digts after radix point as input
-        digits_after_point = get_sig_figs(number)
+        digits_after_point = get_sig_figs(num_as_str, index_of_point)
         # add the digits that come after the radix point, and return
         new_num += pass
         return new_num
