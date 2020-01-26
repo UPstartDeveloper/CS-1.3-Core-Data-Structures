@@ -85,7 +85,12 @@ def decode(digits, base):
     return: int -- integer representation of number (in base 10)"""
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
-    return decode_from_any_base(digits, base)
+    # if already in base 10, only change needed is to conver to int
+    if base == 10:
+        return int(digits)
+    # otherwise, go through the function for decoding to base 10
+    else:
+        return decode_from_any_base(digits, base)
 
 
 """
