@@ -153,8 +153,25 @@ def get_equivalent(number, base, new_num_length):
     return new_value
 
 
+def encode_whole_number(number, base):
+    """Encode number into any base 2-36. Must be a whole number.
+
+       Parameters:
+       number: int -- integer representation of number (in base 10)
+       base: int -- base to convert to
+
+       Return: str -- string representation of number in binary
+
+     """
+    # figure out the length of the binary version of the number
+    new_num_length = get_num_length(number, base)
+    # figure out the specific bits of the binary number
+    equivalent_value = get_equivalent(number, base, new_num_length)
+    return equivalent_value
+
+
 def encode_into_any_base(number, base):
-    """Encode number in binary (base 2).
+    """Encode number into any base 2-36. Can be fractional or whole.
 
        Parameters:
        number: int -- integer representation of number (in base 10)
@@ -163,11 +180,7 @@ def encode_into_any_base(number, base):
        Return: str -- string representation of number in binary
 
     """
-    # figure out the length of the binary version of the number
-    new_num_length = get_num_length(number, base)
-    # figure out the specific bits of the binary number
-    equivalent_value = get_equivalent(number, base, new_num_length)
-    return equivalent_value
+    pass
 
 
 def encode(number, base):
