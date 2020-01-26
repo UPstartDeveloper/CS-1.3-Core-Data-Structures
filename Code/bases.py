@@ -180,7 +180,12 @@ def encode_into_any_base(number, base):
        Return: str -- string representation of number in binary
 
     """
-    pass
+    # enocding numbers if it's not fractional
+    if number % 1 == 0:
+        return encode_whole_number(number, base)
+    # encoding numbers that are fractional
+    else:
+        pass
 
 
 def encode(number, base):
