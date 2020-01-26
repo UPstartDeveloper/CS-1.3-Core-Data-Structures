@@ -170,6 +170,14 @@ def encode_whole_number(number, base):
     return equivalent_value
 
 
+def get_sig_figs(number):
+    '''Return the number of digits to include after the radix point.'''
+    num_as_str = str(number)
+    index_of_point = num_as_str.index('.')
+    digits_after_point = len(num_as_str[(index_of_point + 1):])
+    return digits_after_point
+
+
 def encode_into_any_base(number, base):
     """Encode number into any base 2-36. Can be fractional or whole.
 
@@ -185,7 +193,17 @@ def encode_into_any_base(number, base):
         return encode_whole_number(number, base)
     # encoding numbers that are fractional
     else:
-        pass
+        # init return value
+        new_num = ''
+        # add the digits that come before the radix point
+        new_num += pass
+        # add the radix point
+        new_num += '.'
+        # the answer will have same number of digts after radix point as input
+        digits_after_point = get_sig_figs(number)
+        # add the digits that come after the radix point, and return
+        new_num += pass
+        return new_num
 
 
 def encode(number, base):
