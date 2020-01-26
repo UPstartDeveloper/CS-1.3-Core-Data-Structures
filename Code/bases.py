@@ -23,7 +23,7 @@ def convert_digit_to_decimal(digit):
        digit: str -- can be any symbol used to represent a digit in a number,
                      base 2-36
 
-       Return: int -- the decimal representation of the value of digit
+       Return: float -- the decimal representation of the value of digit
     """
     # list of all English letters
     alpha = list(string.ascii_lowercase)
@@ -35,7 +35,7 @@ def convert_digit_to_decimal(digit):
                 return 10 + i
     # if the number is 0-9, it's decimnal representation is no different
     else:
-        return int(digit)
+        return float(digit)
 
 
 def compute_decimal_val_for_whole_num(digits, base):
@@ -53,11 +53,17 @@ def compute_decimal_val_for_whole_num(digits, base):
     length = len(digits)
     # i represents the exponent the base is raised at for a given place value
     for i in range(length):
-        decimal_value_of_single_digit = convert_digit_to_decimal(digits[i])
-        decimal_value_of_overall_num += (
-            math.pow(base, (length - 1)) * decimal_value_of_single_digit)
-        # move down the exponent for the next iteration
-        length -= 1
+        # grab the next symbol - a digit, a sign, a radix point
+        next_symbol = digits[i]
+        if not next_symbol == '.':
+            decimal_value_of_single_digit = float(
+                convert_digit_to_decimal(next_symbol))
+            decimal_value_of_overall_num += (
+                math.pow(base, (length - 1)) * decimal_value_of_single_digit)
+            # move down the exponent for the next iteration
+            length -= 1
+        else:
+            pass
     return decimal_value_of_overall_num
 
 
@@ -78,26 +84,52 @@ def compute_decimal_val_for_fractional_num(digits, base):
     index = 2
     # i represents the exponent the base is raised at for a given place value
     for i in range(1, length + 1):
-        decimal_value_of_single_digit = convert_digit_to_decimal(digits[index])
-        decimal_value_of_overall_num += (
-            math.pow(base, -i) * decimal_value_of_single_digit)
-        # move to next digit for next iteration
-        index += 1
+        # grab the next symbol - a digit, a sign, a radix point
+        next_symbol = digits[index]
+        if not next_symbol == '.':
+            decimal_value_of_single_digit = (
+                convert_digit_to_decimal(next_symbol))
+            decimal_value_of_overall_num += (
+                math.pow(base, -i) * decimal_value_of_single_digit)
+            # move to next digit for next iteration
+            index += 1
+        else:
+            index += 1
     return decimal_value_of_overall_num
 
 
-def decode_from_any_base(digits, base):
+def decode_from_any_base(digits, base, decoded_num):
     """Decode digits from any base (2 up to 36).
 
        Parameters:
         digits: str -- string representation of number (in given base)
         base: int -- base of given number
+        decoded_num: float -- representation of number (in base 10)
 
-        Return: int -- integer representation of number (in base 10)
-
+        Return: decoded_num
     """
-    # acculmulate the value of the decimal equivalent using digits in new base
-    return compute_decimal_val_for_fractional_num(digits, base)
+    # represent digits as numeric value
+    digits_as_f = float(digits)
+    # separate integer and fractional poritons
+    int_portion = int(math.floor(digits_as_f))
+    fractional = float(digits_as_f - int_portion)
+    # if we're dealing with natural number, no need to use fractional functions
+    if fractional == 0.00:
+        return compute_decimal_val_for_whole_num(str(int_portion), base)
+    else:
+        # decode the int part
+        if int_portion > 0.00:
+            decoded_num += compute_decimal_val_for_whole_num(str(int_portion),
+                                                             base)
+            # update the part of the number that's been decoded so far
+            digits_as_f -= decoded_num
+            digits = str(digits_as_f)
+            # now call the function again!
+            return decode_from_any_base(digits, base, decoded_num)
+        elif fractional > 0:
+            # decode the fractional number, can be leftover from a mixed number
+            decoded_num += compute_decimal_val_for_fractional_num(digits, base)
+            return decoded_num
 
 
 def decode(digits, base):
@@ -107,7 +139,10 @@ def decode(digits, base):
     return: int -- integer representation of number (in base 10)"""
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
-    return decode_from_any_base(digits, base)
+    # init return value
+    decoded_num = 0
+    # decode the number
+    return decode_from_any_base(digits, base, decoded_num)
 
 
 """
