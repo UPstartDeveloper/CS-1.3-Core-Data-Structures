@@ -48,17 +48,42 @@ def compute_decimal_val_for_whole_num(digits, base):
        Return: int -- integer representation of number (in base 10)
     """
     # init a return value
-    decimal_value_of_whole_num = 0
+    decimal_value_of_overall_num = 0
     # compute the powers of the old base used in the representation of digits
     length = len(digits)
     # i represents the exponent the base is raised at for a given place value
     for i in range(length):
         decimal_value_of_single_digit = convert_digit_to_decimal(digits[i])
-        decimal_value_of_whole_num += (
+        decimal_value_of_overall_num += (
             math.pow(base, (length - 1)) * decimal_value_of_single_digit)
         # move down the exponent for the next iteration
         length -= 1
-    return decimal_value_of_whole_num
+    return decimal_value_of_overall_num
+
+
+def compute_decimal_val_for_fractional_num(digits, base):
+    """Return the representation of a number in the base 10 system.
+
+       Parameters:
+       digits: str -- string representation of number (in given base)
+       base: int -- base of given number
+
+       Return: int -- integer representation of number (in base 10)
+    """
+    # init a return value
+    decimal_value_of_overall_num = 0
+    # compute the powers of the old base used in the representation of digits
+    length = len(digits) - 2
+    # keep track of the index we are at in the number, start fter radix point
+    index = 2
+    # i represents the exponent the base is raised at for a given place value
+    for i in range(1, length + 1):
+        decimal_value_of_single_digit = convert_digit_to_decimal(digits[index])
+        decimal_value_of_overall_num += (
+            math.pow(base, -i) * decimal_value_of_single_digit)
+        # move to next digit for next iteration
+        index += 1
+    return decimal_value_of_overall_num
 
 
 def decode_from_any_base(digits, base):
@@ -72,7 +97,7 @@ def decode_from_any_base(digits, base):
 
     """
     # acculmulate the value of the decimal equivalent using digits in new base
-    return compute_decimal_val_for_whole_num(digits, base)
+    return compute_decimal_val_for_fractional_num(digits, base)
 
 
 def decode(digits, base):
@@ -282,11 +307,15 @@ def convert(digits, base1, base2):
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base1 <= 36, 'base1 is out of range: {}'.format(base1)
     assert 2 <= base2 <= 36, 'base2 is out of range: {}'.format(base2)
-    # decode into base 10 representation, if not already so
-    if not base1 == 10:
-        digits = decode(digits, base1)
-    # from base 10, encode into the requested base
-    return encode(float(digits), base2)
+    # if we're converting to base 10, only need to do a decode operation
+    if base2 == 10:
+        return decode(digits, base1)
+    else:
+        # decode into base 10 representation, if not already so
+        if not base1 == 10:
+            digits = decode(digits, base1)
+        # from base 10, encode into the requested base
+        return encode(float(digits), base2)
 
 
 def main():
