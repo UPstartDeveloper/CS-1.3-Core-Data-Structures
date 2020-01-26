@@ -115,7 +115,7 @@ def get_num_length(number, base):
     return (exponent)
 
 
-def get_equivalent(number, base, new_num_length):
+def get_equivalent_for_integers(number, base, new_num_length):
     """Return the equivalent of a decimal number in the new base.
 
        Parameters:
@@ -161,7 +161,8 @@ def encode_whole_number(number, base):
     # figure out the length of the inputted version of the number
     new_num_length = get_num_length(number, base)
     # figure out the specific digits of the new representation of number
-    equivalent_value = get_equivalent(number, base, new_num_length)
+    equivalent_value = get_equivalent_for_integers(number, base,
+                                                   new_num_length)
     return equivalent_value
 
 
@@ -215,22 +216,13 @@ def encode_fractional_number(number, base):
 
        Return: str -- string representation of number in the new base
 
-     """
-    # init return value
-    new_num = ''
-    # add the digits that come before the radix index_of_point
-    num_as_str = str(number)
-    index_of_point = num_as_str.index('.')
-    # convert only the slice of the number that appears before the point
-    num_before_point = math.floor(number)
-    new_num += encode_whole_number(num_before_point, base)
-    # add the radix point
-    new_num += '.'
-    # the answer will have same number of digts after radix point as input
-    num_digits_after_point = get_sig_figs(num_as_str, index_of_point)
-    # add the digits that come after the radix point, and return
-    new_num += encode_fraction(num_digits_after_point, number, base)
-    return new_num
+    """
+    # figure out the length of the inputted version of the number
+    new_num_length = get_num_length(number, base)
+    # figure out the specific digits of the new representation of number
+    equivalent_value = get_equivalent_for_fractions(number, base,
+                                                    new_num_length)
+    return equivalent_value
 
 
 def encode_into_any_base(number, base, encoded_num):
@@ -258,8 +250,8 @@ def encode_into_any_base(number, base, encoded_num):
             # then encoding the decimal part of the number
             return encode_into_any_base(number, base, encoded_num)
         else:
-            pass
-            # return encode_fractional_number(number, base)
+            encoded_num += encode_fractional_number(number, base)
+            return encoded_num
 
 
 def encode(number, base):
