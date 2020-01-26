@@ -108,35 +108,34 @@ def decode_from_any_base(digits, base, decoded_num):
 
         Return: decoded_num
     """
-    # represent digits as numeric value
-    digits_as_f = float(digits)
-    # separate integer and fractional poritons
-    int_portion = int(math.floor(digits_as_f))
-    fractional = float(digits_as_f - int_portion)
-    # if we're dealing with natural number, no need to use fractional functions
-    if fractional == 0.00:
-        return compute_decimal_val_for_whole_num(str(int_portion), base)
-    else:
+    # determine if the digits contain a fraction
+    if '.' in digits:
+        # spearate the int and fractional portions of the number
+        index_of_point = digits.index('.')
+        int_portion = digits[:index_of_point]
+        fractional = digits[index_of_point:]
         # decode the int part
-        if int_portion > 0.00:
-            decoded_num += compute_decimal_val_for_whole_num(str(int_portion),
-                                                             base)
+        if not int_portion == '0':
+            decoded_num += compute_decimal_val_for_whole_num(int_portion, base)
             # update the part of the number that's been decoded so far
             digits_as_f -= decoded_num
             digits = str(digits_as_f)
             # now call the function again!
             return decode_from_any_base(digits, base, decoded_num)
-        elif fractional > 0:
+        elif not fractional == '.0':
             # decode the fractional number, can be leftover from a mixed number
             decoded_num += compute_decimal_val_for_fractional_num(digits, base)
             return decoded_num
+    else:
+        # just take care of the integer
+        return compute_decimal_val_for_whole_num(digits, base)
 
 
 def decode(digits, base):
     """Decode given digits in given base to number in base 10.
     digits: str -- string representation of number (in given base)
     base: int -- base of given number
-    return: int -- integer representation of number (in base 10)"""
+    return: float -- representation of number (in base 10)"""
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # init return value
