@@ -131,16 +131,16 @@ def get_equivalent_for_integers(number, base, new_num_length):
     new_value = ''
     # list of all English letters
     alpha = list(string.ascii_lowercase)
-    # figure out the bit to place at each index in the new number
+    # figure out the digit to place at each index in the new number
     for i in range(new_num_length):
-        # the power of the new base, at this index in the new number
+        # each iteration the power of the place value decreases
         place_value = math.pow(base, (new_num_length - (i + 1)))
-        # the decimal representation of the digit to add
+        # the representation of the next digit to add in the new base
         next_digit = int(number // place_value)
         # convert to representation of that value for the appropiate base
         if next_digit > 9:
             index_of_digit = next_digit - 10
-            # adding the digit to the new  number
+            # adding the digit to the new number
             new_value += alpha[index_of_digit]
         else:
             new_value += str(next_digit)
@@ -161,7 +161,26 @@ def get_equivalent_for_fractions(number, base, new_num_length):
        Return: str -- string representation of number
 
     """
-    pass
+    # initialize a return value
+    new_value = ''
+    # list of all English letters
+    alpha = list(string.ascii_lowercase)
+    # for decimals, powers descend from left to right
+    for i in range(-new_num_length, 0):
+        # for place values, absolute value of the power increases left to right
+        place_value = math.pow(base, (new_num_length + (i - 1)))
+        # the representation of the next digit to add in the new base
+        next_digit = int(number // place_value)
+        # convert to representation of that value for the appropiate base
+        if next_digit > 9:
+            index_of_digit = next_digit - 10
+            # adding the digit to the new number
+            new_value += alpha[index_of_digit]
+        else:
+            new_value += str(next_digit)
+        # decrement the number, so the change reflects on the next iteration
+        number -= next_digit * place_value
+    return new_value
 
 
 def encode_whole_number(number, base):
@@ -225,6 +244,11 @@ def encode_into_any_base(number, base, encoded_num):
             # then encoding the decimal part of the number
             return encode_into_any_base(number, base, encoded_num)
         else:
+            # add the radix point to the answer
+            if encoded_num == '':
+                encoded_num += '0'
+            encoded_num += '.'
+            # convert the fractional part (of the overall number being encoded)
             encoded_num += encode_fractional_number(number, base)
             return encoded_num
 
@@ -265,7 +289,7 @@ def convert(digits, base1, base2):
     if not base1 == 10:
         digits = decode(digits, base1)
     # from base 10, encode into the requested base
-    return encode(int(digits), base2)
+    return encode(float(digits), base2)
 
 
 def main():
