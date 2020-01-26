@@ -38,20 +38,21 @@ def convert_digit_to_decimal(digit):
         return int(digit)
 
 
-def compute_decimal_val(ascending_powers, digits, base, length):
+def compute_decimal_val_for_whole_num(digits, base):
     """Return the representation of a number in the base 10 system.
 
        Parameters:
-       ascending_powers: list -- a collection of the exponents used in place
-                                values of the digits number
        digits: str -- string representation of number (in given base)
        base: int -- base of given number
-       length: int -- the length of the part of digits, left to be decoded
 
        Return: int -- integer representation of number (in base 10)
     """
     # init a return value
     decimal_value_of_whole_num = 0
+    # compute the powers of the old base used in the representation of digits
+    length = len(digits)
+    ascending_powers = list(range(length))
+    # commence decoding!
     for power in ascending_powers:
         decimal_value_of_single_digit = convert_digit_to_decimal(digits[power])
         decimal_value_of_whole_num += (
@@ -71,11 +72,8 @@ def decode_from_any_base(digits, base):
         Return: int -- integer representation of number (in base 10)
 
     """
-    # compute the powers of the old base used in the representation of digits
-    length = len(digits)
-    ascending_powers = list(range(length))
     # acculmulate the value of the decimal equivalent using digits in new base
-    return compute_decimal_val(ascending_powers, digits, base, length)
+    return compute_decimal_val_for_whole_num(digits, base)
 
 
 def decode(digits, base):
