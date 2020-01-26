@@ -184,16 +184,31 @@ def get_sig_figs(num, index_of_point):
     return digits_after_point
 
 
-def encode_fraction(num_digits, base):
+def encode_fraction(num_digits, number, base):
     """Handles conversion of the non-integer portion of a fractional number.
 
        Parameters:
        num_digits: int -- the number of digits to include in the return value
+       number: int -- integer representation of number (in base 10)
        base: int -- base to convert to
 
        Return: str -- representation of the number in the new base
     """
-    pass
+    # init return str
+    new_repr = ''
+    for i in range(num_digits):
+        # multiply number by the new base
+        scaled_num = number * base
+        # find the index of the radix point
+        str_scaled_num = str(scaled_num)
+        index = str_scaled_num('.')
+        # add the int portion to the return value
+        integer_portion = str_scaled_num[:index]
+        new_repr += integer_portion
+        # use the decimal portion to multiply by the base, on next iteration
+        decimal_portion = int(str_scaled_num[(index + 1):])
+        number = decimal_portion
+    return new_repr
 
 
 def encode_fractional_number(number, base):
@@ -213,7 +228,7 @@ def encode_fractional_number(number, base):
     index_of_point = num_as_str.index('.')
     # convert only the slice of the number that appears before the point
     num_before_point = math.floor(number)
-    new_num += encode_whole_number(num_before_point, base)
+    new_num += encode_whole_number(num_before_point, number, base)
     # add the radix point
     new_num += '.'
     # the answer will have same number of digts after radix point as input
