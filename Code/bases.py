@@ -204,12 +204,13 @@ def encode_into_any_base(number, base):
         # add the digits that come before the radix point
         num_as_str = str(number)
         index_of_point = num_as_str.index('.')
-        num_before_point = pass
-        new_num += pass
+        # convert only the slice of the number that appears before the point
+        num_before_point = math.floor(number)
+        new_num += encode_whole_number(num_before_point, base)
         # add the radix point
         new_num += '.'
         # the answer will have same number of digts after radix point as input
-        digits_after_point = get_sig_figs(num_as_str, index_of_point)
+        num_digits_after_point = get_sig_figs(num_as_str, index_of_point)
         # add the digits that come after the radix point, and return
         new_num += pass
         return new_num
