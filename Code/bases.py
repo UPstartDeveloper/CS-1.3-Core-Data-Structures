@@ -233,12 +233,13 @@ def encode_fractional_number(number, base):
     return new_num
 
 
-def encode_into_any_base(number, base):
+def encode_into_any_base(number, base, encoded_num):
     """Encode number into any base 2-36. Can be fractional or whole.
 
        Parameters:
        number: int -- integer representation of number (in base 10)
        base: int -- base to convert to
+       encoded_num: str -- representation (so far) of number in base
 
        Return: str -- string representation of number in the new base
 
@@ -248,7 +249,13 @@ def encode_into_any_base(number, base):
         return encode_whole_number(number, base)
     # encoding numbers that are fractional
     else:
-        return encode_fractional_number(number, base)
+        # first encoding the part that comes before the radix point
+        if not str(number)[0] == '0':
+            pass
+        # then encoding the decimal part of the number
+        else:
+            pass
+            # return encode_fractional_number(number, base)
 
 
 def encode(number, base):
@@ -263,7 +270,10 @@ def encode(number, base):
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
-    return encode_into_any_base(number, base)
+    # init return value
+    encoded_num = ''
+    # call recursive function to encode numbers
+    return encode_into_any_base(number, base, encoded_num)
 
 
 """
