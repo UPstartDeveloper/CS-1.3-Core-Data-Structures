@@ -51,10 +51,9 @@ def compute_decimal_val_for_whole_num(digits, base):
     decimal_value_of_whole_num = 0
     # compute the powers of the old base used in the representation of digits
     length = len(digits)
-    ascending_powers = list(range(length))
-    # commence decoding!
-    for power in ascending_powers:
-        decimal_value_of_single_digit = convert_digit_to_decimal(digits[power])
+    # i represents the exponent the base is raised at for a given place value
+    for i in range(length):
+        decimal_value_of_single_digit = convert_digit_to_decimal(digits[i])
         decimal_value_of_whole_num += (
             math.pow(base, (length - 1)) * decimal_value_of_single_digit)
         # move down the exponent for the next iteration
