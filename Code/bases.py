@@ -116,7 +116,8 @@ def get_num_length(number, base):
 
 
 def get_equivalent_for_integers(number, base, new_num_length):
-    """Return the equivalent of a decimal number in the new base.
+    """Return the equivalent of a decimal number in the new base. Only integers
+       allowed.
 
        Parameters:
        number: int -- integer representation of number (in base 10)
@@ -148,6 +149,21 @@ def get_equivalent_for_integers(number, base, new_num_length):
     return new_value
 
 
+def get_equivalent_for_fractions(number, base, new_num_length):
+    """Return the equivalent of a decimal number in the new base. Only floating
+       point numbers allowed.
+
+       Parameters:
+       number: float -- integer representation of number (in base 10)
+       base: int -- base to convert to
+       new_num_length: int -- how many digits needed in the encoded number
+
+       Return: str -- string representation of number
+
+    """
+    pass
+
+
 def encode_whole_number(number, base):
     """Encode number into any base 2-36. Must be a whole number.
 
@@ -164,47 +180,6 @@ def encode_whole_number(number, base):
     equivalent_value = get_equivalent_for_integers(number, base,
                                                    new_num_length)
     return equivalent_value
-
-
-def get_sig_figs(num, index_of_point):
-    """Return the number of digits to include after the radix point.
-
-      Parameters:
-       num: str -- representation of number (in base 10)
-       index_of_point: int -- index position of the radix point in num
-
-      Return: int -- number of digits appearing after the point in number
-
-    """
-    digits_after_point = len(num[(index_of_point + 1):])
-    return digits_after_point
-
-
-def encode_fraction(num_digits, number, base):
-    """Handles conversion of the non-integer portion of a fractional number.
-
-       Parameters:
-       num_digits: int -- the number of digits to include in the return value
-       number: int -- integer representation of number (in base 10)
-       base: int -- base to convert to
-
-       Return: str -- representation of the number in the new base
-    """
-    # init return str
-    new_repr = ''
-    for i in range(num_digits):
-        # multiply number by the new base
-        scaled_num = number * base
-        # find the index of the radix point
-        str_scaled_num = str(scaled_num)
-        index = str_scaled_num.index('.')
-        # add the int portion to the return value
-        integer_portion = str_scaled_num[:index]
-        new_repr += integer_portion
-        # use the decimal portion to multiply by the base, on next iteration
-        decimal_portion = int(str_scaled_num[(index + 1):])
-        number = decimal_portion
-    return new_repr
 
 
 def encode_fractional_number(number, base):
