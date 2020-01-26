@@ -237,7 +237,7 @@ def encode_into_any_base(number, base, encoded_num):
     """Encode number into any base 2-36. Can be fractional or whole.
 
        Parameters:
-       number: int -- integer representation of number (in base 10)
+       number: float -- integer representation of number (in base 10)
        base: int -- base to convert to
        encoded_num: str -- representation (so far) of number in base
 
@@ -251,8 +251,12 @@ def encode_into_any_base(number, base, encoded_num):
     else:
         # first encoding the part that comes before the radix point
         if not str(number)[0] == '0':
-            pass
-        # then encoding the decimal part of the number
+            int_part = math.floor(number)
+            encoded_num += encode_whole_number(int_part, base)
+            # now cut off the integer from number, so it's just a fraction
+            number = float(number - int_part)
+            # then encoding the decimal part of the number
+            return encode_into_any_base(number, base, encoded_num)
         else:
             pass
             # return encode_fractional_number(number, base)
