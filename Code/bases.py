@@ -85,12 +85,7 @@ def decode(digits, base):
     return: int -- integer representation of number (in base 10)"""
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
-    # if already in base 10, only change needed is to conver to int
-    if base == 10:
-        return int(digits)
-    # otherwise, go through the function for decoding to base 10
-    else:
-        return decode_from_any_base(digits, base)
+    return decode_from_any_base(digits, base)
 
 
 """
@@ -201,7 +196,7 @@ def encode_fraction(num_digits, number, base):
         scaled_num = number * base
         # find the index of the radix point
         str_scaled_num = str(scaled_num)
-        index = str_scaled_num('.')
+        index = str_scaled_num.index('.')
         # add the int portion to the return value
         integer_portion = str_scaled_num[:index]
         new_repr += integer_portion
@@ -228,13 +223,13 @@ def encode_fractional_number(number, base):
     index_of_point = num_as_str.index('.')
     # convert only the slice of the number that appears before the point
     num_before_point = math.floor(number)
-    new_num += encode_whole_number(num_before_point, number, base)
+    new_num += encode_whole_number(num_before_point, base)
     # add the radix point
     new_num += '.'
     # the answer will have same number of digts after radix point as input
     num_digits_after_point = get_sig_figs(num_as_str, index_of_point)
     # add the digits that come after the radix point, and return
-    new_num += encode_fraction(num_digits_after_point, base)
+    new_num += encode_fraction(num_digits_after_point, number, base)
     return new_num
 
 
@@ -285,10 +280,12 @@ def convert(digits, base1, base2):
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base1 <= 36, 'base1 is out of range: {}'.format(base1)
     assert 2 <= base2 <= 36, 'base2 is out of range: {}'.format(base2)
-    # decode into base 10 representation
-    number_in_base10 = decode(digits, base1)
+    number = float(digits)
+    # decode into base 10 representation, if not already so
+    if not base1 == 10:
+        number = decode(digits, base1)
     # from base 10, encode into the requested base
-    return encode(number_in_base10, base2)
+    return encode(number, base2)
 
 
 def main():
@@ -301,8 +298,10 @@ def main():
         base2 = int(args[2])
         # Convert given digits between bases
         result = convert(digits, base1, base2)
-        print('{} in base {} is {} in base {}'.format(digits, base1, result,
-                                                      base2))
+        print('{} in base {} is {} in base {} (with sig figs)'.format(digits,
+                                                                      base1,
+                                                                      result,
+                                                                      base2))
     else:
         print('Usage: {} digits base1 base2'.format(sys.argv[0]))
         print('Converts digits from base1 to base2')
