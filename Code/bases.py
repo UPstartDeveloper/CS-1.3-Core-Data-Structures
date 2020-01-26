@@ -71,10 +71,10 @@ def decode_from_any_base(digits, base):
         Return: int -- integer representation of number (in base 10)
 
     """
-    # compute the the bases of 2 used in the binary number
+    # compute the powers of the old base used in the representation of digits
     length = len(digits)
     ascending_powers = list(range(length))
-    # acculmulate the value of the decimal equivalent using binary digits
+    # acculmulate the value of the decimal equivalent using digits in new base
     return compute_decimal_val(ascending_powers, digits, base, length)
 
 
@@ -99,11 +99,11 @@ Encoding functions
 
 
 def get_num_length(number, base):
-    """Given length of a decimal number, return the length of
-       binary equivalent.
+    """Given length of a decimal number, return the length of the
+       equivalent representation in the new base.
 
        Parameters:
-       number: int -- string representation of binary number
+       number: int -- string representation of number
        base: int -- base to convert to
 
        Return:
@@ -121,14 +121,14 @@ def get_num_length(number, base):
 
 
 def get_equivalent(number, base, new_num_length):
-    """Return the binary equivalent of a decimal number.
+    """Return the equivalent of a decimal number in the new base.
 
        Parameters:
        number: int -- integer representation of number (in base 10)
        base: int -- base to convert to
-       bi_length: int -- amount of bits in the binary equivalent of number
+       new_num_length: int -- how many digits needed in the encoded number
 
-       Return: str -- string representation of number in binary
+       Return: str -- string representation of number
 
     """
     # initialize a return value
@@ -160,12 +160,12 @@ def encode_whole_number(number, base):
        number: int -- integer representation of number (in base 10)
        base: int -- base to convert to
 
-       Return: str -- string representation of number in binary
+       Return: str -- string representation of number
 
      """
-    # figure out the length of the binary version of the number
+    # figure out the length of the inputted version of the number
     new_num_length = get_num_length(number, base)
-    # figure out the specific bits of the binary number
+    # figure out the specific digits of the new representation of number
     equivalent_value = get_equivalent(number, base, new_num_length)
     return equivalent_value
 
@@ -184,6 +184,18 @@ def get_sig_figs(num, index_of_point):
     return digits_after_point
 
 
+def encode_fraction(num_digits, base):
+    """Handles conversion of the non-integer portion of a fractional number.
+
+       Parameters:
+       num_digits: int -- the number of digits to include in the return value
+       base: int -- base to convert to
+
+       Return: str -- representation of the number in the new base
+    """
+    pass
+
+
 def encode_fractional_number(number, base):
     """Encode number into any base 2-36. Must be a fractional number.
 
@@ -191,7 +203,7 @@ def encode_fractional_number(number, base):
        number: int -- integer representation of number (in base 10)
        base: int -- base to convert to
 
-       Return: str -- string representation of number in binary
+       Return: str -- string representation of number in the new base
 
      """
     # init return value
@@ -207,7 +219,7 @@ def encode_fractional_number(number, base):
     # the answer will have same number of digts after radix point as input
     num_digits_after_point = get_sig_figs(num_as_str, index_of_point)
     # add the digits that come after the radix point, and return
-    new_num += pass
+    new_num += encode_fraction(num_digits_after_point, base)
     return new_num
 
 
@@ -218,7 +230,7 @@ def encode_into_any_base(number, base):
        number: int -- integer representation of number (in base 10)
        base: int -- base to convert to
 
-       Return: str -- string representation of number in binary
+       Return: str -- string representation of number in the new base
 
     """
     # enocding numbers if it's not fractional
