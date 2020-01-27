@@ -118,8 +118,7 @@ def decode_from_any_base(digits, base, decoded_num):
         if not int_portion == '0':
             decoded_num += compute_decimal_val_for_whole_num(int_portion, base)
             # update the part of the number that's been decoded so far
-            digits_as_f -= decoded_num
-            digits = str(digits_as_f)
+            digits = '0' + fractional
             # now call the function again!
             return decode_from_any_base(digits, base, decoded_num)
         elif not fractional == '.0':
