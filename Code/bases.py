@@ -148,8 +148,8 @@ Encoding functions
 """
 
 
-def get_num_length(number, base):
-    """Given length of a decimal number, return the length of the
+def get_num_length_for_whole(number, base):
+    """Given length of a natural decimal number, return the length of the
        equivalent representation in the new base.
 
        Parameters:
@@ -157,7 +157,7 @@ def get_num_length(number, base):
        base: int -- base to convert to
 
        Return:
-       bi_length: int
+       exponent: int -- the highest exponent of a place value needed
 
     """
     exponent = 0
@@ -168,6 +168,30 @@ def get_num_length(number, base):
         power = math.pow(base, exponent)
     # the exponent shows the amount of place values in the number being encoded
     return (exponent)
+
+
+def get_num_length_for_fractional(number, base):
+    """Given length of a fractional decimal number, return the length of the
+       equivalent representation in the new base.
+
+       Parameters:
+       number: float -- representation of number
+       base: int -- base to convert to
+
+       Return:
+       exponent: int -- the highest exponent of a place value needed
+
+    """
+    exponent = 0
+    power = 0
+    sum = 0
+    # count the number of powers of the base needed to exceed the number
+    while sum <= number:
+        exponent -= 1
+        power = math.pow(base, exponent)
+        sum += number
+    # the exponent shows the amount of place values in the number being encoded
+    return -(exponent - 1)
 
 
 def get_equivalent_for_integers(number, base, new_num_length):
@@ -220,10 +244,13 @@ def get_equivalent_for_fractions(number, base, new_num_length):
     new_value = ''
     # list of all English letters
     alpha = list(string.ascii_lowercase)
+    # keep track of the exponent for the place value currently being converted
+    exponent = -1
     # for decimals, powers descend from left to right
     for i in range(-new_num_length, 0):
         # for place values, absolute value of the power increases left to right
-        place_value = math.pow(base, (new_num_length + (i - 1)))
+        place_value = math.pow(base, exponent)
+        exponent -= 1
         # the representation of the next digit to add in the new base
         next_digit = int(number // place_value)
         # convert to representation of that value for the appropiate base
@@ -235,6 +262,7 @@ def get_equivalent_for_fractions(number, base, new_num_length):
             new_value += str(next_digit)
         # decrement the number, so the change reflects on the next iteration
         number -= next_digit * place_value
+        # print(number)
     return new_value
 
 
@@ -249,7 +277,7 @@ def encode_whole_number(number, base):
 
      """
     # figure out the length of the inputted version of the number
-    new_num_length = get_num_length(number, base)
+    new_num_length = get_num_length_for_whole(number, base)
     # figure out the specific digits of the new representation of number
     equivalent_value = get_equivalent_for_integers(number, base,
                                                    new_num_length)
@@ -267,7 +295,7 @@ def encode_fractional_number(number, base):
 
     """
     # figure out the length of the inputted version of the number
-    new_num_length = get_num_length(number, base)
+    new_num_length = get_num_length_for_fractional(number, base)
     # figure out the specific digits of the new representation of number
     equivalent_value = get_equivalent_for_fractions(number, base,
                                                     new_num_length)
@@ -295,7 +323,7 @@ def encode_into_any_base(number, base, encoded_num):
             int_part = math.floor(number)
             encoded_num += encode_whole_number(int_part, base)
             # now cut off the integer from number, so it's just a fraction
-            number = float(number - int_part)
+            number = number - int_part
             # then encoding the decimal part of the number
             return encode_into_any_base(number, base, encoded_num)
         else:
@@ -310,7 +338,7 @@ def encode_into_any_base(number, base, encoded_num):
 
 def encode(number, base):
     """Encode given number in base 10 to digits in given base.
-       number: int -- integer representation of number (in base 10)
+       number: float -- integer representation of number (in base 10)
        base: int -- base to convert to
 
        return: str -- string representation of number (in given base)
