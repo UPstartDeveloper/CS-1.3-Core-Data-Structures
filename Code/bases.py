@@ -128,7 +128,7 @@ def decode_from_any_base(digits, base, decoded_num):
             return decoded_num
     else:
         # just take care of the integer
-        return compute_decimal_val_for_whole_num(digits, base)
+        return int(compute_decimal_val_for_whole_num(digits, base))
 
 
 def decode(digits, base):
@@ -343,7 +343,7 @@ def convert(digits, base1, base2):
     assert 2 <= base2 <= 36, 'base2 is out of range: {}'.format(base2)
     # if we're converting to base 10, only need to do a decode operation
     if base2 == 10:
-        return decode(digits, base1)
+        return str(decode(digits, base1))
     else:
         # decode into base 10 representation, if not already so
         if not base1 == 10:
