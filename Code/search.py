@@ -5,7 +5,7 @@ import string
 
 
 def linear_search(array, item):
-    """return the first index of item in array or None if item is not found
+    """Return the first index of item in array or None if item is not found
 
        Runtime Analysis:
        Given n as the number of items in the array, linear search runs in
@@ -15,11 +15,12 @@ def linear_search(array, item):
        O(n) iterations.
 
        Spacetime Analysis:
-       This function uses O(n) space. The amount of memory used by this
-       algorithm comprises only of local variables. The amount of data used up
-       by these variables grows directly proportional with respect to the size
-       of the array. If we double the size of array, we would asymptotically
-       need twice as many variables to search through it, using linear search.
+       This function uses O(n) space on average. The amount of memory used by
+       this algorithm comprises only of local variables. The amount of data
+       used up by these variables grows directly proportional with respect to
+       the size of the array. If we double the size of array, we would
+       asymptotically need twice as many variables to search through it, using
+       linear search.
 
     """
     # implement linear_search_iterative and linear_search_recursive below, then
@@ -48,7 +49,25 @@ def linear_search_recursive(array, item, index=0):
 
 
 def binary_search(array, item):
-    """return the index of item in sorted array or None if item is not found"""
+    """Return the index of item in sorted array or None if item is not found.
+
+       Runtime Analysis:
+       On each iteration or recursive step through this function, half of the
+       list elements are eliminated from consideration. On the best case, the
+       item is found exactly at the middle index position in the array. This is
+       expressed at O(1). On the worst case, the item is not found, or is just
+       one index postion off to the left or right of the middle index position.
+       Because I use linear search as a helper function in this implementation
+       (to handle alphabetization), this case is expressed as O(n*log(n)), or
+       more simply O(n) asymptotically. That is to say, although usually binary
+       search would be only O(log(n)) complexity, since I am using this
+       function to handle both numbers and str values, it is O(n).
+
+       Spacetime Analysis:
+       Since this implementation uses linear search, it shares the same
+       spacetime complexity as the linear search implementation above: O(n).
+
+    """
     # implement binary_search_iterative and binary_search_recursive below, then
     # change this to call your implementation to verify it passes all tests
     return binary_search_iterative(array, item)
@@ -106,7 +125,6 @@ def calculate_middle(low, high):
 
 
 def binary_search_iterative(array, item):
-    # TODO: implement binary search iteratively here
     # init index to start at middle of the array
     low = 0
     high = len(array)
@@ -135,7 +153,6 @@ def binary_search_iterative(array, item):
 
 
 def binary_search_recursive(array, item, left=None, right=None):
-    # TODO: implement binary search recursively here
     # for the first pass only, init left and right (same as low and high)
     if left is None and right is None:
         left = 0
