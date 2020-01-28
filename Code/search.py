@@ -1,6 +1,9 @@
 #!python
 
 
+import string
+
+
 def linear_search(array, item):
     """return the first index of item in array or None if item is not found"""
     # implement linear_search_iterative and linear_search_recursive below, then
@@ -32,9 +35,40 @@ def binary_search(array, item):
     # return binary_search_recursive(array, item)
 
 
+def is_less_than(elem, item):
+    """Determine if the elem is less than item.
+
+       Parameters:
+       elem: str or int or float value
+       item: str or int or float value
+
+       Return: bool
+
+    """
+    # a list of lowercase English letters
+    alpha = list(string.ascii_lowercase)
+    # determine if the elem is a str or number
+    if elem[0].lower() in alpha:
+        # if an English letter, less than or greater than is by index in alpha
+        pass
+    else:
+        # if a number, then determine greater than or less than normally
+        pass
+
+
 def binary_search_iterative(array, item):
     # TODO: implement binary search iteratively here
-    pass
+    # init index to start at middle of the array
+    low = 0
+    mid = (len(array) // 2)
+    high = (len(array) - 1)
+    # init the list element to start looking at
+    elem = array[mid]
+    # continually move the mid_index around, until you find the item
+    while not elem == item:
+        # determine if the element is less than or greater than item
+        pass
+
     # once implemented, change binary_search to call binary_search_iterative
     # to verify that your iterative implementation passes all tests
 
