@@ -5,7 +5,23 @@ import string
 
 
 def linear_search(array, item):
-    """return the first index of item in array or None if item is not found"""
+    """return the first index of item in array or None if item is not found
+
+       Runtime Analysis:
+       Given n as the number of items in the array, linear search runs in
+       linear time. In the best case we find the item at the first index
+       in the array, which can be expressed as O(1) iterations. In the worst
+       case the item is not found in the array, which can be expressed as
+       O(n) iterations.
+
+       Spacetime Analysis:
+       This function uses O(n) space. The amount of memory used by this
+       algorithm comprises only of local variables. The amount of data used up
+       by these variables grows directly proportional with respect to the size
+       of the array. If we double the size of array, we would asymptotically
+       need twice as many variables to search through it, using linear search.
+
+    """
     # implement linear_search_iterative and linear_search_recursive below, then
     # change this to call your implementation to verify it passes all tests
     # return linear_search_iterative(array, item)
