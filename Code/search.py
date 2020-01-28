@@ -35,8 +35,8 @@ def binary_search(array, item):
     """return the index of item in sorted array or None if item is not found"""
     # implement binary_search_iterative and binary_search_recursive below, then
     # change this to call your implementation to verify it passes all tests
-    # return binary_search_iterative(array, item)
-    return binary_search_recursive(array, item)
+    return binary_search_iterative(array, item)
+    # return binary_search_recursive(array, item)
 
 
 def compare_letters(elem, item):
@@ -107,19 +107,13 @@ def binary_search_iterative(array, item):
             # cut out the upper half of the list
             high = mid
         mid = calculate_middle(low, high)
-        # reassign element using new middle
+        # reassign element using new middle, and check again
         elem = array[mid]
-        # if elem now matches item, return the middle index here
-        if elem == item:
-            return mid
-        # if indices are being rechecked, then the item is not in the list
-        elif low == mid:
-            break
+        if low == mid and not elem == item:
+            return None
     # if the item is found right at the middle
     else:
         return mid
-    # return value for when item not in list
-    return None
     # once implemented, change binary_search to call binary_search_iterative
     # to verify that your iterative implementation passes all tests
 
