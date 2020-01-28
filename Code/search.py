@@ -58,19 +58,39 @@ def is_less_than(elem, item):
         return (elem < item)
 
 
+def calculate_middle(low, high):
+    '''Return the index of the middle, given lowest and highest indices.'''
+    return ((low + high) // 2)
+
+
 def binary_search_iterative(array, item):
     # TODO: implement binary search iteratively here
     # init index to start at middle of the array
     low = 0
-    mid = (len(array) // 2)
     high = (len(array) - 1)
+    mid = calculate_middle(low, high)
     # init the list element to start looking at
     elem = array[mid]
     # continually move the mid_index around, until you find the item
-    while not elem == item:
+    while not elem == item and :  # index condition here:
         # determine if the element is less than or greater than item
-        pass
-
+        if is_less_than(elem, item) is True:
+            # cut out the upper half of the list
+            high = mid
+            mid = calculate_middle(low, high)
+            # reassign element using new middle
+            elem = array[mid]
+        else:
+            # cut out the lower half of the list
+            low = mid
+            mid = calculate_middle(low, high)
+            # reassign element using new middle
+            elem = array[mid]
+        # if elem now matches item, return the middle index here
+        if elem == item:
+            return mid
+    # return value for when item not in list
+    return None
     # once implemented, change binary_search to call binary_search_iterative
     # to verify that your iterative implementation passes all tests
 
