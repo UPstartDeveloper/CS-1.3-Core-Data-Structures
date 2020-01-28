@@ -44,10 +44,24 @@ def compare_letters(elem, item):
     # a list of lowercase English letters
     alpha = list(string.ascii_lowercase)
     # init indices used to track letters
-    index_elem = 0
-    index_item = 0
-    while index_elem == index_item:
-        pass
+    index = 0
+    elem_length = len(elem)
+    item_length = len(item)
+    # avoid IndexError
+    while not index >= elem_length or index >= item_length:
+        # compare letters at the same index in the words
+        value_elem = linear_search_recursive(alpha, elem[index].lower())
+        value_item = linear_search_recursive(alpha, item[index].lower())
+        # if one of the values is less than the other, for alphabetization
+        if value_elem < value_item:
+            return True
+        elif value_elem > value_item:
+            return False
+        else:
+            # if we compared equal letters, then move on to the next letter
+            index += 1
+    # if both words equal up to n letters, then alphabetize based on length
+    return (elem_length < item_length)
 
 
 def is_less_than(elem, item):
@@ -62,9 +76,7 @@ def is_less_than(elem, item):
     """
     # determine if the elem is a str or number
     if isinstance(elem, str) is True:
-        # if an English letter, less than or greater than is by index in alpha
-        pass
-        # leser value comes first alphabetically
+        # lesser value comes first alphabetically
         less_than = compare_letters(elem, item)
         return (less_than is True)
     else:
