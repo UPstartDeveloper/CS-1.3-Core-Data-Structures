@@ -39,6 +39,17 @@ def binary_search(array, item):
     # return binary_search_recursive(array, item)
 
 
+def compare_letters(elem, item):
+    '''Given two strings, return which comes first alphabetically.'''
+    # a list of lowercase English letters
+    alpha = list(string.ascii_lowercase)
+    # init indices used to track letters
+    index_elem = 0
+    index_item = 0
+    while index_elem == index_item:
+        pass
+
+
 def is_less_than(elem, item):
     """Determine if the elem is less than item.
 
@@ -49,14 +60,13 @@ def is_less_than(elem, item):
        Return: bool
 
     """
-    # a list of lowercase English letters
-    alpha = list(string.ascii_lowercase)
     # determine if the elem is a str or number
     if isinstance(elem, str) is True:
         # if an English letter, less than or greater than is by index in alpha
-        index_elem = linear_search_recursive(elem[0].lower(), alpha)
-        index_item = linear_search_recursive(item[0].lower(), alpha)
-        return (index_elem < index_item)
+        pass
+        # leser value comes first alphabetically
+        less_than = compare_letters(elem, item)
+        return (less_than is True)
     else:
         # if a number, then determine greater than or less than normally
         return (elem < item)
