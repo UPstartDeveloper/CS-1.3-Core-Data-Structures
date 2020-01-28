@@ -48,12 +48,14 @@ def is_less_than(elem, item):
     # a list of lowercase English letters
     alpha = list(string.ascii_lowercase)
     # determine if the elem is a str or number
-    if elem[0].lower() in alpha:
+    if isinstance(elem, str) is True:
         # if an English letter, less than or greater than is by index in alpha
-        pass
+        index_elem = linear_search_recursive(elem[0].lower(), alpha)
+        index_item = linear_search_recursive(item[0].lower(), alpha)
+        return (index_elem < index_item)
     else:
         # if a number, then determine greater than or less than normally
-        pass
+        return (elem < item)
 
 
 def binary_search_iterative(array, item):
