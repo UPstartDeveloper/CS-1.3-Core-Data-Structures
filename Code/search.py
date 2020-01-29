@@ -70,53 +70,8 @@ def binary_search(array, item):
     """
     # implement binary_search_iterative and binary_search_recursive below, then
     # change this to call your implementation to verify it passes all tests
-    return binary_search_iterative(array, item)
-    # return binary_search_recursive(array, item)
-
-
-def compare_letters(elem, item):
-    '''Given two strings, return which comes first alphabetically.'''
-    # a list of lowercase English letters
-    alpha = list(string.ascii_lowercase)
-    # init indices used to track letters
-    index = 0
-    elem_length = len(elem)
-    item_length = len(item)
-    # avoid IndexError
-    while not index >= elem_length or index >= item_length:
-        # compare letters at the same index in the words
-        value_elem = linear_search_recursive(alpha, elem[index].lower())
-        value_item = linear_search_recursive(alpha, item[index].lower())
-        # if one of the values is less than the other, for alphabetization
-        if value_elem < value_item:
-            return True
-        elif value_elem > value_item:
-            return False
-        else:
-            # if we compared equal letters, then move on to the next letter
-            index += 1
-    # if both words equal up to n letters, then alphabetize based on length
-    return (elem_length < item_length)
-
-
-def is_less_than(elem, item):
-    """Determine if the elem is less than item.
-
-       Parameters:
-       elem: str or int or float value
-       item: str or int or float value
-
-       Return: bool
-
-    """
-    # determine if the elem is a str or number
-    if isinstance(elem, str) is True:
-        # lesser value comes first alphabetically
-        less_than = compare_letters(elem, item)
-        return (less_than is True)
-    else:
-        # if a number, then determine greater than or less than normally
-        return (elem < item)
+    # return binary_search_iterative(array, item)
+    return binary_search_recursive(array, item)
 
 
 def calculate_middle(low, high):
@@ -134,7 +89,7 @@ def binary_search_iterative(array, item):
     # continually move the mid_index around, until you find the item
     while not elem == item:
         # determine if the element is less than or greater than item
-        if is_less_than(elem, item) is True:
+        if elem < item:
             # cut out the lower half of the list,
             low = mid
         else:
@@ -165,7 +120,7 @@ def binary_search_recursive(array, item, left=None, right=None):
         return mid
     else:
         # decide how to move the indices, and try again
-        if is_less_than(elem, item) is True:
+        if elem < item:
             # cut out the lower half of the list
             left = mid
         else:
