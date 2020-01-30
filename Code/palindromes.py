@@ -7,6 +7,11 @@ import string
 # string.ascii_letters is ascii_lowercase + ascii_uppercase
 
 
+def clean_text(text):
+    '''Given a str, returns a list of alphanumeric chars in the str.'''
+    return [char.lower() for char in text if char.isalpha() is True]
+
+
 def is_palindrome(text):
     """A string of characters is a palindrome if it reads the same forwards and
     backwards, ignoring punctuation, whitespace, and letter casing."""
@@ -19,13 +24,13 @@ def is_palindrome(text):
 
 def is_palindrome_iterative(text):
     # clean the string
-    letters = [char for char in text if char.isalpha() is True]
+    letters = clean_text(text)
     # calculate the midpoint of the str
     halfway_point = (len(letters) // 2)
     # case-insensitive checking from front and back
     for i in range(halfway_point):
         letter = letters[i].lower()
-        letter_from_back = letters[-i-1].lower()
+        letter_from_back = letters[-i-1]
         if not letter == letter_from_back:
             return False
     # if you made it through, it's a palindrome
@@ -38,7 +43,7 @@ def is_palindrome_recursive(text, left=None, right=None):
     # on first stack frame, clean text str and set left to the first letter
     if left is None:
         left = 0
-        text = [char for char in text if char.isalpha() is True]
+        text = clean_text(text)
     # identify the middle index position
     halfway_point = len(text) // 2
     if halfway_point > 0:
