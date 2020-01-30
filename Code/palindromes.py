@@ -18,14 +18,17 @@ def is_palindrome(text):
 
 
 def is_palindrome_iterative(text):
-    # TODO: implement the is_palindrome function iteratively here
+    # clean the string
     letters = [char for char in text if char.isalpha() is True]
+    # calculate the midpoint of the str
     halfway_point = (len(letters) // 2)
+    # case-insensitive checking from front and back
     for i in range(halfway_point):
-        letter = letters[i]
-        letter_from_back = letters[-i-1]
+        letter = letters[i].lower()
+        letter_from_back = letters[-i-1].lower()
         if not letter == letter_from_back:
             return False
+    # if you made it through, it's a palindrome
     return True
     # once implemented, change is_palindrome to call is_palindrome_iterative
     # to verify that your iterative implementation passes all tests
