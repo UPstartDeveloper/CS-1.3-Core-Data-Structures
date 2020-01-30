@@ -77,6 +77,21 @@ def find_all_indexes(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_all_indexes here (iteratively and/or recursively)
+    # list of indexes where match was found (for the first letter of pattern)
+    indices = list()
+    # begin str traversal
+    position_of_match = 0
+    while position_of_match < len(text):
+        index_of_match = find_index(text, pattern)
+        # if we find an index, add it to the list and move along in the text
+        if index_of_match is not None:
+            indices.append(index_of_match)
+            position_of_match += index_of_match + len(pattern)
+            text = text[position_of_match:]
+        # if we return None, all possible matches have been found
+        else:
+            position_of_match = len(text)
+    return indices
 
 
 def test_string_algorithms(text, pattern):
