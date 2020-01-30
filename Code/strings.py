@@ -8,6 +8,25 @@ def contains(text, pattern):
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # clean the text
     text = clean_text(text)
+    # keep track of the index position we grab letters from the pattern
+    index_p = 0
+    # traverse the text for matches
+    for index_t in range(len(text)):
+        # grab letters from the text and the pattern
+        letter_t = text[index_t]
+        letter_p = pattern[index_p]
+        # make a comparision and move along in the pattern if there's a match
+        if letter_p == letter_t:
+            # if the last letter in the pattern has been matched, we found it!
+            if (index_p + 1) == len(pattern):
+                return True
+            else:
+                index_p += 1
+        # keep searching for matches of first letter, if no match
+        else:
+            index_p = 0
+    # if no matches at the end, the pattern cannot be found
+    return False
 
 
 def find_index(text, pattern):
