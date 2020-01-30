@@ -19,7 +19,14 @@ def is_palindrome(text):
 
 def is_palindrome_iterative(text):
     # TODO: implement the is_palindrome function iteratively here
-    pass
+    letters = [char for char in text if char.isalpha() is True]
+    halfway_point = (len(letters) // 2)
+    for i in range(halfway_point):
+        letter = letters[i]
+        letter_from_back = letters[-i-1]
+        if not letter == letter_from_back:
+            return False
+    return True
     # once implemented, change is_palindrome to call is_palindrome_iterative
     # to verify that your iterative implementation passes all tests
 
