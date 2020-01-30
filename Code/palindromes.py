@@ -39,23 +39,23 @@ def is_palindrome_recursive(text, left=None, right=None):
     if left is None:
         left = 0
         text = [char for char in text if char.isalpha() is True]
-    # if there are no letters, then True is returned as default
+    # identify the middle index position
     halfway_point = len(text) // 2
     if halfway_point > 0:
         # grab the letters we need to compare, case insensitive
         right = (-left - 1)
         letter_left = text[left].lower()
         letter_right = text[right].lower()
-        # make the comparision, and decide accordingly
+        # make the comparision, and decide to check more letters or not
         if letter_left == letter_right:
-            # decide if we need to check more letters or not
-            if left == halfway_point:
-                return True
-            else:
+            if left < halfway_point:
                 return is_palindrome_recursive(text=text, left=left+1)
+            else:
+                return True
         # one mismatch is all we need to know the str is not a palindrome
         else:
             return False
+    # if there are no letters, True returned by default
     else:
         return True
     # once implemented, change is_palindrome to call is_palindrome_recursive
