@@ -13,8 +13,8 @@ def is_palindrome(text):
     # implement is_palindrome_iterative and is_palindrome_recursive below, then
     # change this to call your implementation to verify it passes all tests
     assert isinstance(text, str), 'input is not a string: {}'.format(text)
-    return is_palindrome_iterative(text)
-    # return is_palindrome_recursive(text)
+    # return is_palindrome_iterative(text)
+    return is_palindrome_recursive(text)
 
 
 def is_palindrome_iterative(text):
@@ -35,8 +35,29 @@ def is_palindrome_iterative(text):
 
 
 def is_palindrome_recursive(text, left=None, right=None):
-    # TODO: implement the is_palindrome function recursively here
-    pass
+    # on first stack frame, clean text str and set left to the first letter
+    if left is None:
+        left = 0
+        text = [char for char in text if char.isalpha() is True]
+    # if there are no letters, then True is returned as default
+    halfway_point = len(text) // 2
+    if halfway_point > 0:
+        # grab the letters we need to compare, case insensitive
+        right = (-left - 1)
+        letter_left = text[left].lower()
+        letter_right = text[right].lower()
+        # make the comparision, and decide accordingly
+        if letter_left == letter_right:
+            # decide if we need to check more letters or not
+            if left == halfway_point:
+                return True
+            else:
+                return is_palindrome_recursive(text=text, left=left+1)
+        # one mismatch is all we need to know the str is not a palindrome
+        else:
+            return False
+    else:
+        return True
     # once implemented, change is_palindrome to call is_palindrome_recursive
     # to verify that your iterative implementation passes all tests
 
