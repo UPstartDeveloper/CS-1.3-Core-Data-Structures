@@ -64,7 +64,7 @@ def find_index(text, pattern):
                         # move ahead to the next possible place for matching
                         index_t += pattern_length_without_first
                     elif i == pattern_length_without_first:
-                        return i
+                        return index_t
             # don't give up! move to the next possible index for matching
             else:
                 index_t += 1
