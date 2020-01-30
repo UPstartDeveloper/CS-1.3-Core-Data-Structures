@@ -2,6 +2,16 @@ from palindromes import clean_text
 # !python
 
 
+def letter_t(text, index_t):
+    '''Return the letter at index_t (int) in text(list).'''
+    return text[index_t]
+
+
+def letter_p(pattern, index_p):
+    '''Return the letter at index_p(int) in pattern(str).'''
+    return pattern[index_p]
+
+
 def contains(text, pattern):
     """Return a boolean indicating whether pattern occurs in text."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
@@ -17,10 +27,10 @@ def contains(text, pattern):
         # traverse the text for matches
         for index_t in range(len(text)):
             # grab letters from the text and the pattern
-            letter_t = text[index_t]
-            letter_p = pattern[index_p]
+            letter_text = letter_t(text, index_t)
+            letter_pattern = letter_p(pattern, index_p)
             # if matching, move along in the pattern
-            if letter_p == letter_t or letter_t == pattern[0]:
+            if letter_pattern == letter_text or letter_text == pattern[0]:
                 # if the last letter in the pattern has matched, we found it!
                 if (index_p + 1) == len(pattern):
                     return True
