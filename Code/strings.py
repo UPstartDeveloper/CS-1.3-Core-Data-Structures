@@ -25,20 +25,24 @@ def contains(text, pattern):
     else:
         index_p = 0
         # traverse the text for matches
-        for index_t in range(len(text)):
+        index_t = 0
+        while index_t < len(text):
             # grab letters from the text and the pattern
             letter_text = letter_t(text, index_t)
             letter_pattern = letter_p(pattern, index_p)
             # if matching, move along in the pattern
-            if letter_pattern == letter_text or letter_text == pattern[0]:
+            if letter_pattern == letter_text:
                 # if the last letter in the pattern has matched, we found it!
-                if (index_p + 1) == len(pattern):
+                if index_p == len(pattern) - 1:
                     return True
                 else:
                     index_p += 1
+            elif letter_text == pattern[0]:
+                index_p = 1
             # keep searching for matches of first letter, if no match
             else:
                 index_p = 0
+            index_t += 1
         # if no matches at the end, the pattern cannot be found
         return False
 
@@ -81,16 +85,23 @@ def find_all_indexes(text, pattern):
     indices = list()
     # begin str traversal
     position_of_match = 0
+    # use separate str for keeping iterations, and for finding matches
+    text_left = text
     while position_of_match < len(text):
-        index_of_match = find_index(text, pattern)
+        index_of_match = find_index(text_left, pattern)
         # if we find an index, add it to the list and move along in the text
         if index_of_match is not None:
             indices.append(index_of_match)
             position_of_match += index_of_match + len(pattern)
-            text = text[position_of_match:]
+            # remove the substr of text in which we already found a match
+            text_left = text[position_of_match:]
         # if we return None, all possible matches have been found
         else:
-            position_of_match = len(text)
+            position_of_match += 1
+    # update the indices to reflect their true positions in full text
+    if len(indices) > 1:
+        for i in range(1, len(indices)):
+            indices[i] += (len(pattern) * i)
     return indices
 
 
