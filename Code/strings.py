@@ -32,8 +32,10 @@ def contains(text, pattern):
             letter_pattern = letter_p(pattern, index_p)
             # if matching, move along in the pattern
             if letter_pattern == letter_text:
+                # print(index_p)
+                # print(len(pattern) - 1)
                 # if the last letter in the pattern has matched, we found it!
-                if index_p == len(pattern) - 1:
+                if index_p == (len(pattern) - 1):
                     return True
                 else:
                     index_p += 1
@@ -56,6 +58,31 @@ def find_index(text, pattern):
     if contains(text, pattern) is False:
         return None
     else:
+        index_p = 0
+        # traverse the text for matches
+        index_t = 0
+        while index_t < len(text):
+            # grab letters from the text and the pattern
+            letter_text = letter_t(text, index_t)
+            letter_pattern = letter_p(pattern, index_p)
+            # if matching, move along in the pattern
+            if letter_pattern == letter_text:
+                # print(index_p)
+                # print(len(pattern) - 1)
+                # if the last letter in the pattern has matched, we found it!
+                if index_p == (len(pattern) - 1):
+                    return index_t - index_p
+                else:
+                    index_p += 1
+            elif letter_text == pattern[0]:
+                index_p = 1
+            # keep searching for matches of first letter, if no match
+            else:
+                index_p = 0
+            index_t += 1
+        # if no matches at the end, the pattern cannot be found
+        return False
+        '''
         # begin str traversal!
         index_t = 0
         while index_t < len(text):
@@ -73,6 +100,32 @@ def find_index(text, pattern):
             else:
                 index_t += 1
         return index_t
+        '''
+'''
+def find_index_and_exclude(text, pattern, position):
+    index_p = 0
+    # traverse the text for matches
+    index_t = 0
+    while index_t < len(text):
+        # grab letters from the text and the pattern
+        letter_text = letter_t(text, index_t)
+        letter_pattern = letter_p(pattern, index_p)
+        # if matching, move along in the pattern
+        if letter_pattern == letter_text and not index_t == position:
+            # if the last letter in the pattern has matched, we found it!
+            if index_p == (len(pattern) - 1):
+                return index_t - index_p
+            else:
+                index_p += 1
+        elif letter_text == pattern[0]:
+            index_p = 1
+        # keep searching for matches of first letter, if no match
+        else:
+            index_p = 0
+        index_t += 1
+    # if no matches at the end, the pattern cannot be found
+    return None
+'''
 
 
 def find_all_indexes(text, pattern):
@@ -81,28 +134,51 @@ def find_all_indexes(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_all_indexes here (iteratively and/or recursively)
+    index = 0
+    indices = list()
     # list of indexes where match was found (for the first letter of pattern)
     indices = list()
     # begin str traversal
-    position_of_match = 0
+    end_of_match = 0
     # use separate str for keeping iterations, and for finding matches
     text_left = text
-    while position_of_match < len(text):
+    # hold the substr in which matches already found in a list
+    cutoffs = list()
+    while end_of_match < len(text):
         index_of_match = find_index(text_left, pattern)
+        print(index_of_match)
         # if we find an index, add it to the list and move along in the text
         if index_of_match is not None:
             indices.append(index_of_match)
-            position_of_match += index_of_match + len(pattern)
+            end_of_match += index_of_match + len(pattern)
             # remove the substr of text in which we already found a match
-            text_left = text[position_of_match:]
+            text_left = text[end_of_match:]
+            # print(text_left)
+            cutoffs.append(text[:end_of_match])
         # if we return None, all possible matches have been found
         else:
-            position_of_match += 1
+            end_of_match += 1
     # update the indices to reflect their true positions in full text
     if len(indices) > 1:
         for i in range(1, len(indices)):
-            indices[i] += (len(pattern) * i)
+            # indices[i] += (len(pattern) * i)
+            print(cutoffs[i])
+            indices[i] += len(cutoffs[i]) - len(pattern)
     return indices
+
+    '''
+    indices = list()
+    run = True
+    while run is True:
+        position = None
+        index = find_index_and_exclude(text, pattern, position)
+        if index is not None:
+            indices.append(index)
+            position = index
+        else:
+            run = False
+    return indices
+    '''
 
 
 def test_string_algorithms(text, pattern):
