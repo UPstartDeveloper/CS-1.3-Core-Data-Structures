@@ -128,12 +128,28 @@ def find_index_and_exclude(text, pattern, position):
 '''
 
 
+def find_next_index(text, pattern, indices):
+    index = find_index(text, pattern)
+    if index is None:
+        if len(indices) > 1:
+            # update all indices to true values
+            pass
+        return indices
+    else:
+        indices.append(index)
+        # update the text to remove occurence of path that was just found
+        return find_next_index(text_pattern, indices)
+
+
 def find_all_indexes(text, pattern):
     """Return a list of starting indexes of all occurrences of pattern in text,
     or an empty list if not found."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_all_indexes here (iteratively and/or recursively)
+    indices = list()
+    return find_next_index(text, pattern, indices)
+    '''
     index = 0
     # list of indexes where match was found (for the first letter of pattern)
     indices = list()
@@ -167,7 +183,7 @@ def find_all_indexes(text, pattern):
             print(cutoffs[i])
             indices[i] += len(cutoffs[i]) - len(pattern)
     return indices
-
+    '''
     '''
     indices = list()
     run = True
