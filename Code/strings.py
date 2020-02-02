@@ -19,37 +19,70 @@ def letter_p(pattern, index_p):
         return ''
 
 
-def contains(text, pattern):
-    """Return a boolean indicating whether pattern occurs in text."""
-    assert isinstance(text, str), 'text is not a string: {}'.format(text)
-    assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    # if pattern is empty, return True as default
+def set_letters(text, pattern, index_t, index_p):
+    '''Finds the characters in text and in pattern currently being examined.'''
+    return (letter_t(text, index_t), letter_p(pattern, index_p))
+
+
+def search_for_string(text, pattern, signal):
+    """Helper function to optimize code reuse in contains and find_index.
+
+       Parameters:
+       text(str): a string of alphanumeric chars. Mix of lower and uppercase.
+                 May or may not include spaces. All ASCII chars are fair game.
+       pattern(str): a shorter str which may or may appear in text.
+                     Can simply be an empty string ('').
+       signal(int): a flag that indicates what types of data the function
+                    should return. 1 optimizes the values for contains,
+                    2 optimizes the values for find_index.
+
+      Returns: bool if used for contains, int or NoneType if used for
+               find_index
+
+    """
+    if signal == 1:
+        # adjust return values for the contains function
+        edge_case = True
+        not_found = False
+    elif signal == 2:
+        # adjust return values for the find_index function
+        edge_case = 0
+        not_found = None
+    # go ahead and find those str patterns!
     if len(pattern) == 0:
-        return True
-    # keep track of the index position we grab letters from the pattern
+        return edge_case
     else:
-        index_p = 0
         # traverse the text for matches
-        index_t = 0
-        while index_t < len(text):
+        index_p, index_t = (0, 0)
+        while index_t <= len(text):
             # grab letters from the text and the pattern
-            letter_text = letter_t(text, index_t)
-            letter_pattern = letter_p(pattern, index_p)
+            char_t, char_p = set_letters(text, pattern, index_t, index_p)
             # if matching, move along in the pattern
-            if letter_pattern == letter_text:
+            if char_p == char_t:
                 # if the last letter in the pattern has matched, we found it!
                 if index_p == (len(pattern) - 1):
-                    return True
+                    # set the appropiate return value
+                    if signal == 1:
+                        return True
+                    elif signal == 2:
+                        return index_t - index_p
                 else:
                     index_p += 1
-            elif letter_text == letter_p(pattern, 0):
+            elif char_t == letter_p(pattern, 0):
                 index_p = 1
             # keep searching for matches of first letter, if no match
             else:
                 index_p = 0
             index_t += 1
         # if no matches at the end, the pattern cannot be found
-        return False
+        return not_found
+
+
+def contains(text, pattern):
+    """Return a boolean indicating whether pattern occurs in text."""
+    assert isinstance(text, str), 'text is not a string: {}'.format(text)
+    assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
+    return search_for_string(text, pattern, 1)
 
 
 def find_index(text, pattern):
@@ -57,34 +90,7 @@ def find_index(text, pattern):
     or None if not found."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    # find out if the pattern exist
-    if contains(text, pattern) is False:
-        return None
-    else:
-        # return 0 if pattern empty str
-        if len(pattern) == 0:
-            return 0
-        # otherwise start searching for index!
-        index_p = 0
-        # traverse the text for matches
-        index_t = 0
-        while index_t < len(text):
-            # grab letters from the text and the pattern
-            letter_text = letter_t(text, index_t)
-            letter_pattern = letter_p(pattern, index_p)
-            # if matching, move along in the pattern
-            if letter_pattern == letter_text:
-                # if the last letter in the pattern has matched, we found it!
-                if index_p == (len(pattern) - 1):
-                    return index_t - index_p
-                else:
-                    index_p += 1
-            elif letter_text == pattern[0]:
-                index_p = 1
-            # keep searching for matches of first letter, if no match
-            else:
-                index_p = 0
-            index_t += 1
+    return search_for_string(text, pattern, 2)
 
 
 def find_next_index(text, pattern, indices):
