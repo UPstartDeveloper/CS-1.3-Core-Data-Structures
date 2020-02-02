@@ -92,50 +92,6 @@ def find_index(text, pattern):
             index_t += 1
         # if no matches at the end, the pattern cannot be found
         return False
-        '''
-        # begin str traversal!
-        index_t = 0
-        while index_t < len(text):
-            # try to find a match for the first letter of pattern
-            pattern_length_without_first = len(pattern) - 1
-            if letter_t(text, index_t) == letter_p(pattern, 0):
-                # make sure the rest of the pattern also matches
-                for i in range(1, len(pattern)):
-                    if not letter_t(text, index_t + i) == letter_p(pattern, i):
-                        # move ahead to the next possible place for matching
-                        index_t += pattern_length_without_first
-                    elif i == pattern_length_without_first:
-                        return index_t
-            # don't give up! move to the next possible index for matching
-            else:
-                index_t += 1
-        return index_t
-        '''
-'''
-def find_index_and_exclude(text, pattern, position):
-    index_p = 0
-    # traverse the text for matches
-    index_t = 0
-    while index_t < len(text):
-        # grab letters from the text and the pattern
-        letter_text = letter_t(text, index_t)
-        letter_pattern = letter_p(pattern, index_p)
-        # if matching, move along in the pattern
-        if letter_pattern == letter_text and not index_t == position:
-            # if the last letter in the pattern has matched, we found it!
-            if index_p == (len(pattern) - 1):
-                return index_t - index_p
-            else:
-                index_p += 1
-        elif letter_text == pattern[0]:
-            index_p = 1
-        # keep searching for matches of first letter, if no match
-        else:
-            index_p = 0
-        index_t += 1
-    # if no matches at the end, the pattern cannot be found
-    return None
-'''
 
 
 def find_next_index(text, pattern, indices):
@@ -169,54 +125,6 @@ def find_all_indexes(text, pattern):
     # otherwise find all indices
     indices = list()
     return find_next_index(text, pattern, indices)
-    '''
-    index = 0
-    # list of indexes where match was found (for the first letter of pattern)
-    indices = list()
-    # begin str traversal
-    end_of_match = 0
-    # use separate str for keeping iterations, and for finding matches
-    text_remaining = text
-    # hold the substr in which matches already found in a list
-    cutoffs = list()
-    while end_of_match < len(text):
-        index_of_match = find_index(text_remaining, pattern)
-        print(index_of_match)
-        # if we find an index, add it to the list and move along in the text
-        if index_of_match is not None:
-            indices.append(index_of_match)
-            end_of_match += index_of_match + len(pattern)
-            # remove the substr of text in which we already found a match
-            text_remaining = text[end_of_match:]
-            print(text_remaining)
-            # print(text_remaining)
-            cutoff = text[:end_of_match]
-            print(cutoff)
-            cutoffs.append(cutoff)
-        # if we return None, all possible matches have been found
-        else:
-            end_of_match += 1
-    # update the indices to reflect their true positions in full text
-    if len(indices) > 1:
-        for i in range(1, len(indices)):
-            # indices[i] += (len(pattern) * i)
-            print(cutoffs[i])
-            indices[i] += len(cutoffs[i]) - len(pattern)
-    return indices
-    '''
-    '''
-    indices = list()
-    run = True
-    while run is True:
-        position = None
-        index = find_index_and_exclude(text, pattern, position)
-        if index is not None:
-            indices.append(index)
-            position = index
-        else:
-            run = False
-    return indices
-    '''
 
 
 def test_string_algorithms(text, pattern):
