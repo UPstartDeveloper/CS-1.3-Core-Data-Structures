@@ -17,8 +17,9 @@ class StringsTest(unittest.TestCase):
         assert contains('abc', 'abc') is True  # all strings contain themselves
         assert contains('aaa', 'a') is True  # multiple occurrences
         assert contains('aaa', 'aa') is True  # overlapping pattern
-        # TODO: Write more positive test cases with assert is True statements
-        # ...
+        self.assertTrue(contains('Spider-Man', 'spider'))
+        self.assertTrue(contains("I'll Be Back", "i'll"))
+        self.assertTrue(contains("Never Gonna Give You Up", "give you"))
 
     def test_contains_with_non_matching_patterns(self):
         # Negative test cases (counterexamples) with non-matching patterns

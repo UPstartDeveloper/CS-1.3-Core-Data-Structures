@@ -1,4 +1,3 @@
-from palindromes import clean_text
 # !python
 
 
@@ -25,7 +24,7 @@ def contains(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # clean the text
-    text = clean_text(text)
+    text = [char for char in text]
     # if pattern is empty, return True as default
     if len(pattern) == 0:
         return True
