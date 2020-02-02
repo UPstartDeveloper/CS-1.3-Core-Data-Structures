@@ -39,6 +39,7 @@ class StringsTest(unittest.TestCase):
         self.assertTrue(contains('aaaaababbabc', 'abc'))
         self.assertTrue(contains('wingardium leviosa', 'M l'))
         self.assertTrue(contains('bb Beibi/be', 'be'))
+        self.assertTrue(find_index("rat a tat cat", "at"))
 
     def test_find_index_with_matching_patterns(self):
         # Positive test cases (examples) with matching patterns
@@ -88,6 +89,7 @@ class StringsTest(unittest.TestCase):
         self.assertEqual(find_index('adcf', ''), 0)
         self.assertEqual(find_index("windwums are chummy-chum'd", "um'"), 22)
         self.assertEqual(find_index("cuckoo for cococoa puffs", 'coa'), 15)
+        self.assertEqual(find_index("rat a tat cat", "at"), 1)
 
     # Positive test cases (examples) with matching patterns
     def test_find_all_indexes_with_matching_patterns(self):
@@ -155,6 +157,7 @@ class StringsTest(unittest.TestCase):
         self.assertEqual(find_all_indexes(
             "Python 3.7.6, pytest-5.1.2, py-1.8.0, pluggy-0.13.0", ", "),
             [12, 26, 36])
+        self.assertEqual(find_all_indexes("rat a tat cat", "at"), [1, 7, 11])
 
 
 if __name__ == '__main__':
