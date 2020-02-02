@@ -64,6 +64,10 @@ def find_index(text, pattern):
     if contains(text, pattern) is False:
         return None
     else:
+        # return 0 if pattern empty str
+        if len(pattern) == 0:
+            return 0
+        # otherwise start searching for index!
         index_p = 0
         # traverse the text for matches
         index_t = 0
@@ -80,7 +84,7 @@ def find_index(text, pattern):
                     return index_t - index_p
                 else:
                     index_p += 1
-            elif letter_text == letter_p(pattern, 0):
+            elif letter_text == pattern[0]:
                 index_p = 1
             # keep searching for matches of first letter, if no match
             else:
@@ -159,6 +163,10 @@ def find_all_indexes(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_all_indexes here (iteratively and/or recursively)
+    # edge case: return every index if the pattern is an empty str
+    if len(pattern) == 0:
+        return [i for i in range(len(text))]
+    # otherwise find all indices
     indices = list()
     return find_next_index(text, pattern, indices)
     '''
