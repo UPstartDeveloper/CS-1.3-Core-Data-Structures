@@ -23,8 +23,6 @@ def contains(text, pattern):
     """Return a boolean indicating whether pattern occurs in text."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    # clean the text
-    text = [char for char in text]
     # if pattern is empty, return True as default
     if len(pattern) == 0:
         return True
