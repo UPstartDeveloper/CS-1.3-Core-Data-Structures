@@ -5,7 +5,7 @@ from palindromes import clean_text
 def letter_t(text, index_t):
     '''Return the letter at index_t (int) in text(list).'''
     try:
-        return text[index_t]
+        return text[index_t].lower()
     # when the pattern is an empty str
     except IndexError:
         return ''
@@ -14,7 +14,7 @@ def letter_t(text, index_t):
 def letter_p(pattern, index_p):
     '''Return the letter at index_p(int) in pattern(str).'''
     try:
-        return pattern[index_p]
+        return pattern[index_p].lower()
     # when the pattern is an empty str
     except IndexError:
         return ''
@@ -94,7 +94,7 @@ def find_index(text, pattern):
 
 def find_next_index(text, pattern, indices):
     """Returns all indices in which a given patterns appears in a larger text.
-       Implements recursion.
+       Implements recursion. Comparsions are case insensitive.
 
        Parameters:
        text(str): a string of alphanumeric chars. Mix of lower and uppercase.
