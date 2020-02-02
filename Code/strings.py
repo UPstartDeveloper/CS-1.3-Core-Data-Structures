@@ -4,12 +4,18 @@ from palindromes import clean_text
 
 def letter_t(text, index_t):
     '''Return the letter at index_t (int) in text(list).'''
-    return text[index_t]
+    try:
+        return text[index_t]
+    except IndexError:
+        return ''
 
 
 def letter_p(pattern, index_p):
     '''Return the letter at index_p(int) in pattern(str).'''
-    return pattern[index_p]
+    try:
+        return pattern[index_p]
+    except IndexError:
+        return ''
 
 
 def contains(text, pattern):
@@ -39,7 +45,7 @@ def contains(text, pattern):
                     return True
                 else:
                     index_p += 1
-            elif letter_text == pattern[0]:
+            elif letter_text == letter_p(pattern, 0):
                 index_p = 1
             # keep searching for matches of first letter, if no match
             else:
@@ -74,7 +80,7 @@ def find_index(text, pattern):
                     return index_t - index_p
                 else:
                     index_p += 1
-            elif letter_text == pattern[0]:
+            elif letter_text == letter_p(pattern, 0):
                 index_p = 1
             # keep searching for matches of first letter, if no match
             else:
@@ -134,7 +140,11 @@ def find_next_index(text, pattern, indices):
         if len(indices) > 1:
             # update all indices to true values
             for i in range(1, len(indices)):
-                indices[i] += 1
+                next_index = indices[i]
+                next_index += 1 + indices[i - 1]
+                # chars_in_between = next_index - indices[i - 1]
+                # next_index += chars_in_between
+                indices[i] = next_index
         return indices
     else:
         indices.append(index)
