@@ -135,26 +135,28 @@ def find_all_indexes(text, pattern):
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_all_indexes here (iteratively and/or recursively)
     index = 0
-    indices = list()
     # list of indexes where match was found (for the first letter of pattern)
     indices = list()
     # begin str traversal
     end_of_match = 0
     # use separate str for keeping iterations, and for finding matches
-    text_left = text
+    text_remaining = text
     # hold the substr in which matches already found in a list
     cutoffs = list()
     while end_of_match < len(text):
-        index_of_match = find_index(text_left, pattern)
+        index_of_match = find_index(text_remaining, pattern)
         print(index_of_match)
         # if we find an index, add it to the list and move along in the text
         if index_of_match is not None:
             indices.append(index_of_match)
             end_of_match += index_of_match + len(pattern)
             # remove the substr of text in which we already found a match
-            text_left = text[end_of_match:]
-            # print(text_left)
-            cutoffs.append(text[:end_of_match])
+            text_remaining = text[end_of_match:]
+            print(text_remaining)
+            # print(text_remaining)
+            cutoff = text[:end_of_match]
+            print(cutoff)
+            cutoffs.append(cutoff)
         # if we return None, all possible matches have been found
         else:
             end_of_match += 1
