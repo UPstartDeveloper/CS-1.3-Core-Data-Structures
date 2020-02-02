@@ -133,12 +133,14 @@ def find_next_index(text, pattern, indices):
     if index is None:
         if len(indices) > 1:
             # update all indices to true values
-            pass
+            for i in range(1, len(indices)):
+                indices[i] += 1
         return indices
     else:
         indices.append(index)
         # update the text to remove occurence of path that was just found
-        return find_next_index(text_pattern, indices)
+        text = text[index + 1:]
+        return find_next_index(text, pattern, indices)
 
 
 def find_all_indexes(text, pattern):
