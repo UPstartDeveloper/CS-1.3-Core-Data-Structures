@@ -85,8 +85,6 @@ def find_index(text, pattern):
             else:
                 index_p = 0
             index_t += 1
-        # if no matches at the end, the pattern cannot be found
-        return False
 
 
 def find_next_index(text, pattern, indices):
