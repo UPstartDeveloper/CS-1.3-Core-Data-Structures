@@ -112,7 +112,7 @@ def find_next_index(text, pattern, indices):
         if len(indices) > 1:
             # update all indices to true values in the text str
             for i in range(1, len(indices)):
-                # the index where an occurence begins, excluding 1st occurrence
+                # the index where an occurence begins, excluding the 1st
                 next_index = indices[i]
                 # adjusting this index to where it lies in the text str
                 next_index += 1 + indices[i - 1]
@@ -125,7 +125,7 @@ def find_next_index(text, pattern, indices):
         return find_next_index(text, pattern, indices)
 
 
-def find_all_indexes(text, pattern):
+def find_all_indexes(text, pattern, indices=None):
     """Return a list of starting indexes of all occurrences of pattern in text,
     or an empty list if not found."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
@@ -134,8 +134,12 @@ def find_all_indexes(text, pattern):
     if len(pattern) == 0:
         return [i for i in range(len(text))]
     # otherwise find all indices
-    indices = list()
-    return find_next_index(text, pattern, indices)
+    else:
+        # set indices to an empty list on the first pass
+        if indices is None:
+            indices = list()
+        # now find all the indices
+        return find_next_index(text, pattern, indices)
 
 
 def test_string_algorithms(text, pattern):
