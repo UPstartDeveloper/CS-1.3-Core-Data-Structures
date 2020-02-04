@@ -87,11 +87,13 @@ def search_for_string(text, pattern, signal):
                         return index_t - index_p
                 else:
                     index_p += 1
-            elif char_t == letter_p(pattern, 0):
-                index_p = 1
             # keep searching for matches of first letter, if no match
             else:
+                # how far did we get along in index_p?
+                distance = index_p
+                # reset index_p to start, and move index_t back as well
                 index_p = 0
+                index_t -= distance
             index_t += 1
         # if no matches at the end, the pattern cannot be found
         return not_found
@@ -154,7 +156,7 @@ def find_next_index(text, pattern, indices):
         return find_next_index(text, pattern, indices)
 
 
-def find_all_indexes(text, pattern, indices=None):
+def find_all_indexes(text, pattern):
     """Return a list of starting indexes of all occurrences of pattern in text,
        or an empty list if not found.
 
@@ -188,8 +190,7 @@ def find_all_indexes(text, pattern, indices=None):
     # otherwise find all indices
     else:
         # set indices to an empty list on the first pass
-        if indices is None:
-            indices = list()
+        indices = list()
         # now find all the indices
         return find_next_index(text, pattern, indices)
 
