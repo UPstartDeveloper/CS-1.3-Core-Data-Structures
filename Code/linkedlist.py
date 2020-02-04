@@ -94,19 +94,26 @@ class LinkedList(object):
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index <= self.size):
             raise ValueError('List index out of range: {}'.format(index))
-        # Perform traversal of the nodes
-        prev_node = self.head
-        # find the node at index, as well as the one just before it
-        for i in range(index - 1):
-            prev_node = node.next
-        node_being_moved = prev_node.next
-        # make a new Node for the data to be inserted
-        new_node = Node(item)
-        # insert the new node in the right place, and connect it to the rest
-        prev_node.next = new_node
-        new_node.next = node_being_moved
-        # increment the size property
-        self.size += 1
+        # if we are inserting at the tail, or no previous nodes, then append
+        if self.size == index:
+            self.append(item)
+        # if we are inserting at the head, then just perform a prepend
+        elif index == 0:
+            self.prepend(item)
+        else:
+            # Perform traversal of the nodes
+            prev_node = self.head
+            # find the node at index, as well as the one just before it
+            for i in range(index - 1):
+                prev_node = prev_node.next
+            node_being_moved = prev_node.next
+            # make a new Node for the data to be inserted
+            new_node = Node(item)
+            # insert the new node in the right place, and connect it to the rest
+            prev_node.next = new_node
+            new_node.next = node_being_moved
+            # increment the size property
+            self.size += 1
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
@@ -172,7 +179,9 @@ class LinkedList(object):
             # Check if this node's data matches the old_item
             if node.data == old_item:
                 # We found the node, now change the data it references
-                node.data = new_item  # Constant time to return data
+                node.data = new_item
+                # end the method by returning None
+                return None
             else:
                 # Skip to the next node
                 node = node.next
