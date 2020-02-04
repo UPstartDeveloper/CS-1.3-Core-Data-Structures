@@ -85,7 +85,8 @@ class StringsTest(unittest.TestCase):
         assert find_index('abra cadabra', 'abra') == 0
         # overlapping prefix
         assert find_index('abra cadabra', 'adab') == 6
-
+        assert find_index('oooooh', 'oooh') == 2
+        assert find_index('oooooooooh', 'oooh') == 6
         self.assertEqual(find_index('adcf', ''), 0)
         self.assertEqual(find_index("windwums are chummy-chum'd", "um'"), 22)
         self.assertEqual(find_index("cuckoo for cococoa puffs", 'coa'), 15)

@@ -1,5 +1,6 @@
 #!python
 
+
 class Node(object):
 
     def __init__(self, data):
@@ -104,6 +105,8 @@ class LinkedList(object):
             self.tail.next = new_node
         # Update tail to new node regardless
         self.tail = new_node
+        # Increment the size property
+        self.size += 1
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
@@ -119,6 +122,8 @@ class LinkedList(object):
             new_node.next = self.head
         # Update head to new node regardless
         self.head = new_node
+        # Increment the size property
+        self.size += 1
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
@@ -158,7 +163,7 @@ class LinkedList(object):
         # Create a flag to track if we have found the given item
         found = False
         # Loop until we have found the given item or the node is None
-        while not found and node is not None:
+        while found is False and node is not None:
             # Check if the node's data matches the given item
             if node.data == item:
                 # We found data matching the given item, so update found flag
@@ -168,7 +173,7 @@ class LinkedList(object):
                 previous = node
                 node = node.next
         # Check if we found the given item or we never did and reached the tail
-        if found:
+        if found is True:
             # Check if we found a node in the middle of this linked list
             if node is not self.head and node is not self.tail:
                 # Update the previous node to skip around the found node
@@ -189,6 +194,8 @@ class LinkedList(object):
                     previous.next = None
                 # Update tail to the previous node regardless
                 self.tail = previous
+            # Decrement the size property
+            self.size -= 1
         else:
             # Otherwise raise an error to tell the user that delete has failed
             raise ValueError('Item not found: {}'.format(item))

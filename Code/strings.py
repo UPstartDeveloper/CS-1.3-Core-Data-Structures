@@ -39,6 +39,25 @@ def search_for_string(text, pattern, signal):
       Returns: bool if used for contains, int or NoneType if used for
                find_index
 
+      Complexity Analysis:
+      Best case: O(1)
+      Worst case: O(t), where t is the length of the text.
+
+      In the best case the pattern is the empty string (''). In that scenario
+      this implementation would return the appropiate return value right away,
+      before using tbe process of iteration.
+
+      In the worst case the pattern is nowhere to be found in the text.
+      In that scenario, this implementation would iterate over the entire text
+      string before finally concluding that the pattern is not present.
+
+      In the average case, the pattern is not an empty string, and is found in
+      the text. In that scenario this implementation would perform no less than
+      p iterations, where p is the length of the pattern string. Unless
+      the pattern occurs at the beginning of text, it's guaranteed that the
+      runtime will exceed O(p). Therefore the runtime of this function reaches
+      O(t) asymptotically, because the length of text is the main concern.
+
     """
     if signal == 1:
         # adjust return values for the contains function
@@ -79,7 +98,11 @@ def search_for_string(text, pattern, signal):
 
 
 def contains(text, pattern):
-    """Return a boolean indicating whether pattern occurs in text."""
+    """Return a boolean indicating whether pattern occurs in text.
+
+       Complexity Analysis: look at search_for_string doctring.
+
+    """
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     return search_for_string(text, pattern, 1)
@@ -87,7 +110,11 @@ def contains(text, pattern):
 
 def find_index(text, pattern):
     """Return the starting index of the first occurrence of pattern in text,
-    or None if not found."""
+       or None if not found.
+
+       Complexity Analysis: look at search_for_string doctring.
+
+    """
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     return search_for_string(text, pattern, 2)
@@ -129,7 +156,30 @@ def find_next_index(text, pattern, indices):
 
 def find_all_indexes(text, pattern, indices=None):
     """Return a list of starting indexes of all occurrences of pattern in text,
-    or an empty list if not found."""
+       or an empty list if not found.
+
+       Complexity Analysis:
+       Best case: O(t)
+       Worst Case: O(t)
+
+       In the best case the pattern is the empty string(''). In that scenario
+       this implementation returns a list of all the index positions present
+       in the text string, using a list comprehension which requires t
+       iterations, where t is the length of the text. One iteration is required
+       for each character in the text string.
+
+       In the worst case, there are no occurrences of the pattern present in
+       the text. In that scenario this implementation would be most impacted by
+       the worst case scenario of the find_index function, which would be O(t)
+       as well. The find_index function would require iterating through the
+       entire length of the text string to discover there are pattern matches.
+
+       In the average case, there are occurences of the pattern string in the
+       text string. Since there is no difference between the best and worst
+       case, the complexity of this function asymptotically approaches O(t) as
+       well, on the average case.
+
+    """
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # edge case: return every index if the pattern is an empty str
