@@ -68,22 +68,23 @@ class LinkedList(object):
 
     def get_at_index(self, index):
         """Return the item at the given index in this linked list, or
-           raise ValueError if the given index is out of range of the list size.
+           raise ValueError if the given index is out of range of the list
+           size.
 
            Best case running time: O(1)
            This method runs in constant time if we are getting the item at the
-           index 0 (also can be thought of as the head node), or if the index is
-           out of range of the list. In the former, this is because we only need
-           one iteration through the for loop. In the latter, it is because we can
-           be sure we will need no iteration of the for loop, and just raise the
-           ValuError exception.
+           index 0 (also can be thought of as the head node), or if the index
+           is out of range of the list. In the former, this is because we only
+           need one iteration through the for loop. In the latter, it is
+           because we can be sure we will need no iteration of the for loop,
+           and just raise the ValuError exception.
 
            Worst case running time: O(n)
            This occurs if we are trying to get the item at the last index
-           position in the list, otherwise referred to as the tail node. This is
-           because we will need to traverse through all the items in the list,
-           which increases in linear time with respect to the growth of items in
-           the list, which is represented by n.
+           position in the list, otherwise referred to as the tail node. This
+           is because we will need to traverse through all the items in the
+           list, which increases in linear time with respect to the growth of
+           items in the list, which is represented by n.
 
         """
         # Check if the given index is out of range and if so raise an error
@@ -149,7 +150,15 @@ class LinkedList(object):
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
-        Best and worst case running time: ??? under what conditions? [TODO]
+
+           Best and worst case running time: O(1)
+           In all scenarios, this method runs in constant time. The runtime
+           complexity of all its statements are independent of the size of the
+           list. This is because in all the statements we always instantiate a
+           new Node, check the size of the list, rearrange the pointers of the
+           head and tail properties (and in some cases the next property of
+           the tail). Finally, we end by incrementing the value of the size
+           property.
 
         """
         # Create a new node to hold the given item
@@ -168,7 +177,14 @@ class LinkedList(object):
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+
+           Best and worst case running time: O(1)
+           Similar to the append method, the runtime of the prepend operation
+           is independent of the size of the list. In all scenarios, we merely
+           need to make a new node, rearrange the pointers of the head and
+           tail, and increment the size of the list.
+
+        """
         # Create a new node to hold the given item
         new_node = Node(item)
         # Check if this linked list is empty
@@ -185,9 +201,13 @@ class LinkedList(object):
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
-        Best case running time: O(1) if item is near the head of the list.
-        Worst case running time: O(n) if item is near the tail of the list or
-        not present and we need to loop through all n nodes in the list."""
+
+           Best case running time: O(1) if item is near the head of the list.
+
+           Worst case running time: O(n) if item is near the tail of the list
+           or not present and we need to loop through all n nodes in the list.
+
+        """
         # Start at the head node
         node = self.head  # Constant time to assign a variable reference
         # Loop until the node is None, which is one node too far past the tail
@@ -203,9 +223,23 @@ class LinkedList(object):
 
     def replace(self, old_item, new_item):
         """Replace the given old_item in this linked list with given new_item
-        using the same node, or raise ValueError if old_item is not found.
-        Best case running time: ??? under what conditions? [TODO]
-        Worst case running time: ??? under what conditions? [TODO]"""
+           using the same node, or raise ValueError if old_item is not found.
+
+           Best case running time: O(1)
+           If we are trying to replace an item in a list that's empty, that
+           has only one item, or the item is present at the head, we have a
+           constant runtime that is independent of how the size of the list.
+           In the first scenario mentioned, we would not need any traversal of
+           the list; and in the other two scenarios, we would need exactly one.
+
+           Worst case running time: O(n)
+           If we are trying to replace an item that is present at the end of
+           the list, or not present in the list at all, we will need to
+           traverse through all the items in the list. This operation scales in
+           linear time, because it grows in direct proportion to the number of
+           items in the list (since one iteration is required for each item).
+
+        """
         # Start at the head node
         node = self.head
         # traverse the nodes to find old_item
@@ -224,8 +258,21 @@ class LinkedList(object):
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
-        Best case running time: ??? under what conditions? [TODO]
-        Worst case running time: ??? under what conditions? [TODO]"""
+
+           Best case running time: O(1)
+           If the item is at the head of the list, then we only require one
+           iteration for traversal, and then we rely on decision strucutres to
+           appropiately remove the item. The runtime of these operations will
+           not change based on the length of the list.
+
+           Worst case running time: O(n)
+           If the item at the end of the list, or not present at all, this
+           method will have to traverse through all the items in the list to
+           get to it. This causes the runtime of this method to reach O(n)
+           asymptotically, because it is essentially an implementation of the
+           linear search algorithm.
+
+        """
         # Start at the head node
         node = self.head
         # Keep track of the node before the one containing the given item
