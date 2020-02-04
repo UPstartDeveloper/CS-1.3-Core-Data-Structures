@@ -144,7 +144,7 @@ class LinkedList(object):
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
-        Best case running time: Omega(1) if item is near the head of the list.
+        Best case running time: O(1) if item is near the head of the list.
         Worst case running time: O(n) if item is near the tail of the list or
         not present and we need to loop through all n nodes in the list."""
         # Start at the head node
@@ -165,9 +165,19 @@ class LinkedList(object):
         using the same node, or raise ValueError if old_item is not found.
         Best case running time: ??? under what conditions? [TODO]
         Worst case running time: ??? under what conditions? [TODO]"""
-        # TODO: Find the node containing the given old_item and replace its
-        # data with new_item, without creating a new node object
-        pass
+        # Start at the head node
+        node = self.head
+        # traverse the nodes to find old_item
+        while node is not None:
+            # Check if this node's data matches the old_item
+            if node.data == old_item:
+                # We found the node, now change the data it references
+                node.data = new_item  # Constant time to return data
+            else:
+                # Skip to the next node
+                node = node.next
+        # old_item is not in the list, so raise a ValuError
+        raise ValueError(f'Item not in list: {old_item}')
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
