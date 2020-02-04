@@ -37,7 +37,9 @@ class LinkedList(object):
     def items(self):
         """Return a list of all items in this linked list.
         Best and worst case running time: Theta(n) for n items in the list
-        because we always need to loop through all n nodes."""
+        because we always need to loop through all n nodes.
+
+        """
         # Create an empty list of results
         result = []  # Constant time to create a new list
         # Start at the head node
@@ -66,9 +68,24 @@ class LinkedList(object):
 
     def get_at_index(self, index):
         """Return the item at the given index in this linked list, or
-        raise ValueError if the given index is out of range of the list size.
-        Best case running time: ??? under what conditions? [TODO]
-        Worst case running time: ??? under what conditions? [TODO]"""
+           raise ValueError if the given index is out of range of the list size.
+
+           Best case running time: O(1)
+           This method runs in constant time if we are getting the item at the
+           index 0 (also can be thought of as the head node), or if the index is
+           out of range of the list. In the former, this is because we only need
+           one iteration through the for loop. In the latter, it is because we can
+           be sure we will need no iteration of the for loop, and just raise the
+           ValuError exception.
+
+           Worst case running time: O(n)
+           This occurs if we are trying to get the item at the last index
+           position in the list, otherwise referred to as the tail node. This is
+           because we will need to traverse through all the items in the list,
+           which increases in linear time with respect to the growth of items in
+           the list, which is represented by n.
+
+        """
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index < self.size):
             raise ValueError('List index out of range: {}'.format(index))
@@ -81,9 +98,31 @@ class LinkedList(object):
 
     def insert_at_index(self, index, item):
         """Insert the given item at the given index in this linked list, or
-        raise ValueError if the given index is out of range of the list size.
-        Best case running time: ??? under what conditions? [TODO]
-        Worst case running time: ??? under what conditions? [TODO]"""
+           raise ValueError if the given index is out of range of the list
+           size.
+
+           Best case running time: O(1)
+           This function mimics the approach of the prepend and append methods
+           in several scenarios: if we are inserting an item at the head node
+           position (which is index 0), this uses the runtime of the prepend
+           method; or if we inserting at the tail node, or we are inserting an
+           item into a list with no other items, this method uses the same
+           runtime as the append operation (in the latter case, the index
+           would also be equal to 0). Furthermore, this method also runs in
+           constant time if the index is out of range, in which it takes
+           constant time to raise tbe ValueError.
+
+           Worst case running time: O(n)
+           If we are inserting an item at an index position that cannot be
+           considered the head nor the tail, then we have a variable number
+           of items to iterate over. In the worst case scenario, the index we
+           want to insert at is just before the tail, meaning we need n-1
+           iterations through the for loop (found in the else block below),
+           where n is the number of items in the list. The runtime in this
+           scenario scales in linear time to the growth of the list, therefore
+           we disregard the -1 and are left with O(n) runtime.
+
+        """
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index <= self.size):
             raise ValueError('List index out of range: {}'.format(index))
@@ -102,7 +141,7 @@ class LinkedList(object):
             node_being_moved = prev_node.next
             # make a new Node for the data to be inserted
             new_node = Node(item)
-            # insert the new node in the right place, and connect it to the rest
+            # insert the new node at the index, and connect it to the rest
             prev_node.next = new_node
             new_node.next = node_being_moved
             # increment the size property
@@ -110,7 +149,9 @@ class LinkedList(object):
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        Best and worst case running time: ??? under what conditions? [TODO]
+
+        """
         # Create a new node to hold the given item
         new_node = Node(item)
         # Check if this linked list is empty
