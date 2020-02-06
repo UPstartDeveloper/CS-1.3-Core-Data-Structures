@@ -29,7 +29,14 @@ class LinkedStack(object):
 
     def push(self, item):
         """Insert the given item on the top of this stack.
-        Running time: O(???) – Why? [TODO]"""
+           Running time: O(1)
+           This method does nothing more than an append() operation, found in
+           the LinkedList class. This method in turn performs an O(1) operation
+           because since we have a pointer to the tail, we do not need a
+           variable number of iterations through the list to find where we need
+           to add in the new item.
+
+        """
         self.list.append(item)  # the tail is the top of this Stack
 
     def peek(self):
@@ -42,8 +49,20 @@ class LinkedStack(object):
 
     def pop(self):
         """Remove and return the item on the top of this stack,
-        or raise ValueError if this stack is empty.
-        Running time: O(???) – Why? [TODO]"""
+           or raise ValueError if this stack is empty.
+           Running time: O(n)
+           The runtime and space complexity of this method is dependent of
+           the size of the list. It first checks the size of the list against
+           0, which runs in constant time because the list has a property for
+           its size that is used for the comparision. From there, the average
+           case will be that our stack is not empty, and therefore we have todo
+           traverse the list to find which of the items we need to pop. This
+           traversal is implemented using linear search in the LinkedList
+           class' implementation, therefore it causes the runtime of the method
+           to scale in linear proportion, with respect to the number of items
+           in our list.
+
+        """
         if self.is_empty() is False:
             top_item = self.list.tail.data
             self.list.delete(top_item)
@@ -78,7 +97,27 @@ class ArrayStack(object):
 
     def push(self, item):
         """Insert the given item on the top of this stack.
-        Running time: O(???) – Why? [TODO]"""
+           Running time: O(n)
+           This method performs an append() operation on the built-in list
+           object in Python, which can be considered as a dynamic array data
+           structure. There exist two possible runtimes for list.append(). In
+           one scenario when the list has not yet run out of allocated memory
+           spaces, it simply populates the new item at the index position
+           equal to the length of the array (which it keeps track) - a constant
+           runtime operation.
+           In the other scenario the list tries to add the new item, but it
+           cannot due to having already running out of allocated memory spaces
+           that are contiguous. Therefore, the processor needs to go and find
+           another block of memory that is larger, copy over all the elements
+           in the existing array, and then it can add the new item. Since this
+           algorithm involves a traversal through the list (while copying
+           items over), the complexity of this operation is in linear time.
+
+           Taken together, the overall runtime complexity of this append()
+           operation averages to O(n), because it will grow in direct
+           proportion to the number of items in the list.
+
+        """
         self.list.append(item)
 
     def peek(self):
@@ -91,8 +130,18 @@ class ArrayStack(object):
 
     def pop(self):
         """Remove and return the item on the top of this stack,
-        or raise ValueError if this stack is empty.
-        Running time: O(???) – Why? [TODO]"""
+           or raise ValueError if this stack is empty.
+           Running time: O(1)
+           Whether or not the list is empty, this operation will decide in
+           constant time; because the Python list data type keeps track of its
+           size as a property of the object. From there, the method will either
+           raise a ValueError exception, or calulate the index of the index in
+           the array it needs to remove an element from, remove the element at
+           that position, and return it. Neither of these processes contains
+           any steps which have a variable runtime, therefore the overall
+           method will run in constant time asymptotically.
+
+        """
         if self.is_empty() is True:
             raise ValueError('No items in this stack.')
         else:
