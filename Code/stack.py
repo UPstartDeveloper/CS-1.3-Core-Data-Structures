@@ -30,12 +30,13 @@ class LinkedStack(object):
     def push(self, item):
         """Insert the given item on the top of this stack.
         Running time: O(???) – Why? [TODO]"""
-        self.list.append(item)  # the head is the top of this Stack
+        self.list.append(item)  # the tail is the top of this Stack
 
     def peek(self):
         """Return the item on the top of this stack without removing it,
         or None if this stack is empty."""
-        # TODO: Return top item, if any
+        top = self.list.tail
+        return top
 
     def pop(self):
         """Remove and return the item on the top of this stack,
