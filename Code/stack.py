@@ -35,19 +35,17 @@ class LinkedStack(object):
     def peek(self):
         """Return the item on the top of this stack without removing it,
         or None if this stack is empty."""
-        top = self.list.tail
-        if top is not None:
-            return top.data
+        if self.is_empty() is True:
+            return None
         else:
-            return top
+            return self.list.tail.data
 
     def pop(self):
         """Remove and return the item on the top of this stack,
         or raise ValueError if this stack is empty.
         Running time: O(???) – Why? [TODO]"""
-        top = self.list.tail
-        if top is not None:
-            top_item = top.data
+        if self.is_empty() is False:
+            top_item = self.list.tail.data
             self.list.delete(top_item)
             return top_item
         else:
@@ -86,7 +84,7 @@ class ArrayStack(object):
     def peek(self):
         """Return the item on the top of this stack without removing it,
         or None if this stack is empty."""
-        if len(self.list) == 0:
+        if self.is_empty() is True:
             return None
         else:
             return self.list[-1]
@@ -95,7 +93,7 @@ class ArrayStack(object):
         """Remove and return the item on the top of this stack,
         or raise ValueError if this stack is empty.
         Running time: O(???) – Why? [TODO]"""
-        if len(self.list) == 0:
+        if self.is_empty() is True:
             raise ValueError('No items in this stack.')
         else:
             return self.list.pop(-1)
