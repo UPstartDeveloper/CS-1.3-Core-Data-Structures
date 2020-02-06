@@ -55,7 +55,7 @@ class LinkedStack(object):
            the size of the list. It first checks the size of the list against
            0, which runs in constant time because the list has a property for
            its size that is used for the comparision. From there, the average
-           case will be that our stack is not empty, and therefore we have todo
+           case will be that our stack is not empty, and therefore we have to
            traverse the list to find which of the items we need to pop. This
            traversal is implemented using linear search in the LinkedList
            class' implementation, therefore it causes the runtime of the method
