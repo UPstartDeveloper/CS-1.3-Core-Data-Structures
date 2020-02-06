@@ -73,11 +73,11 @@ class ArrayStack(object):
 
     def is_empty(self):
         """Return True if this stack is empty, or False otherwise."""
-        # TODO: Check if empty
+        return len(self.list) == 0
 
     def length(self):
         """Return the number of items in this stack."""
-        # TODO: Count number of items
+        return len(self.list)
 
     def push(self, item):
         """Insert the given item on the top of this stack.
