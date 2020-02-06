@@ -35,8 +35,11 @@ class LinkedStack(object):
     def peek(self):
         """Return the item on the top of this stack without removing it,
         or None if this stack is empty."""
-        top = self.list.tail.data
-        return top
+        top = self.list.tail
+        if top is not None:
+            return top.data
+        else:
+            return top
 
     def pop(self):
         """Remove and return the item on the top of this stack,
@@ -47,8 +50,9 @@ class LinkedStack(object):
         if top is not None:
             top_item = top.data
             self.list.delete(top_item)
+            return top_item
         else:
-            raise ValuError('No items in this stack.')
+            raise ValueError('No items in this stack.')
 
 
 # Implement ArrayStack below, then change the assignment at the bottom
