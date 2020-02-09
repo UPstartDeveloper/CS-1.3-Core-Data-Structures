@@ -90,7 +90,10 @@ class DequeTest(unittest.TestCase):
 
     def test_back(self):
         '''The deque is able to shows last item without removing it.'''
-        pass
+        d = Queue(['A', 'B', 'C'])
+        assert d.is_empty() is False
+        assert d.back() == 'C'
+        assert d.length() == 3
 
     def test_pop_front(self):
         '''The deque is able to dequeue from the front.'''
