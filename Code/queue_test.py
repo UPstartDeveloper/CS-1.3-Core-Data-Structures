@@ -105,10 +105,15 @@ class DequeTest(unittest.TestCase):
         assert d.pop_front() == 'C'
         assert d.is_empty() is True
 
-
     def test_pop_back(self):
         '''The deque is able to dequeue from back.'''
-        pass
+        d = Queue(['A', 'B', 'C'])
+        assert d.pop_back() == 'C'
+        assert d.length() == 2
+        assert d.pop_back() == 'B'
+        assert d.length() == 1
+        assert d.pop_back() == 'A'
+        assert d.is_empty() is True
 
 
 if __name__ == '__main__':
