@@ -97,7 +97,14 @@ class DequeTest(unittest.TestCase):
 
     def test_pop_front(self):
         '''The deque is able to dequeue from the front.'''
-        pass
+        d = Queue(['A', 'B', 'C'])
+        assert d.pop_front() == 'A'
+        assert d.length() == 2
+        assert d.pop_front() == 'B'
+        assert d.length() == 1
+        assert d.pop_front() == 'C'
+        assert d.is_empty() is True
+
 
     def test_pop_back(self):
         '''The deque is able to dequeue from back.'''
