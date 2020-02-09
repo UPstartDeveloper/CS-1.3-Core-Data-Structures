@@ -80,7 +80,13 @@ class DequeTest(unittest.TestCase):
 
     def test_push_back(self):
         '''The deque is able to enqueue at the back of the list.'''
-        pass
+        d = Queue()
+        assert d.is_empty() is True
+        d.push_back('A')
+        assert d.list[0] == 'A'
+        d.push_back("B")
+        assert d.list[0] == 'A'
+        assert d.list[1] == 'B'
 
     def test_back(self):
         '''The deque is able to shows last item without removing it.'''
