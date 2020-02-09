@@ -68,5 +68,27 @@ class QueueTest(unittest.TestCase):
             q.dequeue()
 
 
+class DequeTest(unittest.TestCase):
+    def test_push_front(self):
+        '''The deque is able to enqueue at the front of the list.'''
+        pass
+
+    def test_push_back(self):
+        '''The deque is able to enqueue at the back of the list.'''
+        pass
+
+    def test_back(self):
+        '''The deque is able to shows last item without removing it.'''
+        pass
+
+    def test_pop_front(self):
+        '''The deque is able to dequeue from the front.'''
+        pass
+
+    def test_pop_back(self):
+        '''The deque is able to dequeue from back.'''
+        pass
+
+
 if __name__ == '__main__':
     unittest.main()
