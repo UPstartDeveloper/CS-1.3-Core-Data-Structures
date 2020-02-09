@@ -71,7 +71,12 @@ class QueueTest(unittest.TestCase):
 class DequeTest(unittest.TestCase):
     def test_push_front(self):
         '''The deque is able to enqueue at the front of the list.'''
-        pass
+        d = Queue()
+        assert d.is_empty() is True
+        d.push_front('A')
+        assert d.list[0] == 'A'
+        d.push_front("B")
+        assert d.list[0] == 'B'
 
     def test_push_back(self):
         '''The deque is able to enqueue at the back of the list.'''
