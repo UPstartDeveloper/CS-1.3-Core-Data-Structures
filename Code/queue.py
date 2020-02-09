@@ -140,23 +140,25 @@ class Deque(ArrayQueue):
     '''A double-ended queue implemented using a dynamic array.'''
     def push_front(self, item):
         '''Inserts item at the front of the deque.'''
-        pass
+        self.list.insert(0, item)
 
     def push_back(self, item):
         '''Insert item at the back of the deque.'''
-        pass
+        self.enqueue(item)
 
     def back(self):
         '''Return item at the back of the deque.'''
-        pass
+        index = len(self.list) - 1
+        return self.list[index]
 
     def pop_front(self):
         '''Remove and return the item at the front of the deque.'''
-        pass
+        return self.list.pop(0)
 
     def pop_back(self):
         '''Remove and return the item at the back of the deque.'''
-        pass
+        index = len(self.list) - 1
+        return self.list.pop(index)
 
 
 # Implement LinkedQueue and ArrayQueue above, then change the assignment below
