@@ -136,7 +136,13 @@ class ArrayQueue(object):
             return self.list.pop(0)
 
 
+class Deque(ArrayQueue):
+    '''A double-ended queue implemented using a dynamic array.'''
+    pass
+
+
 # Implement LinkedQueue and ArrayQueue above, then change the assignment below
 # to use each of your Queue implementations to verify they each pass all tests
-Queue = LinkedQueue
+# Queue = LinkedQueue
 # Queue = ArrayQueue
+Queue = Deque
