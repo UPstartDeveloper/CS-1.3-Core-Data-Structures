@@ -139,24 +139,51 @@ class ArrayQueue(object):
 class Deque(ArrayQueue):
     '''A double-ended queue implemented using a dynamic array.'''
     def push_front(self, item):
-        '''Inserts item at the front of the deque.'''
+        """Inserts item at the front of the deque.
+
+           Complexity: O(n) because all n items in the list have to move 1
+           index position greater than their initial index, to make room for
+           the new item.
+
+        """
         self.list.insert(0, item)
 
     def push_back(self, item):
-        '''Insert item at the back of the deque.'''
+        """Insert item at the back of the deque.
+
+           Complexity: O(1) because the built-in list.append() method points
+           to the last index in the list in constant time.
+
+        """
         self.enqueue(item)
 
     def back(self):
-        '''Return item at the back of the deque.'''
+        """Return item at the back of the deque.
+
+           Complexity: O(1) because we can calculate the index and lookup the
+           last item in the list independent of the size of the list.
+
+        """
         index = len(self.list) - 1
         return self.list[index]
 
     def pop_front(self):
-        '''Remove and return the item at the front of the deque.'''
+        """Remove and return the item at the front of the deque.
+
+           Complexity: O(n) because after we remove and return the item at the
+           front, we need all other items to move to an index position one less
+           than their initial index position.
+
+        """
         return self.list.pop(0)
 
     def pop_back(self):
-        '''Remove and return the item at the back of the deque.'''
+        """Remove and return the item at the back of the deque.
+
+          Complexity: O(1) because unlike pop_front, once we remove the item
+          from the back we do not need to do anything else.
+
+        """
         index = len(self.list) - 1
         return self.list.pop(index)
 
