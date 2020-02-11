@@ -131,9 +131,9 @@ class ArrayStack(object):
            Whether or not the list is empty, this operation will decide in
            constant time; because the Python list data type keeps track of its
            size as a property of the object. From there, the method will either
-           raise a ValueError exception, or calulate the index of the index in
-           the array it needs to remove an element from, remove the element at
-           that position, and return it. Neither of these processes contains
+           raise a ValueError exception, or calulate the index of the element
+           in the array it needs to remove the element from, remove the element
+           at that position, and return it. Neither of these processes contains
            any steps which have a variable runtime, therefore the overall
            method will run in constant time asymptotically.
 
