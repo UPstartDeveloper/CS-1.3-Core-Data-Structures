@@ -92,15 +92,15 @@ class ArrayQueue(object):
 
     def enqueue(self, item):
         """Insert the given item at the back of this queue.
-           Running time: O(n)
+           Running time: O(1), on average
            The runtime of this method is mainly dependent on the space and time
            complexity of the append operation in Python's built-in list object.
            This complexity averages out to O(n) on average. The list object is
            a dynamic array, meaning we will always be able to add new items (as
-           long as there is RAM available) - yet when we run out of allocated
-           memory, this operation has to traverse through all the items in the
-           list, as it copies them over to a new block of contiguous memory
-           that satisfies the size requirements. Due to step running in linear
+           long as there is RAM available) - yet sometimes we run out of
+           allocated memory, and this operation has to traverse through all the
+           list items, as it copies them over to a new block of memory that
+           satisfies the size requirements. Due to this step running in linear
            time, we can describe the complexity of this method increasing in
            linear scale, with respect to the growth of the number of items in
            the list.
