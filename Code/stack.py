@@ -30,14 +30,14 @@ class LinkedStack(object):
     def push(self, item):
         """Insert the given item on the top of this stack.
            Running time: O(1)
-           This method does nothing more than an append() operation, found in
+           This method does nothing more than an prepend() operation, found in
            the LinkedList class. This method in turn performs an O(1) operation
-           because since we have a pointer to the tail, we do not need a
+           because since we have a pointer to the head, we do not need a
            variable number of iterations through the list to find where we need
            to add in the new item.
 
         """
-        self.list.append(item)  # the tail is the top of this Stack
+        self.list.prepend(item)  # the tail is the top of this Stack
 
     def peek(self):
         """Return the item on the top of this stack without removing it,
@@ -45,26 +45,22 @@ class LinkedStack(object):
         if self.is_empty() is True:
             return None
         else:
-            return self.list.tail.data
+            return self.list.head.data
 
     def pop(self):
         """Remove and return the item on the top of this stack,
            or raise ValueError if this stack is empty.
-           Running time: O(n)
-           The runtime and space complexity of this method is dependent of
+           Running time: O(1)
+           The runtime and space complexity of this method is independent of
            the size of the list. It first checks the size of the list against
            0, which runs in constant time because the list has a property for
            its size that is used for the comparision. From there, the average
-           case will be that our stack is not empty, and therefore we have to
-           traverse the list to find which of the items we need to pop. This
-           traversal is implemented using linear search in the LinkedList
-           class' implementation, therefore it causes the runtime of the method
-           to scale in linear proportion, with respect to the number of items
-           in our list.
+           case will be that our stack is not empty, and therefore we simply
+           have to get the item from head data.
 
         """
         if self.is_empty() is False:
-            top_item = self.list.tail.data
+            top_item = self.list.head.data
             self.list.delete(top_item)
             return top_item
         else:
@@ -150,5 +146,5 @@ class ArrayStack(object):
 
 # Implement LinkedStack and ArrayStack above, then change the assignment below
 # to use each of your Stack implementations to verify they each pass all tests
-# Stack = LinkedStack
-Stack = ArrayStack
+Stack = LinkedStack
+# Stack = ArrayStack
