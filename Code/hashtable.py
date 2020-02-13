@@ -27,7 +27,7 @@ class HashTable(object):
         """Return the load factor, the ratio of number of entries to buckets.
         Best and worst case running time: ??? under what conditions? [TODO]"""
         # Calculate load factor
-        return (self.size / len(self.buckets))
+        return (self.length() / len(self.buckets))
 
     def keys(self):
         """Return a list of all keys in this hash table.
@@ -62,12 +62,7 @@ class HashTable(object):
         """Return the number of key-value entries by traversing its buckets.
         Best and worst case running time: ??? under what conditions? [TODO]"""
         # Count number of key-value entries in each of the buckets
-        item_count = 0
-        for bucket in self.buckets:
-            item_count += bucket.length()
-        return item_count
-        # Equivalent to this list comprehension:
-        return sum(bucket.length() for bucket in self.buckets)
+        return self.size
 
     def contains(self, key):
         """Return True if this hash table contains the given key, or False.
@@ -111,12 +106,15 @@ class HashTable(object):
             # In this case, the given key's value is being updated
             # Remove the old key-value entry from the bucket first
             bucket.delete(entry)
+        else:
+            # increment the size because we are adding a new key value pair
+            self.size += 1
         # Insert the new key-value entry into the bucket in either case
         bucket.append((key, value))
         # Check if the load factor exceeds a threshold such as 0.75
         if self.load_factor() > 0.75:
             # If so, automatically resize to reduce the load factor
-            self._resize(len(self.buckets) * 2)
+            self._resize()
 
     def delete(self, key):
         """Delete the given key and its associated value, or raise KeyError.
@@ -130,6 +128,7 @@ class HashTable(object):
         if entry is not None:  # Found
             # Remove the key-value entry from the bucket
             bucket.delete(entry)
+            self.size -= 1
         else:  # Not found
             raise KeyError('Key not found: {}'.format(key))
 
@@ -149,9 +148,11 @@ class HashTable(object):
         key_value_pairs = self.items()
         # Create a new list of new_size total empty linked list buckets
         self.buckets = [LinkedList() for i in range(new_size)]
+        # reset size
+        self.size = 0
         # Rehash each key-value entry into the new list of buckets,
         for pair in key_value_pairs:
-            self.set((pair[0], pair[1]))
+            self.set(pair[0], pair[1])
 
 
 def test_hash_table():
