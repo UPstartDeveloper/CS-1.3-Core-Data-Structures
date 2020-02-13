@@ -26,8 +26,8 @@ class HashTable(object):
     def load_factor(self):
         """Return the load factor, the ratio of number of entries to buckets.
         Best and worst case running time: ??? under what conditions? [TODO]"""
-        # TODO: Calculate load factor
-        # return ...
+        # Calculate load factor
+        return (self.size / len(self.buckets))
 
     def keys(self):
         """Return a list of all keys in this hash table.
@@ -113,10 +113,10 @@ class HashTable(object):
             bucket.delete(entry)
         # Insert the new key-value entry into the bucket in either case
         bucket.append((key, value))
-        # TODO: Check if the load factor exceeds a threshold such as 0.75
-        # ...
-        # TODO: If so, automatically resize to reduce the load factor
-        # ...
+        # Check if the load factor exceeds a threshold such as 0.75
+        if self.load_factor() > 0.75:
+            # If so, automatically resize to reduce the load factor
+            self._resize(len(self.buckets) * 2)
 
     def delete(self, key):
         """Delete the given key and its associated value, or raise KeyError.
@@ -142,7 +142,7 @@ class HashTable(object):
         # If unspecified, choose new size dynamically based on current size
         if new_size is None:
             new_size = len(self.buckets) * 2  # Double size
-        # Option to reduce size if buckets are sparsely filled (low load factor)
+        # Option to reduce size if load factor is low
         elif new_size is 0:
             new_size = len(self.buckets) / 2  # Half size
         # TODO: Get a list to temporarily hold all current key-value entries
