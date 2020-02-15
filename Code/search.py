@@ -118,20 +118,19 @@ def binary_search_recursive(array, item, left=None, right=None):
     # check if we have found the element
     if elem == item:
         return mid
+    # decide how to move the indices, and try again
+    elif elem < item:
+        # cut out the lower half of the list
+        left = mid
     else:
-        # decide how to move the indices, and try again
-        if elem < item:
-            # cut out the lower half of the list
-            left = mid
-        else:
-            # cut out the upper half of the list
-            right = mid
-        mid = calculate_middle(left, right)
-        elem = array[mid]
-        # if we are checking indices again, the item's not present
-        if left == mid and not elem == item:
-            return None
-        # call the function with the new subset of the list
-        return binary_search_recursive(array, item, left, right)
+        # cut out the upper half of the list
+        right = mid
+    mid = calculate_middle(left, right)
+    elem = array[mid]
+    # if we are checking indices again, the item's not present
+    if left == mid and not elem == item:
+        return None
+    # call the function with the new subset of the list
+    return binary_search_recursive(array, item, left, right)
     # once implemented, change binary_search to call binary_search_recursive
     # to verify that your recursive implementation passes all tests
