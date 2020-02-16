@@ -14,7 +14,17 @@ def clean_text(text):
 
 def is_palindrome(text):
     """A string of characters is a palindrome if it reads the same forwards and
-    backwards, ignoring punctuation, whitespace, and letter casing."""
+    backwards, ignoring punctuation, whitespace, and letter casing.
+
+    Runtime Analysis:
+    This method runs in linear time, which can be expressed in terms of O(n),
+    where n is the number of alphanumeric characters in text. This is because
+    on average we will need to perform n/2 iterations (or recursive calls)
+    in order to determine if text is a palindrome. Therefore the runtime of
+    this function will increase on a linear scale with respect to the increase
+    in the number of alphanumeric characters in text.
+
+    """
     # implement is_palindrome_iterative and is_palindrome_recursive below, then
     # change this to call your implementation to verify it passes all tests
     assert isinstance(text, str), 'input is not a string: {}'.format(text)
