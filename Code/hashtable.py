@@ -190,6 +190,9 @@ class HashTable(object):
             # Remove the key-value entry from the bucket
             bucket.delete(entry)
             self.size -= 1
+            # downsize the number of buckekts if the table becomes too sparse
+            if self.load_factor() <= 0.40:
+                self._resize(0)
         else:  # Not found
             raise KeyError('Key not found: {}'.format(key))
 
@@ -215,7 +218,7 @@ class HashTable(object):
             new_size = len(self.buckets) * 2  # Double size
         # Option to reduce size if load factor is low
         elif new_size is 0:
-            new_size = len(self.buckets) / 2  # Half size
+            new_size = len(self.buckets) // 2  # Half size
         # Get a list to temporarily hold all current key-value entries
         key_value_pairs = self.items()
         # Create a new list of new_size total empty linked list buckets
