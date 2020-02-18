@@ -230,6 +230,14 @@ class BinarySearchTree(object):
             # Recursively descend to the node's right child, updates parent
             return self._find_parent_node_recursive(item, node.right, node)
 
+    def find_direction(self, node, parent):
+        '''Return whether the node is to the left or right of its parent.'''
+        if parent.left == node:
+            return 'left'
+        elif parent.right == node:
+            return 'right'
+        # return None if the node is not actually the child of the parent
+
     def delete(self, item):
         """Remove given item from this tree, if present, or raise ValueError.
         TODO: Best case running time: ??? under what conditions?
@@ -244,6 +252,8 @@ class BinarySearchTree(object):
             self.root = None
         else:
             # find the parent, and whether this node is to its left or right
+            parent = self._find_parent_node_iterative(node.data)
+
             # node has 0 children
             # node has 1 child
             # node has 2 children
