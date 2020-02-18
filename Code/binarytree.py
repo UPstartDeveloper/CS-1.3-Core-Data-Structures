@@ -237,6 +237,17 @@ class BinarySearchTree(object):
         # TODO: Use helper methods and break this algorithm down into 3 cases
         # based on how many children the node containing the given item has and
         # implement new helper methods for subtasks of the more complex cases
+        # find the node to start
+        node = self._find_node_recursive(item)
+        if self.root == node:
+            # find the node, set it to None (this splits the tree in 2)
+            self.root = None
+        else:
+            # find the parent, and whether this node is to its left or right
+            # node has 0 children
+            # node has 1 child
+            # node has 2 children
+            pass
 
     def items_in_order(self):
         """Return an in-order list of all items in this binary search tree."""
