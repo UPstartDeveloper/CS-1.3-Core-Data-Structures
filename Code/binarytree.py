@@ -155,9 +155,10 @@ class BinarySearchTree(object):
         return None
 
     def _find_node_recursive(self, item, node):
-        """Return the node containing the given item in this binary search tree,
-        or None if the given item is not found. Search is performed recursively
-        starting from the given node (give the root node to start recursion).
+        """Return the node containing the given item in this binary search
+        tree, or None if the given item is not found. Search is performed
+        recursively starting from the given node (give the root node to start
+        recursion).
         TODO: Best case running time: ??? under what conditions?
         TODO: Worst case running time: ??? under what conditions?"""
         # Check if starting node exists
@@ -189,20 +190,20 @@ class BinarySearchTree(object):
         parent = None
         # Loop until we descend past the closest leaf node
         while node is not None:
-            # TODO: Check if the given item matches the node's data
-            if # ...:
+            # Check if the given item matches the node's data
+            if item = node.data:
                 # Return the parent of the found node
                 return parent
-            # TODO: Check if the given item is less than the node's data
-            elif # ...:
-                # TODO: Update the parent and descend to the node's left child
-                parent = # ...
-                node = # ...
-            # TODO: Check if the given item is greater than the node's data
-            elif # ...:
-                # TODO: Update the parent and descend to the node's right child
-                parent = # ...
-                node = # ...
+            # Check if the given item is less than the node's data
+            elif item < node.data:
+                # Update the parent and descend to the node's left child
+                parent = node
+                node = node.left
+            # Check if the given item is greater than the node's data
+            elif item > node.data:
+                # Update the parent and descend to the node's right child
+                parent = node
+                node = node.right
         # Not found
         return parent
 
@@ -252,11 +253,11 @@ class BinarySearchTree(object):
         TODO: Running time: ??? Why and under what conditions?
         TODO: Memory usage: ??? Why and under what conditions?"""
         # TODO: Traverse left subtree, if it exists
-        # ...
+        ...
         # TODO: Visit this node's data with given function
-        # ...
+        ...
         # TODO: Traverse right subtree, if it exists
-        # ...
+        ...
 
     def _traverse_in_order_iterative(self, node, visit):
         """Traverse this binary tree with iterative in-order traversal (DFS).
@@ -280,11 +281,11 @@ class BinarySearchTree(object):
         TODO: Running time: ??? Why and under what conditions?
         TODO: Memory usage: ??? Why and under what conditions?"""
         # TODO: Visit this node's data with given function
-        # ...
+        ...
         # TODO: Traverse left subtree, if it exists
-        # ...
+        ...
         # TODO: Traverse right subtree, if it exists
-        # ...
+        ...
 
     def _traverse_pre_order_iterative(self, node, visit):
         """Traverse this binary tree with iterative pre-order traversal (DFS).
@@ -308,11 +309,11 @@ class BinarySearchTree(object):
         TODO: Running time: ??? Why and under what conditions?
         TODO: Memory usage: ??? Why and under what conditions?"""
         # TODO: Traverse left subtree, if it exists
-        # ...
+        ...
         # TODO: Traverse right subtree, if it exists
-        # ...
+        ...
         # TODO: Visit this node's data with given function
-        # ...
+        ...
 
     def _traverse_post_order_iterative(self, node, visit):
         """Traverse this binary tree with iterative post-order traversal (DFS).
@@ -336,9 +337,9 @@ class BinarySearchTree(object):
         TODO: Running time: ??? Why and under what conditions?
         TODO: Memory usage: ??? Why and under what conditions?"""
         # TODO: Create queue to store nodes not yet traversed in level-order
-        # queue = # ...
+        queue = ...
         # TODO: Enqueue given starting node
-        # ...
+        ...
         # TODO: Loop until queue is empty
         while ...:
             # TODO: Dequeue node at front of queue
