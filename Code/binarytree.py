@@ -22,11 +22,23 @@ class BinaryTreeNode(object):
         return self.left is not None or self.right is not None
 
     def count_edges(self, direction):
+        """Count the height of a node going to the left, or to the right.
+
+           Parameter:
+           direction(str): determines whether the method will judge the height
+                           of a Node depending on its descendants on the left
+                           or right
+
+            Returns:
+            int: the height of the Node whose height is being measured, from
+                 just the left or right side
+
+        """
         if self.is_leaf() is True:
             return 0
-        elif direction == 'left' or self.right is not None:
+        elif direction == 'left' or self.right is None:
             return 1 + self.left.count_edges('left')
-        elif direction == 'right' or self.left is not None:
+        elif direction == 'right' or self.left is None:
             return 1 + self.right.count_edges('right')
 
     def height(self):
