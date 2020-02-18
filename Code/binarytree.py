@@ -239,7 +239,7 @@ class BinarySearchTree(object):
         # error case: if the node is not actually the child of the parent
         raise ValueError('The node is not the child of the parent.')
 
-    def promote_descendants(self, node, parent, direction):
+    def promote_descendants(self, node, parent, direction=None):
         """Takes the descendants on the left, raise them to the parent's place.
 
            Parameters:
@@ -286,15 +286,17 @@ class BinarySearchTree(object):
                 if node.left is not None and node.right is not None:
                     self.promote_descendants(node, parent,
                                              direction_from_parent)
-                # node has 1 child - figure out if it's to the left or right
+                # node has 1 child - check if it's to the left
                 if node.left is not None:
+                    # now decide which of the parent's pointers to connect with
                     if direction_from_parent == 'left':
                         parent.left = node.left
                     else:
                         parent.right = node.left
                 # the 1 child is on the right side
                 else:
-                    if direction == 'left':
+                    # now decide which of the parent's pointers to connect with
+                    if direction_from_parent == 'left':
                         parent.left = node.right
                     else:
                         parent.right = node.right
