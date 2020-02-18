@@ -117,7 +117,7 @@ class BinarySearchTree(object):
             self.size += 1
             return None
         # Find the parent node of where the given item should be inserted
-        parent = self._find_parent_node_recursive(item, self.root)
+        parent = self._find_parent_node_iterative(item)
         # Check if the given item should be inserted left of parent node
         if item < parent.data:
             # Create a new node and set the parent's left child
@@ -191,7 +191,7 @@ class BinarySearchTree(object):
         # Loop until we descend past the closest leaf node
         while node is not None:
             # Check if the given item matches the node's data
-            if item = node.data:
+            if item == node.data:
                 # Return the parent of the found node
                 return parent
             # Check if the given item is less than the node's data
@@ -239,6 +239,25 @@ class BinarySearchTree(object):
         # error case: if the node is not actually the child of the parent
         raise ValueError('The node is not the child of the parent.')
 
+    def promote_descendants(self, node, parent, direction):
+        """Takes the descendants on the left, raise them to the parent's place.
+
+           Parameters:
+           node(BinaryTreeNode): the node being deleted that's not the root,
+                                 and has 2 children
+           parent(BinaryTreeNode): the parent of the node being deleted
+           direction_from_parent(str): indicates if the node being deleted is
+                                       to the left or right of the parent
+        """
+        while node.is_leaf() is False:
+            # take the lesser of the children of the node being moved
+            child = node.left
+            if direction == 'left':
+                parent.left = child
+            else:
+                parent.right = child
+            child.right = node.right
+
     def delete(self, item):
         """Remove given item from this tree, if present, or raise ValueError.
         TODO: Best case running time: ??? under what conditions?
@@ -247,13 +266,13 @@ class BinarySearchTree(object):
         # based on how many children the node containing the given item has and
         # implement new helper methods for subtasks of the more complex cases
         # find the node to start
-        node = self._find_node_recursive(item)
-        if self.root == node:
-            # find the node, set it to None (this splits the tree in 2)
-            self.root = None
-        elif node is None:
+        node = self._find_node_recursive(item, self.root)
+        if node is None:
             # raise ValueError because node is not present
             raise ValueError('Item is not present in this binary tree.')
+        elif self.root == node:
+            # find the node, set it to None (this splits the tree in 2)
+            self.root = None
         else:
             # find the parent, and whether this node is to its left or right
             parent = self._find_parent_node_iterative(node.data)
@@ -268,7 +287,8 @@ class BinarySearchTree(object):
             elif node.is_branch() is True:
                 # node has 2 children
                 if node.left is not None and node.right is not None:
-                    pass
+                    self.promote_descendants(node, parent,
+                                             direction_from_parent)
                 # node has 1 child - figure out if it's to the left or right
                 if node.left is not None:
                     if direction_from_parent == 'left':
@@ -281,6 +301,8 @@ class BinarySearchTree(object):
                         parent.left = node.right
                     else:
                         parent.right = node.right
+        # decrement the size of the tree at the end
+        self.size -= 1
 
     def items_in_order(self):
         """Return an in-order list of all items in this binary search tree."""
