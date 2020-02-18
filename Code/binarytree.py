@@ -249,6 +249,18 @@ class BinarySearchTree(object):
            direction_from_parent(str): indicates if the node being deleted is
                                        to the left or right of the parent
         """
+        while node.left is not None:
+            moving_up = node.left
+            if parent is not None and direction is None:
+                direction = self.find_direction(node, parent)
+            if direction == 'left':
+                parent.left = moving_up
+            elif direction == 'right':
+                parent.right = moving_up
+            moving_up.right = node.right
+            parent = node
+            node = node.left
+        '''
         while node.is_leaf() is False:
             # take the lesser of the children of the node being moved
             child = node.left
@@ -257,6 +269,7 @@ class BinarySearchTree(object):
             else:
                 parent.right = child
             child.right = node.right
+        '''
 
     def delete(self, item):
         """Remove given item from this tree, if present, or raise ValueError.
@@ -271,37 +284,58 @@ class BinarySearchTree(object):
             # raise ValueError because node is not present
             raise ValueError('Item is not present in this binary tree.')
         else:
+            # decrement the size of the tree at the end
+            self.size -= 1
             # find the parent, and whether this node is to its left or right
             parent = self._find_parent_node_iterative(node.data)
-            direction_from_parent = self.find_direction(node, parent)
+            direction_from_parent = ''
+            if parent is not None:
+                direction_from_parent = self.find_direction(node, parent)
             # node has 0 children
             if node.is_leaf() is True:
+                # if this is the last node, delete the root
+                if parent is None:
+                    self.root = None
                 # set the appropiate child property of the parent to None
-                if direction_from_parent == 'left':
+                elif direction_from_parent == 'left':
                     parent.left = None
                 else:
                     parent.right = None
+                return None
             elif node.is_branch() is True:
                 # node has 2 children
                 if node.left is not None and node.right is not None:
-                    self.promote_descendants(node, parent,
-                                             direction_from_parent)
+                    # node is the root
+                    if self.root == node:
+                        # change the root
+                        self.root = node.left
+                        # move the descendants
+                        self.promote_descendants(node, None)
+                    else:
+                        # only move the descendents
+                        self.promote_descendants(node, parent,
+                                                 direction_from_parent)
+                    return None
                 # node has 1 child - check if it's to the left
-                if node.left is not None:
+                elif node.left is not None:
+                    # if we mere;y need to change the root
+                    if parent is None:
+                        self.root = node.left
                     # now decide which of the parent's pointers to connect with
-                    if direction_from_parent == 'left':
+                    elif direction_from_parent == 'left':
                         parent.left = node.left
                     else:
                         parent.right = node.left
                 # the 1 child is on the right side
-                else:
+                elif node.right is not None:
+                    # if we mere;y need to change the root
+                    if parent is None:
+                        self.root = node.right
                     # now decide which of the parent's pointers to connect with
-                    if direction_from_parent == 'left':
+                    elif direction_from_parent == 'left':
                         parent.left = node.right
                     else:
                         parent.right = node.right
-        # decrement the size of the tree at the end
-        self.size -= 1
 
     def items_in_order(self):
         """Return an in-order list of all items in this binary search tree."""

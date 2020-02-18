@@ -193,9 +193,7 @@ class BinarySearchTreeTest(unittest.TestCase):
         assert tree.root.right is None
         assert tree.size == 1
         tree.delete(3)
-        assert tree.root.data is None
-        assert tree.root.left is None
-        assert tree.root.right is None
+        assert tree.root is None
         assert tree.size == 0
 
     def test_delete_with_7_items(self):
