@@ -236,7 +236,8 @@ class BinarySearchTree(object):
             return 'left'
         elif parent.right == node:
             return 'right'
-        # return None if the node is not actually the child of the parent
+        # error case: if the node is not actually the child of the parent
+        raise ValueError('The node is not the child of the parent.')
 
     def delete(self, item):
         """Remove given item from this tree, if present, or raise ValueError.
@@ -250,14 +251,22 @@ class BinarySearchTree(object):
         if self.root == node:
             # find the node, set it to None (this splits the tree in 2)
             self.root = None
+        elif node is None:
+            # raise ValueError because node is not present
+            raise ValueError('Item is not present in this binary tree.')
         else:
             # find the parent, and whether this node is to its left or right
             parent = self._find_parent_node_iterative(node.data)
-
+            direction = self.find_direction(node, parent)
             # node has 0 children
-            # node has 1 child
-            # node has 2 children
-            pass
+            if node.is_leaf() is True:
+                pass
+            elif node.is_branch() is True:
+                # node has 1 child
+                if node.left is not None or node.right is not None:
+                    pass
+                # node has 2 children
+                if node.left is not None or node.right is not None:
 
     def items_in_order(self):
         """Return an in-order list of all items in this binary search tree."""
