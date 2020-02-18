@@ -257,16 +257,30 @@ class BinarySearchTree(object):
         else:
             # find the parent, and whether this node is to its left or right
             parent = self._find_parent_node_iterative(node.data)
-            direction = self.find_direction(node, parent)
+            direction_from_parent = self.find_direction(node, parent)
             # node has 0 children
             if node.is_leaf() is True:
-                pass
+                # set the appropiate child property of the parent to None
+                if direction_from_parent == 'left':
+                    parent.left = None
+                else:
+                    parent.right = None
             elif node.is_branch() is True:
-                # node has 1 child
-                if node.left is not None or node.right is not None:
-                    pass
                 # node has 2 children
-                if node.left is not None or node.right is not None:
+                if node.left is not None and node.right is not None:
+                    pass
+                # node has 1 child - figure out if it's to the left or right
+                if node.left is not None:
+                    if direction_from_parent == 'left':
+                        parent.left = node.left
+                    else:
+                        parent.right = node.left
+                # the 1 child is on the right side
+                else:
+                    if direction == 'left':
+                        parent.left = node.right
+                    else:
+                        parent.right = node.right
 
     def items_in_order(self):
         """Return an in-order list of all items in this binary search tree."""
