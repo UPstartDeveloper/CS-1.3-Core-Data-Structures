@@ -186,14 +186,17 @@ class BinarySearchTreeTest(unittest.TestCase):
         assert tree.root.data == 1
         assert tree.root.left is None
         assert tree.root.right.data == 3
+        assert tree.size == 2
         tree.delete(1)
         assert tree.root.data == 3
         assert tree.root.left is None
         assert tree.root.right is None
+        assert tree.size == 1
         tree.delete(3)
         assert tree.root.data is None
         assert tree.root.left is None
         assert tree.root.right is None
+        assert tree.size == 0
 
     def test_delete_with_7_items(self):
         # Create a complete binary search tree of 7 items in level-order
@@ -206,18 +209,21 @@ class BinarySearchTreeTest(unittest.TestCase):
         assert tree.root.right.data == 6
         assert tree.root.left.left is None
         assert tree.root.left.right.data == 3
+        assert tree.size == 6
         tree.delete(6)
         assert tree.root.data == 2
         assert tree.root.left.data == 1
         assert tree.root.right.data == 5
         assert tree.root.right.right.data == 7
         assert tree.root.right.left is None
+        assert tree.size == 5
         tree.delete(2)
         assert tree.root.data == 1
         assert tree.root.left.data == 3
         assert tree.root.right.data == 5
         assert tree.root.left.left is None
         assert tree.root.left.right is None
+        assert tree.size == 4
 
     '''
     def test_items_in_order_with_3_strings(self):
