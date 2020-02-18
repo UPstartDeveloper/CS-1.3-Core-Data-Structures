@@ -270,9 +270,6 @@ class BinarySearchTree(object):
         if node is None:
             # raise ValueError because node is not present
             raise ValueError('Item is not present in this binary tree.')
-        elif self.root == node:
-            # find the node, set it to None (this splits the tree in 2)
-            self.root = None
         else:
             # find the parent, and whether this node is to its left or right
             parent = self._find_parent_node_iterative(node.data)

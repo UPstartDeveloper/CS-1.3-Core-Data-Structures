@@ -181,7 +181,7 @@ class BinarySearchTreeTest(unittest.TestCase):
         assert tree.root.data == 2
         assert tree.root.left.data == 1
         assert tree.root.right.data == 3
-        # TODO: Test structure of tree after each deletion
+        # Test structure of tree after each deletion
         tree.delete(2)
         assert tree.root.data == 1
         assert tree.root.left is None
@@ -199,7 +199,7 @@ class BinarySearchTreeTest(unittest.TestCase):
         # Create a complete binary search tree of 7 items in level-order
         items = [4, 2, 6, 1, 3, 5, 7]
         tree = BinarySearchTree(items)
-        # TODO: Test structure of tree after each deletion
+        # Test structure of tree after each deletion
         tree.delete(4)
         assert tree.root.data == 2
         assert tree.root.left.data == 1
