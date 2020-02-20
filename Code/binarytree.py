@@ -356,7 +356,7 @@ class BinarySearchTree(object):
         if node is not None:
             self._traverse_in_order_recursive(node.left, visit)
         # Visit this node's data with given function
-            visit(node)
+            visit(node.data)
         # Traverse right subtree, if it exists
             self._traverse_in_order_recursive(node.right, visit)
 
@@ -383,11 +383,11 @@ class BinarySearchTree(object):
         TODO: Memory usage: ??? Why and under what conditions?"""
         if node is not None:
             # Visit this node's data with given function
-            visit(node)
+            visit(node.data)
             # Traverse left subtree, if it exists
-            self._traverse_in_order_recursive(node.left, visit)
+            self._traverse_pre_order_recursive(node.left, visit)
             # Traverse right subtree, if it exists
-            self._traverse_in_order_recursive(node.right, visit)
+            self._traverse_pre_order_recursive(node.right, visit)
 
     def _traverse_pre_order_iterative(self, node, visit):
         """Traverse this binary tree with iterative pre-order traversal (DFS).
@@ -412,11 +412,11 @@ class BinarySearchTree(object):
         TODO: Memory usage: ??? Why and under what conditions?"""
         if node is not None:
             # Traverse left subtree, if it exists
-            self._traverse_in_order_recursive(node.left, visit)
+            self._traverse_post_order_recursive(node.left, visit)
             # Traverse right subtree, if it exists
-            self._traverse_in_order_recursive(node.right, visit)
+            self._traverse_post_order_recursive(node.right, visit)
             # Visit this node's data with given function
-            visit(node)
+            visit(node.data)
 
     def _traverse_post_order_iterative(self, node, visit):
         """Traverse this binary tree with iterative post-order traversal (DFS).
@@ -448,7 +448,7 @@ class BinarySearchTree(object):
         while not queue.list.length() == 0:
             # Dequeue node at front of queue
             node = queue.dequeue()
-            # TODO: Visit this node's data with given function
+            # Visit this node's data with given function
             visit(node.data)
             # Enqueue this node's left child, if it exists
             if node.left is not None:

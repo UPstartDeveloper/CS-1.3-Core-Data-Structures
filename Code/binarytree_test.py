@@ -195,7 +195,7 @@ class BinarySearchTreeTest(unittest.TestCase):
         tree.delete(3)
         assert tree.root is None
         assert tree.size == 0
-
+    '''
     def test_delete_with_7_items(self):
         # Create a complete binary search tree of 7 items in level-order
         items = [4, 2, 6, 1, 3, 5, 7]
@@ -279,7 +279,6 @@ class BinarySearchTreeTest(unittest.TestCase):
         tree = BinarySearchTree(items)
         # Ensure the level-order traversal of tree items is ordered correctly
         assert tree.items_level_order() == [4, 2, 6, 1, 3, 5, 7]
-    '''
 
 
 if __name__ == '__main__':
