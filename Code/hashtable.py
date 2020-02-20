@@ -7,7 +7,7 @@ class HashTable(object):
 
     def __init__(self, init_size=8):
         """Initialize this hash table with the given initial size."""
-        self.buckets = [LinkedList() for i in range(init_size)]
+        self.buckets = [None for i in range(init_size)]
         self.size = 0  # Number of key-value entries
 
     def __str__(self):
@@ -105,9 +105,9 @@ class HashTable(object):
         """
         # Find the bucket the given key belongs in
         index = self._bucket_index(key)
-        bucket = self.buckets[index]
+        entry = self.buckets[index]
         # Check if an entry with the given key exists in that bucket
-        entry = bucket.find(lambda key_value: key_value[0] == key)
+        # entry = bucket.find(lambda key_value: key_value[0] == key)
         return entry is not None  # True or False
 
     def get(self, key):
@@ -125,9 +125,9 @@ class HashTable(object):
         """
         # Find the bucket the given key belongs in
         index = self._bucket_index(key)
-        bucket = self.buckets[index]
+        entry = self.buckets[index]
         # Find the entry with the given key in that bucket, if one exists
-        entry = bucket.find(lambda key_value: key_value[0] == key)
+        # entry = bucket.find(lambda key_value: key_value[0] == key)
         if entry is not None:  # Found
             # Return the given key's associated value
             assert isinstance(entry, tuple)
@@ -153,9 +153,12 @@ class HashTable(object):
         # Find the bucket the given key belongs in
         index = self._bucket_index(key)
         bucket = self.buckets[index]
+        bucket = (key, value)
+        self.size += 1
+        '''
         # Find the entry with the given key in that bucket, if one exists
         # Check if an entry with the given key exists in that bucket
-        entry = bucket.find(lambda key_value: key_value[0] == key)
+        # entry = bucket.find(lambda key_value: key_value[0] == key)
         if entry is not None:  # Found
             # In this case, the given key's value is being updated
             # Remove the old key-value entry from the bucket first
@@ -165,6 +168,7 @@ class HashTable(object):
             self.size += 1
         # Insert the new key-value entry into the bucket in either case
         bucket.append((key, value))
+        '''
         # Check if the load factor exceeds a threshold such as 0.75
         if self.load_factor() > 0.75:
             # If so, automatically resize to reduce the load factor
@@ -183,9 +187,17 @@ class HashTable(object):
         """
         # Find the bucket the given key belongs in
         index = self._bucket_index(key)
-        bucket = self.buckets[index]
+        entry = self.buckets[index]
+        if entry is not None:
+            self.buckets[index] = None
+            self.size -= 1
+            if self.load_factor() <= 0.40:
+                self._resize(0)
+        else:  # Not found
+            raise KeyError('Key not found: {}'.format(key))
+        '''
         # Find the entry with the given key in that bucket, if one exists
-        entry = bucket.find(lambda key_value: key_value[0] == key)
+        # entry = bucket.find(lambda key_value: key_value[0] == key)
         if entry is not None:  # Found
             # Remove the key-value entry from the bucket
             bucket.delete(entry)
@@ -195,6 +207,7 @@ class HashTable(object):
                 self._resize(0)
         else:  # Not found
             raise KeyError('Key not found: {}'.format(key))
+        '''
 
     def _resize(self, new_size=None):
         """Resize this hash table's buckets and rehash all key-value entries.
@@ -222,7 +235,7 @@ class HashTable(object):
         # Get a list to temporarily hold all current key-value entries
         key_value_pairs = self.items()
         # Create a new list of new_size total empty linked list buckets
-        self.buckets = [LinkedList() for i in range(new_size)]
+        self.buckets = [None for i in range(new_size)]
         # reset size
         self.size = 0
         # Rehash each key-value entry into the new list of buckets,
