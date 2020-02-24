@@ -427,8 +427,11 @@ class BinarySearchTree(object):
            operation scales with the number of nodes we need to visit, and we
            need to visit all the nodes in the tree.
 
-           Memory usage: O(n) because the number of recursive calls scales with
-           the number of nodes we need to visit in the tree.
+           Memory usage: O(h), where h is the height of the calling BinaryTree
+           object. This is because this method is recursive; and the amount of
+           memory needed by the call stack as we traverse down the tree to a
+           leaf, will depend on how many levels there are between the leaves
+           and the root of the tree (the same goes for its nested subtrees).
 
         """
         # Traverse left subtree, if it exists
@@ -449,8 +452,11 @@ class BinarySearchTree(object):
            operation scales with the number of nodes we need to visit, and we
            need to visit all the nodes in the tree.
 
-           Memory usage: O(n) because the number of iterations scales with
-           the number of nodes we need to visit in the tree.
+           Memory usage: O(h), where h is the height of the calling BinaryTree
+           object. This is because this method is iterative; and the amount of
+           memory needed to perform all our iterations will depend on how many
+           levels we need to traverse to get to the deepest leaf, from the root
+           of the tree.
 
         """
         # TODO: Traverse in-order without using recursion (stretch challenge)
@@ -474,8 +480,11 @@ class BinarySearchTree(object):
            operation scales with the number of nodes we need to visit, and we
            need to visit all the nodes in the tree.
 
-           Memory usage: O(n) because the number of recursive calls scales with
-           the number of nodes we need to visit in the tree.
+           Memory usage: O(h), where h is the height of the calling BinaryTree
+           object. This is because this method is recursive; and the amount of
+           memory needed by the call stack as we traverse down the tree to a
+           leaf, will depend on how many levels there are between the leaves
+           and the root of the tree (the same goes for its nested subtrees).
 
         """
         if node is not None:
@@ -496,8 +505,11 @@ class BinarySearchTree(object):
           operation scales with the number of nodes we need to visit, and we
           need to visit all the nodes in the tree.
 
-          Memory usage: O(n) because the number of iterations scales with
-          the number of nodes we need to visit in the tree.
+          Memory usage: O(h), where h is the height of the calling BinaryTree
+          object. This is because this method is iterative; and the amount of
+          memory needed to perform all our iterations will depend on how many
+          levels we need to traverse to get to the deepest leaf, from the root
+          of the tree.
 
        """
         # TODO: Traverse pre-order without using recursion (stretch challenge)
@@ -521,8 +533,11 @@ class BinarySearchTree(object):
            operation scales with the number of nodes we need to visit, and we
            need to visit all the nodes in the tree.
 
-           Memory usage: O(n) because the number of recursive processes scales
-           with the number of nodes we need to visit in the tree.
+           Memory usage: O(h), where h is the height of the calling BinaryTree
+           object. This is because this method is recursive; and the amount of
+           memory needed by the call stack as we traverse down the tree to a
+           leaf, will depend on how many levels there are between the leaves
+           and the root of the tree (the same goes for its nested subtrees).
 
       """
         if node is not None:
@@ -543,8 +558,11 @@ class BinarySearchTree(object):
            operation scales with the number of nodes we need to visit, and we
            need to visit all the nodes in the tree.
 
-           Memory usage: O(n) because the number of iterations scales with
-           the number of nodes we need to visit in the tree.
+           Memory usage: O(h), where h is the height of the calling BinaryTree
+           object. This is because this method is iterative; and the amount of
+           memory needed to perform all our iterations will depend on how many
+           levels we need to traverse to get to the deepest leaf, from the root
+           of the tree.
 
        """
         # TODO: Traverse post-order without using recursion (stretch challenge)
