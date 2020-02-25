@@ -269,13 +269,10 @@ class HashTableProbing(HashTable):
            is either the tail node or not in that list at all.
 
         """
-        # Find the bucket the given key belongs in
-        index = self._bucket_index(key)
-        entry = self.buckets[index]
-        # Check if an entry with the given key exists in that bucket
-        # entry = bucket.find(lambda key_value: key_value[0] == key)
-        print(self.buckets)
-        return entry is not None and entry[0] == key  # True or False
+        for entry in self.buckets:
+            if entry is not None and entry[0] == key:
+                return True
+        return False
 
     def get(self, key):
         """Return the value associated with the given key, or raise KeyError.
@@ -290,18 +287,10 @@ class HashTableProbing(HashTable):
            tail node or not in the list at all.
 
         """
-        # Find the bucket the given key belongs in
-        index = self._bucket_index(key)
-        entry = self.buckets[index]
-        # Find the entry with the given key in that bucket, if one exists
-        # entry = bucket.find(lambda key_value: key_value[0] == key)
-        if entry is not None:  # Found
-            # Return the given key's associated value
-            assert isinstance(entry, tuple)
-            assert len(entry) == 2
-            return entry[1]
-        else:  # Not found
-            raise KeyError('Key not found: {}'.format(key))
+        for entry in self.buckets:
+            if entry is not None and entry[0] == key:
+                return entry[1]
+        raise KeyError('Key not found: {}'.format(key))
 
     def set(self, key, value):
         """Insert or update the given key with its associated value.
@@ -319,8 +308,14 @@ class HashTableProbing(HashTable):
         """
         # Find the bucket the given key belongs in
         index = self._bucket_index(key)
-        self.buckets[index] = (key, value)
-        self.size += 1
+        if self.buckets[index] is None:  # place the entry in if no previous
+            self.buckets[index] = (key, value)
+            self.size += 1
+        elif self.buckets[index][0] == key:  # update entry
+            self.buckets[index] = (key, value)
+        else:
+            self.buckets.append((key, value))
+            self.size += 1
         # Check if the load factor exceeds a threshold such as 0.75
 
     def delete(self, key):
@@ -334,15 +329,15 @@ class HashTableProbing(HashTable):
            any of the nodes of that bucket.
 
         """
-        # Find the bucket the given key belongs in
-        index = self._bucket_index(key)
-        entry = self.buckets[index]
-        print(f'Entry: {entry}')
-        if entry is not None:
-            self.buckets[index] = None
-            self.size -= 1
-        else:  # Not found
-            raise KeyError('Key not found: {}'.format(key))
+        for i in range(len(self.buckets)):
+            entry = self.buckets[i]
+            print(entry)
+            print(key)
+            if entry is not None and entry[0] == key:
+                self.buckets[i] = None
+                self.size -= 1
+                return None
+        raise KeyError('Key not found: {}'.format(key))
 
 
 def test_hash_table():
