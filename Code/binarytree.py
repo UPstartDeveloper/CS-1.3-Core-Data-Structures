@@ -433,6 +433,9 @@ class BinarySearchTree(object):
            leaf, will depend on how many levels there are between the leaves
            and the root of the tree (the same goes for its nested subtrees).
 
+           If the tree is balanced, then this runtime can also be expressed
+           using O(log(n)).
+
         """
         # Traverse left subtree, if it exists
         if node is not None:
@@ -457,6 +460,9 @@ class BinarySearchTree(object):
            memory needed to perform all our iterations will depend on how many
            levels we need to traverse to get to the deepest leaf, from the root
            of the tree.
+
+           If the tree is balanced, then this runtime can also be expressed
+           using O(log(n)).
 
         """
         # TODO: Traverse in-order without using recursion (stretch challenge)
@@ -486,6 +492,9 @@ class BinarySearchTree(object):
            leaf, will depend on how many levels there are between the leaves
            and the root of the tree (the same goes for its nested subtrees).
 
+           If the tree is balanced, then this runtime can also be expressed
+           using O(log(n)).
+
         """
         if node is not None:
             # Visit this node's data with given function
@@ -510,6 +519,9 @@ class BinarySearchTree(object):
           memory needed to perform all our iterations will depend on how many
           levels we need to traverse to get to the deepest leaf, from the root
           of the tree.
+
+          If the tree is balanced, then this runtime can also be expressed
+          using O(log(n)).
 
        """
         # TODO: Traverse pre-order without using recursion (stretch challenge)
@@ -539,6 +551,9 @@ class BinarySearchTree(object):
            leaf, will depend on how many levels there are between the leaves
            and the root of the tree (the same goes for its nested subtrees).
 
+           If the tree is balanced, then this runtime can also be expressed
+           using O(log(n)).
+
       """
         if node is not None:
             # Traverse left subtree, if it exists
@@ -563,6 +578,9 @@ class BinarySearchTree(object):
            memory needed to perform all our iterations will depend on how many
            levels we need to traverse to get to the deepest leaf, from the root
            of the tree.
+
+           If the tree is balanced, then this runtime can also be expressed
+           using O(log(n)).
 
        """
         # TODO: Traverse post-order without using recursion (stretch challenge)
@@ -589,8 +607,17 @@ class BinarySearchTree(object):
            operation scales with the number of nodes we need to visit, and we
            need to visit all the nodes in the tree.
 
-           Memory usage: O(n) because the number of iterations scales with
-           the number of nodes we need to visit in the tree.
+           Memory usage: O(2^(h - 1), where h is the height of the tree. This
+           is because the total amount of space needed by this method scales
+           asymptotically with the memeory used up by the queue.
+
+           Because the maximum number of nodes at any level in the tree scales
+           with the powers of two (double the possible number of nodes at the
+           previous level), we can say the queue space requirement scales on
+           the magnitude of O(2^(h-1)). If the tree is balanced, then we can
+           alternatively express this as O(n/2), because at the lowest level we
+           need the most space for the queue, and the lowest level would
+           contain half the nodes of the entire tree overall.
 
        """
         # Create queue to store nodes not yet traversed in level-order
