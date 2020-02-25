@@ -203,7 +203,7 @@ class HashTable(object):
 
 
 class HashTableProbing(HashTable):
-    '''A hash table that resolves collisions using linear probing.'''
+    '''A hash table that resolves collisions without chaining.'''
     def __init__(self, init_size=8):
         """Initialize this hash table with the given initial size."""
         self.buckets = [None for i in range(init_size)]
@@ -261,15 +261,16 @@ class HashTableProbing(HashTable):
     def contains(self, key):
         """Return True if this hash table contains the given key, or False.
 
-           Best case running time: O(1) if we find the entry at the head node
-           of the bucket it is located in.
+           Best case running time: O(1) if we find the entry at the index
+           determined by the hash algorithm.
 
-           Worst case running time: O(n), if the bucket we index into contains
-           all the entries in the hash table, and the entry we are looking for
-           is either the tail node or not in that list at all.
+           Worst case running time: O(n), where n is the number of items in
+           the hash table.
 
         """
-        for entry in self.buckets:
+        # if entry is inside, it is either at the hashed index, or right of it
+        for i in range(len(self.buckets)):
+            entry = self.buckets[i]
             if entry is not None and entry[0] == key:
                 return True
         return False
@@ -295,44 +296,39 @@ class HashTableProbing(HashTable):
     def set(self, key, value):
         """Insert or update the given key with its associated value.
 
-           Best case running time: O(1), if there is already an entry with
-           the same value as key (the argument that's been passed into this
-           method) present at the head node in the bucket. Or if there are no
-           previous nodes in the bucket being traversed through.
+           Best case running time: O(1) if there is a NoneType object existing
+           at the index in the buckets array decided by the hashing algorithm.
 
-           Worst case running time: O(n) if all the items in the hash table are
-           in the bucket we index into, and there is not already an entry with
-           the same value as key (the argument that has been passed into this
-           method) present, or it is at the tail node in that bucket.
+           Worst case running time: O(n) when we are performing an update, and
+           the entry is at the last index in the hash buckets array.
 
         """
         # Find the bucket the given key belongs in
         index = self._bucket_index(key)
-        if self.buckets[index] is None:  # place the entry in if no previous
+        # place the entry in the index, if no previous entry
+        if self.buckets[index] is None:
             self.buckets[index] = (key, value)
             self.size += 1
-        elif self.buckets[index][0] == key:  # update entry
-            self.buckets[index] = (key, value)
+        # try to find a key with the same as the one being set, then update
+        elif self.contains(key) is True:
+            for i in range(len(self.buckets)):
+                entry = self.buckets[i]
+                if entry is not None and entry[0] == key:
+                    self.buckets[i] = (key, value)
+        # there is a previous entry with a different key, go find another index
         else:
             self.buckets.append((key, value))
             self.size += 1
-        # Check if the load factor exceeds a threshold such as 0.75
 
     def delete(self, key):
         """Delete the given key and its associated value, or raise KeyError.
 
-           Best case running time: O(1) if we are deleting an entry that is the
-           head node in the bucket that it is located in.
-
-           Worst case running time: O(n) if all the entries are located are the
-           same bucket, and the entry we are trying to delete is not present in
-           any of the nodes of that bucket.
+           Average running time: O(n) because we perform linear search to
+           discover if the key exists currently in the hash buckets array.
 
         """
         for i in range(len(self.buckets)):
             entry = self.buckets[i]
-            print(entry)
-            print(key)
             if entry is not None and entry[0] == key:
                 self.buckets[i] = None
                 self.size -= 1
@@ -341,7 +337,7 @@ class HashTableProbing(HashTable):
 
 
 def test_hash_table():
-    ht = HashTable(4)
+    ht = HashTableProbing(4)
     print('HashTable: ' + str(ht))
 
     print('Setting entries:')
@@ -352,7 +348,7 @@ def test_hash_table():
     print('size: ' + str(ht.size))
     print('length: ' + str(ht.length()))
     print('buckets: ' + str(len(ht.buckets)))
-    print('load_factor: ' + str(ht.load_factor()))
+    # print('load_factor: ' + str(ht.load_factor()))
     ht.set('X', 10)
     print('set(X, 10): ' + str(ht))
     ht.set('L', 50)  # Should trigger resize
@@ -360,7 +356,7 @@ def test_hash_table():
     print('size: ' + str(ht.size))
     print('length: ' + str(ht.length()))
     print('buckets: ' + str(len(ht.buckets)))
-    print('load_factor: ' + str(ht.load_factor()))
+    # print('load_factor: ' + str(ht.load_factor()))
 
     print('Getting entries:')
     print('get(I): ' + str(ht.get('I')))
@@ -383,7 +379,7 @@ def test_hash_table():
     print('size: ' + str(ht.size))
     print('length: ' + str(ht.length()))
     print('buckets: ' + str(len(ht.buckets)))
-    print('load_factor: ' + str(ht.load_factor()))
+    # print('load_factor: ' + str(ht.load_factor()))
 
 
 if __name__ == '__main__':
