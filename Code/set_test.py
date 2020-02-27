@@ -34,3 +34,16 @@ class SetTests(unittest.TestCase):
         set = Set(elements)
         for element in elements:
             assert set.contains(element) is True
+
+    def test_add(self):
+        '''Test the add method of the Set class.'''
+        set = Set()
+        assert set.size == 0
+        set.add(1)
+        assert set.size == 1
+        assert set.contains(1) is True
+        set = Set([1, 2, 3])
+        assert set.size == 3
+        set.add(4)
+        assert set.size == 4
+        assert set.contains(4) is True
