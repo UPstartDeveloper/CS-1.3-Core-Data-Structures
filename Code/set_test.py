@@ -23,3 +23,14 @@ class SetTests(unittest.TestCase):
         assert set.collection.contains(2) is True
         assert set.collection.get(3) is None
         assert set.collection.contains(3) is True
+
+    def test_contains(self):
+        '''Test the contains method of the Set class.'''
+        # test with no elememts
+        set = Set()
+        assert set.contains(1) is False
+        # test with elememts
+        elements = [1, 2, 3]
+        set = Set(elements)
+        for element in elements:
+            assert set.contains(element) is True

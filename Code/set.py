@@ -17,7 +17,7 @@ class Set:
 
     def contains(self, element):
         '''Returns a boolean indicating whether element is in this set'''
-        pass
+        return self.collection.contains(element) is True
 
     def add(self, element):
         '''Add element to this set, if not present already.'''
