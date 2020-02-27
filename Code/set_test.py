@@ -61,3 +61,13 @@ class SetTests(unittest.TestCase):
             size -= 1
             assert set.size == size
             assert set.contains(element) is False
+
+    def test_union_one_empty_one_with_items(self):
+        '''Test the union method of the Set class.'''
+        elements = [1, 2, 3]
+        set_one = Set()
+        set_two = Set([1, 2, 3])
+        set_three = set_one.union(set_two)
+        assert set_three.size == 3
+        for element in elements:
+            assert set_three.contains(element) is True

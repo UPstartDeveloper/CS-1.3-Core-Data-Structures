@@ -31,7 +31,18 @@ class Set:
 
     def union(self, other_set):
         '''Returns a new set that is the union of this set and other_set.'''
-        pass
+        # gather items from both SetTests
+        items_from_self = self.collection.keys()
+        items_from_other = other_set.collection.keys()
+        # init a new Set object
+        new_set = Set()
+        # add the items to the new set as appropiate
+        for item in items_from_self:
+            new_set.add(item)
+        for item in items_from_other:
+            if new_set.contains(item) is False:
+                new_set.add(item)
+        return new_set
 
     def intersection(self, other_set):
         '''Returns a new set that is the intersection of self and other_set.'''
