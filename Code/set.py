@@ -1,9 +1,9 @@
-from hashtable import hashtable
+from hashtable import HashTable
 
 
 class Set:
     '''A hash table data structure that implements a set abstract data type.'''
-    def __init__(elements=None):
+    def __init__(self, elements=None):
         '''Create a new set structure, and add elements if it is given.'''
         # property that tracks the number of elements in constant time
         self.size = 0
@@ -15,31 +15,31 @@ class Set:
             for element in elements:
                 self.add(element)
 
-    def contains(element):
+    def contains(self, element):
         '''Returns a boolean indicating whether element is in this set'''
         pass
 
-    def add(element):
+    def add(self, element):
         '''Add element to this set, if not present already.'''
         self.collection.set(element, None)
         self.size += 1
 
-    def remove(element):
+    def remove(self, element):
         '''Remove element from this set, if present, or else raise KeyError.'''
         pass
 
-    def union(other_set):
+    def union(self, other_set):
         '''Returns a new set that is the union of this set and other_set.'''
         pass
 
-    def intersection(other_set):
+    def intersection(self, other_set):
         '''Returns a new set that is the intersection of self and other_set.'''
         pass
 
-    def difference(other_set):
+    def difference(self, other_set):
         '''Returns a new set that is the difference of self and other_set.'''
         pass
 
-    def is_subset(other_set):
+    def is_subset(self, other_set):
         '''Returns a boolean for whether other_set is a subset of self.'''
         pass
