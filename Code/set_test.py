@@ -4,6 +4,10 @@ import unittest
 
 class SetTests(unittest.TestCase):
     '''Unit tests for the Set class.'''
+    def setUp(self):
+        '''Run before each test to initialize commonly used variables.'''
+        self.elements = [1, 2, 3]
+
     def test_init_no_elements(self):
         '''Test the Set constructor method, no elements passed in.'''
         set = Set()
@@ -11,11 +15,10 @@ class SetTests(unittest.TestCase):
 
     def test_init_with_elements(self):
         '''Test the Set constructor when elements are passed in.'''
-        elements = [1, 2, 3]
-        set = Set(elements)
+        set = Set(self.elements)
         assert set.size == 3
         # test the values that got added to the collection
-        assert set.collection.keys() == elements
+        assert set.collection.keys() == self.elements
         assert set.collection.values() == [None for i in range(set.size)]
         assert set.collection.get(1) is None
         assert set.collection.contains(1) is True
@@ -30,9 +33,8 @@ class SetTests(unittest.TestCase):
         set = Set()
         assert set.contains(1) is False
         # test with elememts
-        elements = [1, 2, 3]
-        set = Set(elements)
-        for element in elements:
+        set = Set(self.elements)
+        for element in self.elements:
             assert set.contains(element) is True
 
     def test_add(self):
@@ -44,7 +46,7 @@ class SetTests(unittest.TestCase):
         assert set.size == 1
         assert set.contains(1) is True
         # adding an item after instaniation, 3 inital elements
-        set = Set([1, 2, 3])
+        set = Set(self.elements)
         assert set.size == 3
         set.add(4)
         assert set.size == 4
@@ -53,10 +55,9 @@ class SetTests(unittest.TestCase):
     def test_remove(self):
         '''Test the remove method of the Set class.'''
         # test remove after instaniation, 3 initial elements
-        elements = [1, 2, 3]
-        set = Set(elements)
+        set = Set(self.elements)
         size = set.size
-        for element in elements:
+        for element in self.elements:
             set.remove(element)
             size -= 1
             assert set.size == size
@@ -64,10 +65,9 @@ class SetTests(unittest.TestCase):
 
     def test_union_one_empty_one_with_items(self):
         '''Test the union method of the Set class.'''
-        elements = [1, 2, 3]
         set_one = Set()
-        set_two = Set([1, 2, 3])
+        set_two = Set(self.elements)
         set_three = set_one.union(set_two)
         assert set_three.size == 3
-        for element in elements:
+        for element in self.elements:
             assert set_three.contains(element) is True
