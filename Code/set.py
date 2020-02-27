@@ -16,7 +16,16 @@ class Set:
                 self.add(element)
 
     def contains(self, element):
-        '''Returns a boolean indicating whether element is in this set'''
+        """Returns a boolean indicating whether element is in this set.
+
+           This method runs at O(1) amortized runtime complexity. The runtime
+           depends upon the time it takes to traverse the hash buckets
+           of the self.collection HashTable object. This class is dynamically
+           resizing the number of hash buckets in order to keep the load factor
+           to a small constant value, so on average we can say the the runtime
+           of this operation is constant.
+
+        """
         return self.collection.contains(element) is True
 
     def add(self, element):
