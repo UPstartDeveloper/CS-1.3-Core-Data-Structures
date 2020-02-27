@@ -29,9 +29,19 @@ class Set:
         return self.collection.contains(element) is True
 
     def add(self, element):
-        '''Add element to this set, if not present already.'''
-        self.collection.set(element, None)
-        self.size += 1
+        """Add element to this set, if not present already.
+
+           This methods runs in O(n) time where n is the number of set
+           elements. This is because we require checking to make sure the
+           element is not already is tbe set. This in turns necessitates us
+           checking the element for its membership in a list of all the entries
+           in the self.collection property. The runtime of gathering a list of
+           all elements scales in linear magnitude with the number of elements.
+
+        """
+        if self.contains(element) is False:
+            self.collection.set(element, None)
+            self.size += 1
 
     def remove(self, element):
         '''Remove element from this set, if present, or else raise KeyError.'''

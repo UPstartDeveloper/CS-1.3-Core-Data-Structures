@@ -29,6 +29,11 @@ class SetTests(unittest.TestCase):
         assert set.collection.get(3) is None
         assert set.collection.contains(3) is True
 
+    def test_init_with_duplicate_elements(self):
+        '''Test the Set.__init__ when elements are repeated.'''
+        set = Set([1, 2, 2])
+        assert set.size == 2
+
     def test_contains(self):
         '''Test the Set.contains method.'''
         # test with no elememts
