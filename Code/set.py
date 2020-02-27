@@ -7,7 +7,7 @@ class Set:
         '''Create a new set structure, and add elements if it is given.'''
         # property that tracks the number of elements in constant time
         self.size = 0
-        # init collection propoerty of the set
+        # initialize collection propoerty of the set
         if elements is None:
             self.collection = HashTable()
         else:
@@ -34,7 +34,7 @@ class Set:
         # gather items from both SetTests
         items_from_self = self.collection.keys()
         items_from_other = other_set.collection.keys()
-        # init a new Set object
+        # initialize a new Set object
         new_set = Set()
         # add the items to the new set as appropiate
         for item in items_from_self:
@@ -46,7 +46,7 @@ class Set:
 
     def intersection(self, other_set):
         '''Returns a new set that is the intersection of self and other_set.'''
-        # init a set to return
+        # initialize a set to return
         return_set = Set()
         # decide which of the sets is smaller
         pull_from_set = None
@@ -64,7 +64,15 @@ class Set:
 
     def difference(self, other_set):
         '''Returns a new set that is the difference of self and other_set.'''
-        pass
+        # store the elements found in both sets in separate lists
+        self_elem = self.collection.keys()
+        other_elem = other_set.collection.keys()
+        # remove elements from the set of self, if they are found in other_set
+        unique_elements = [
+            elem for elem in self_elem if elem not in other_elem
+        ]
+        # initialize a set to return
+        return Set(unique_elements)
 
     def is_subset(self, other_set):
         '''Returns a boolean for whether other_set is a subset of self.'''
