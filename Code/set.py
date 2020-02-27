@@ -44,12 +44,31 @@ class Set:
             self.size += 1
 
     def remove(self, element):
-        '''Remove element from this set, if present, or else raise KeyError.'''
+        """Remove element from this set, if present, or else raise KeyError.
+
+           The runtime of this method asymptotically scales with respect with
+           the runtime required to traverse the appropiate hash bucket of the
+           self.collection object, searching for the element to delete. The
+           runtime of this step in turn depends on the load factor. The
+           HashTable class is used to implement self.collection and it is
+           dynamically resizing, so the load factor is kept to a small value.
+           Therefore we can express the runtime of this method using O(1)
+           amortized.
+
+        """
         self.collection.delete(element)
         self.size -= 1
 
     def union(self, other_set):
-        '''Returns a new set that is the union of this set and other_set.'''
+        """Returns a new set that is the union of this set and other_set.
+
+           The runtime of this method depends on the number of elements in two
+           different sets, which we can represent using the variables n1 and
+           n2 respectively. Since we iterate over the elements of these two
+           sets in two separate steps, we can add them up for an overall method
+           runtime complexity of O(n1 + n2).
+
+        """
         # gather items from both SetTests
         items_from_self = self.collection.keys()
         items_from_other = other_set.collection.keys()
@@ -64,7 +83,17 @@ class Set:
         return new_set
 
     def intersection(self, other_set):
-        '''Returns a new set that is the intersection of self and other_set.'''
+        """Returns a new set that is the intersection of self (the calling set)
+           and other_set.
+
+          The runtime of this method is O(n), where n denotes the number of
+          elements in whichever of the sets is smaller than the other,
+          and defaults to self in cases when the set objects have an equal
+          amount of elements. This is due to needing to iterate over the list
+          of elements in this set, in order to check if they are present in
+          the other set.
+
+        """
         # initialize a set to return
         return_set = Set()
         # decide which of the sets is smaller
@@ -82,7 +111,20 @@ class Set:
         return return_set
 
     def difference(self, other_set):
-        '''Returns a new set that is the difference of self and other_set.'''
+        """Returns a new set that is the difference of self and other_set.
+
+           The runtime complexity of Set.difference is asymptotically
+           determined by the list comprehension below. This operation filters
+           out any elements in the set of self, if they are also found in the
+           set of other_set. If we represent the numbers of elements in self
+           and other_set using n1 and n2 respectively, then we can say that
+           this list comprehension is performing a linear search of n2
+           iterations, for each of its n1 iterations.
+
+           Therefore we can conclude that the runtime of this method is
+           O(n1 * n2).
+
+        """
         # store the elements found in both sets in separate lists
         self_elem = self.collection.keys()
         other_elem = other_set.collection.keys()
@@ -94,7 +136,16 @@ class Set:
         return Set(unique_elements)
 
     def is_subset(self, other_set):
-        '''Returns a boolean for whether other_set is a subset of self.'''
+        """Returns a boolean for whether other_set is a subset of self.
+           Similar to the runtime of Set.union, the runtime of this method is
+           determined by having to store separate lists of the elements in
+           the self set and other_set. The numbers of elements in these sets
+           can be represented using the variables n1 and n2 respectively. Since
+           we iterate over the elements of these two
+           sets in two separate steps, we can add them up for an overall method
+           runtime complexity of O(n1 + n2).
+
+        """
         # store the elements found in both sets in separate lists
         self_elem = self.collection.keys()
         other_elem = other_set.collection.keys()

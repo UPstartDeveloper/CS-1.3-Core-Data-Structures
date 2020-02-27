@@ -59,8 +59,8 @@ class SetTests(unittest.TestCase):
         assert set.size == 4
         assert set.contains(4) is True
 
-    def test_remove(self):
-        '''Test the Set.remove method.'''
+    def test_remove_normal_case(self):
+        '''Test the Set.remove method with a valid input.'''
         # test remove after instaniation, 3 initial elements
         set = Set(self.one_two_three)
         size = set.size
@@ -69,6 +69,12 @@ class SetTests(unittest.TestCase):
             size -= 1
             assert set.size == size
             assert set.contains(element) is False
+
+    def test_remove_error_case(self):
+        '''Test the Set.remove method with an input that raises KeyError.'''
+        set = Set(self.one_two_three)
+        with self.assertRaises(KeyError):
+            set.remove(4)
 
     def test_union_one_empty_one_with_items(self):
         '''Test the Set.union method.'''
