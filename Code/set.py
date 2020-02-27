@@ -21,7 +21,8 @@ class Set:
 
     def add(element):
         '''Add element to this set, if not present already.'''
-        pass
+        self.collection.set(element, None)
+        self.size += 1
 
     def remove(element):
         '''Remove element from this set, if present, or else raise KeyError.'''
