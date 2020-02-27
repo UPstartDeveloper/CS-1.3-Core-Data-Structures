@@ -37,13 +37,27 @@ class SetTests(unittest.TestCase):
 
     def test_add(self):
         '''Test the add method of the Set class.'''
+        # adding an item after instaniation, no inital elements
         set = Set()
         assert set.size == 0
         set.add(1)
         assert set.size == 1
         assert set.contains(1) is True
+        # adding an item after instaniation, 3 inital elements
         set = Set([1, 2, 3])
         assert set.size == 3
         set.add(4)
         assert set.size == 4
         assert set.contains(4) is True
+
+    def test_remove(self):
+        '''Test the remove method of the Set class.'''
+        # test remove after instaniation, 3 initial elements
+        elements = [1, 2, 3]
+        set = Set(elements)
+        size = set.size
+        for element in elements:
+            set.remove(element)
+            size -= 1
+            assert set.size == size
+            assert set.contains(element) is False

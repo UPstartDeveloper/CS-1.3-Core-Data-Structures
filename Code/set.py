@@ -26,7 +26,8 @@ class Set:
 
     def remove(self, element):
         '''Remove element from this set, if present, or else raise KeyError.'''
-        pass
+        self.collection.delete(element)
+        self.size -= 1
 
     def union(self, other_set):
         '''Returns a new set that is the union of this set and other_set.'''
