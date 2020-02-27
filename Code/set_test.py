@@ -7,14 +7,15 @@ class SetTests(unittest.TestCase):
     def setUp(self):
         '''Run before each test to initialize commonly used variables.'''
         self.elements = [1, 2, 3]
+        self.more_elements = [4, 5, 6]
 
     def test_init_no_elements(self):
-        '''Test the Set constructor method, no elements passed in.'''
+        '''Test the Set.__init__ method, no elements passed in.'''
         set = Set()
         assert set.size == 0
 
     def test_init_with_elements(self):
-        '''Test the Set constructor when elements are passed in.'''
+        '''Test the Set.__init__ when elements are passed in.'''
         set = Set(self.elements)
         assert set.size == 3
         # test the values that got added to the collection
@@ -28,7 +29,7 @@ class SetTests(unittest.TestCase):
         assert set.collection.contains(3) is True
 
     def test_contains(self):
-        '''Test the contains method of the Set class.'''
+        '''Test the Set.contains method.'''
         # test with no elememts
         set = Set()
         assert set.contains(1) is False
@@ -38,7 +39,7 @@ class SetTests(unittest.TestCase):
             assert set.contains(element) is True
 
     def test_add(self):
-        '''Test the add method of the Set class.'''
+        '''Test the Set.add method.'''
         # adding an item after instaniation, no inital elements
         set = Set()
         assert set.size == 0
@@ -53,7 +54,7 @@ class SetTests(unittest.TestCase):
         assert set.contains(4) is True
 
     def test_remove(self):
-        '''Test the remove method of the Set class.'''
+        '''Test the Set.remove method.'''
         # test remove after instaniation, 3 initial elements
         set = Set(self.elements)
         size = set.size
@@ -64,7 +65,7 @@ class SetTests(unittest.TestCase):
             assert set.contains(element) is False
 
     def test_union_one_empty_one_with_items(self):
-        '''Test the union method of the Set class.'''
+        '''Test the Set.union method.'''
         set_one = Set()
         set_two = Set(self.elements)
         set_three = set_one.union(set_two)
@@ -73,25 +74,93 @@ class SetTests(unittest.TestCase):
             assert set_three.contains(element) is True
 
     def test_union_both_with_items_no_duplicates(self):
-        '''Test the union method of the Set class.'''
-        more_elements = [4, 5, 6]
-        set_one = Set(more_elements)
+        '''Test the Set.union method.'''
+        set_one = Set(self.more_elements)
         set_two = Set(self.elements)  # elements is [1, 2, 3]
         set_three = set_one.union(set_two)
         assert set_three.size == 6
         # init a list of the elements to check are in set_three
         all_elements = self.elements
-        for element in more_elements:
+        for element in self.more_elements:
             all_elements.append(element)
         # check if the appropiate elements are in set_three
         for element in all_elements:
             assert set_three.contains(element) is True
 
     def test_union_both_with_items_and_duplicates(self):
-        '''Test the union method of the Set class.'''
+        '''Test the Set.union method.'''
         set_one = Set(self.elements)
         set_two = Set(self.elements)
         set_three = set_one.union(set_two)
         assert set_three.size == 3
         for element in self.elements:
             assert set_three.contains(element) is True
+
+    def test_intersection_all_unique_elements(self):
+        '''Test the Set.intersection method.'''
+        set_one = Set(self.elements)
+        set_two = Set(self.more_elements)
+        set_three = set_one.intersection(set_two)
+        assert set_three.size == 0
+        set_four = set_two.intersection(set_one)
+        assert set_four.size == 0
+
+    def test_intersection_different_set_sizes_all_unique_elements(self):
+        '''Test the Set.intersection method.'''
+        set_one = Set(self.elements)
+        set_two = Set([7, 8, 9, 10])
+        set_three = set_one.intersection(set_two)
+        assert set_three.size == 0
+        # test the output is same regardless of order
+        set_four = set_two.intersection(set_one)
+        print(set_four.collection.keys())
+        assert set_four.size == 0
+
+    def test_intersection_all_duplicates(self):
+        '''Test the Set.intersection method.'''
+        set_one = Set(self.elements)
+        set_two = Set(self.elements)
+        set_three = set_one.intersection(set_two)
+        assert set_three.size == 3
+
+    def test_intersection_duplicates_different_sizes(self):
+        '''Test the Set.intersection method.'''
+        set_one = Set(self.elements)
+        set_two = Set([1, 2, 3, 4])
+        set_three = set_one.intersection(set_two)
+        # test size of the new set
+        assert set_three.size == 3
+        # test the wrong values are not in the set
+        assert set_three.contains(4) is False
+        # test the right values are in the set
+        assert set_three.contains(1) is True
+        assert set_three.contains(2) is True
+        assert set_three.contains(3) is True
+        # test that order doesn't matter
+        set_three = set_two.intersection(set_one)
+        assert set_three.size == 3
+        assert set_three.contains(1) is True
+        assert set_three.contains(2) is True
+        assert set_three.contains(3) is True
+
+    def test_intersection_duplicates_pull_from_both(self):
+        '''Test the Set.intersection method.'''
+        # only shared elements are 2, 3
+        set_one = Set(self.elements)
+        set_two = Set([2, 3, 4])
+        set_three = set_one.intersection(set_two)
+        # test size of the new set
+        assert set_three.size == 2
+        # test the wrong values are not in the set
+        assert set_three.contains(4) is False
+        assert set_three.contains(1) is False
+        # test the right values are in the set
+        assert set_three.contains(2) is True
+        assert set_three.contains(3) is True
+        # test that order doesn't matter
+        set_three = set_two.intersection(set_one)
+        assert set_three.size == 2
+        assert set_three.contains(4) is False
+        assert set_three.contains(1) is False
+        assert set_three.contains(2) is True
+        assert set_three.contains(3) is True
