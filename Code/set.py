@@ -6,7 +6,14 @@ class Set:
     def __init__(elements=None):
         '''Create a new set structure, and add elements if it is given.'''
         # property that tracks the number of elements in constant time
-        self.size = 0 if elements is None else len(elements)
+        self.size = 0
+        # init collection propoerty of the set
+        if elements is None:
+            self.collection = HashTable()
+        else:
+            self.collection = HashTable(len(elements))
+            for element in elements:
+                self.add(element)
 
     def contains(element):
         '''Returns a boolean indicating whether element is in this set'''
