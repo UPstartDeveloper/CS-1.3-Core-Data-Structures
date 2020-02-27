@@ -71,3 +71,27 @@ class SetTests(unittest.TestCase):
         assert set_three.size == 3
         for element in self.elements:
             assert set_three.contains(element) is True
+
+    def test_union_both_with_items_no_duplicates(self):
+        '''Test the union method of the Set class.'''
+        more_elements = [4, 5, 6]
+        set_one = Set(more_elements)
+        set_two = Set(self.elements)  # elements is [1, 2, 3]
+        set_three = set_one.union(set_two)
+        assert set_three.size == 6
+        # init a list of the elements to check are in set_three
+        all_elements = self.elements
+        for element in more_elements:
+            all_elements.append(element)
+        # check if the appropiate elements are in set_three
+        for element in all_elements:
+            assert set_three.contains(element) is True
+
+    def test_union_both_with_items_and_duplicates(self):
+        '''Test the union method of the Set class.'''
+        set_one = Set(self.elements)
+        set_two = Set(self.elements)
+        set_three = set_one.union(set_two)
+        assert set_three.size == 3
+        for element in self.elements:
+            assert set_three.contains(element) is True
