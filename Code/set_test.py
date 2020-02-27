@@ -199,3 +199,34 @@ class SetTests(unittest.TestCase):
         set_three = set_two.difference(set_one)
         assert set_three.size == 1
         assert set_three.contains(4) is True
+
+    def test_is_subset_positive_cases(self):
+        '''Test the Set.is_subset method for True cases.'''
+        set_one = Set(self.one_two_three)
+        set_two = Set([2])
+        assert set_one.is_subset(set_two) is True
+        # test mutiple elements in subset
+        set_two = Set([2, 3])
+        assert set_one.is_subset(set_two) is True
+        # test equality
+        set_two = Set([1, 2, 3])
+        assert set_one.is_subset(set_two) is True
+        # test order matters
+        assert set_two.is_subset(set_one) is True
+
+    def test_is_subset_negative_cases_and_order(self):
+        '''Test the Set.is_subset method for False cases.'''
+        set_one = Set(self.one_two_three)
+        set_two = Set([4])
+        assert set_one.is_subset(set_two) is False
+        # test mutiple elements in subset
+        set_two = Set([4, 5])
+        assert set_one.is_subset(set_two) is False
+        # test mutiple elements in subset, one is True and other is False
+        set_two = Set([2, 5])
+        assert set_one.is_subset(set_two) is False
+        # test length
+        set_two = Set([1, 2, 3, 4])
+        assert set_one.is_subset(set_two) is False
+        # test order matters - two is [1, 2, 3, 4], and one is [1, 2, 3]
+        assert set_two.is_subset(set_one) is True

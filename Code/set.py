@@ -76,4 +76,12 @@ class Set:
 
     def is_subset(self, other_set):
         '''Returns a boolean for whether other_set is a subset of self.'''
-        pass
+        # store the elements found in both sets in separate lists
+        self_elem = self.collection.keys()
+        other_elem = other_set.collection.keys()
+        # iterate through the elements in other_set
+        for element in other_elem:
+            # check of they are present in the set of self
+            if element not in self_elem:
+                return False
+        return True
