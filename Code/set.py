@@ -86,12 +86,12 @@ class Set:
         """Returns a new set that is the intersection of self (the calling set)
            and other_set.
 
-          The runtime of this method is O(n), where n denotes the number of
-          elements in whichever of the sets is smaller than the other,
-          and defaults to self in cases when the set objects have an equal
-          amount of elements. This is due to needing to iterate over the list
-          of elements in this set, in order to check if they are present in
-          the other set.
+           The runtime of this method is O(n), where n denotes the number of
+           elements in whichever of the sets is smaller than the other,
+           and defaults to self in cases when the set objects have an equal
+           amount of elements. This is due to needing to iterate over the list
+           of elements in this set, in order to check if they are present in
+           the other set.
 
         """
         # initialize a set to return
@@ -149,6 +149,9 @@ class Set:
         # store the elements found in both sets in separate lists
         self_elem = self.collection.keys()
         other_elem = other_set.collection.keys()
+        # other_elem CANNOT be a subset if it's bigger
+        if other_set.size > self.size:
+            return False
         # iterate through the elements in other_set
         for element in other_elem:
             # check of they are present in the set of self
