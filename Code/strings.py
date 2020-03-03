@@ -195,6 +195,64 @@ def find_all_indexes(text, pattern):
         return find_next_index(text, pattern, indices)
 
 
+'''
+Functions For Generating Anagrams
+Credit for function comes from my CS 1.2 repo, can be found at
+https://github.com/UPstartDeveloper/CS-1.2-Intro-Data-Structures/blob/master/Code/anagram_app/app.py#L17
+'''
+
+
+def get_words():
+    """Get words from the words file, to get anagrams from."""
+    # get words from the words file
+    file = open("/usr/share/dict/words", "r")
+    words_list = file.readlines()
+    file.close()
+    # removing newline characters from strings in words file
+    words_no_newline = list()
+    for word in words_list:
+        word = word[:-3]
+        words_no_newline.append(word)
+    return words_no_newline
+
+
+def determine_anagram(word, possible_anagram):
+    """Determines if a word might be the anagram of another word.
+       Params:
+       word(str)
+       possible_anagram(str)
+       Return bool
+    """
+    # possible_anagram cannot be a anagram if it isn't the same length as word
+    if not len(word) == len(possible_anagram):
+        return False
+    # possible_anagram must be different from word
+    elif word == possible_anagram:
+        return False
+    # possible_anagram must have all same letters as word
+    for letter in possible_anagram:
+        if letter not in word:
+            return False
+
+    for letter in word:
+        if letter not in possible_anagram:
+            return False
+    # all tests passed, then return True
+    return True
+
+
+def generate_anagram(word):
+    '''Return the first anagram of word found in the dictionary file.'''
+    # gather words from the dictionary
+    all_words = get_words()
+    # take the first anagram
+    for possible_anagram in all_words:
+        if determine_anagram(word, possible_anagram) is True:
+            return possible_anagram
+    # if none were found, inform the client
+    return 'Sorry, no anagrams were found'
+
+
 def test_string_algorithms(text, pattern):
     found = contains(text, pattern)
     print('contains({!r}, {!r}) => {}'.format(text, pattern, found))
