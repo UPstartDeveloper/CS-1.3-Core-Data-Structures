@@ -1,6 +1,21 @@
 from set import Set
 from linkedlist import LinkedList
+from stack import Stack  # implements using LinkedStack
+from hashtable import HashTable
 import sys
+
+
+def letter_distribution(word):
+    """Returns an associative array of a word, representing its letters and
+       counts in the word.
+
+       Parameter:
+       word(str): a str composed of only English letters. All lower cases.
+
+       Returns: HashTable
+
+    """
+    pass
 
 
 def determine_anagram(word, possible_anagram):
@@ -18,17 +33,8 @@ def determine_anagram(word, possible_anagram):
     # cannot be an anagram if it's not same length
     if not len(word) == len(possible_anagram):
         return False
-    # possible_anagram must be different from word
-    if word == possible_anagram:
-        return False
-    # possible_anagram must have all same letters as word, in same distribution
-    for letter in possible_anagram:
-        if letter not in word:
-            return False
-
-    for letter in word:
-        if letter not in possible_anagram:
-            return False
+    # make distributions of letters and counts of both str
+    pass
     # all tests passed, then return True
     return True
 
