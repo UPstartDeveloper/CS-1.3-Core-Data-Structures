@@ -120,24 +120,8 @@ def unscramble(jumbled_word):
 # Solution using permutations, Sets, and LinkedLists
 
 
-def get_possible_words(jumbled_word):
-    """Return the set of all words the same length as our input str.
-
-        Parameters:
-        jumbled_word(str): the str that represents a common English word, with
-                           its letters misspelled. This str has the following
-                           key characteristics:
-                           - it is composed entirely of English letters
-                           - letters may be repeated.
-                           - all letters are lower case
-                           - all letters will appear in correctly spelled word,
-                             with the same distribution as in the input str
-
-       Return:
-       Set: an unordered collection of all words the same length as
-            our jumbled str
-
-    """
+def get_possible_words(length):
+    '''Return the set of all words the same length as our input str.'''
     # get words from the words file
     file = open("/usr/share/dict/words", "r")
     words_list = file.readlines()
@@ -148,19 +132,28 @@ def get_possible_words(jumbled_word):
         word = word[:-3]
         clean_words.append(word)
     # return the set of all words with the appropiate length
-    return Set(
-        [
-            word for word in clean_words
-            if determine_anagram(jumbled_word, word) is True
-        ]
-    )
+    return Set([word for word in clean_words if len(word) == length])
 
 
 def unscramble(word):
     '''Return intersection of all words, the set of all anagrams of word.'''
-    # generate the set of all possible anangrams of the word
+    # generate the set of all possible anagrams of the word
+    anagrams = list(permutations(word))
+    # convert this to a list of str, not tuple
+    anagrams = [''.join(list(anagram)) for anagram in anagrams]
+    # convert this to a Set
+    anagrams = Set(anagrams)
     # generate the set of all English words in the dictionary file
-    actual_words = get_possible_words()
+    actual_words = get_possible_words(len(word))
+    # find the intersection between the two
+    overlap = anagrams.intersection(actual_words)
+    # dump all the words into a LinkedList, and return the head
+    unscrambled_words = LinkedList(word for word in overlap.collection.keys())
+    if unscrambled_words.head is not None:
+        print(unscrambled_words)  # shows all anagrams found
+        return unscrambled_words.head.data
+    else:
+        return 'Sorry, no English word could be found.'
 
 
 if __name__ == "__main__":
