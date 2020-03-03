@@ -1,3 +1,6 @@
+from set import Set
+from linkedlist import LinkedList
+
 def get_words():
     """Get words from the words file to get anagrams from."""
     # get words from the words file
