@@ -3,10 +3,11 @@ from linkedlist import LinkedList
 from stack import Stack  # implements using LinkedStack
 from hashtable import HashTable
 import sys
+from itertools import permutations
 
-
+"""
 def letter_distribution(word):
-    """Returns an associative array of a word, representing its letters and
+    '''Returns an associative array of a word, representing its letters and
        counts in the word.
 
        Parameter:
@@ -14,7 +15,7 @@ def letter_distribution(word):
 
        Returns: HashTable
 
-    """
+    '''
     histogram = HashTable()
     letters = histogram.keys()
     for letter in word:
@@ -30,7 +31,7 @@ def letter_distribution(word):
 
 
 def compare_distributions(word_dist, possible_anagram_dist):
-    """Return True is all the letters in word appear in the same amount in the
+    '''Return True is all the letters in word appear in the same amount in the
        other word.
 
        Parameters:
@@ -40,7 +41,7 @@ def compare_distributions(word_dist, possible_anagram_dist):
 
        Returns: bool
 
-    """
+    '''
     letters_in_word = word_dist.keys()
     letters_in_poss_anagram = possible_anagram_dist.keys()
     # for each letter in word, be sure it exists in the other word
@@ -54,7 +55,7 @@ def compare_distributions(word_dist, possible_anagram_dist):
 
 
 def determine_anagram(word, possible_anagram):
-    """Determines if a word might be the anagram of another word.
+    '''Determines if a word might be the anagram of another word.
        Credit for function comes from my CS 1.2 repo, can be found at
        https://github.com/UPstartDeveloper/CS-1.2-Intro-Data-Structures/blob/master/Code/anagram_app/app.py#L17
 
@@ -64,7 +65,7 @@ def determine_anagram(word, possible_anagram):
 
        Returns: bool
 
-    """
+    '''
     # cannot be an anagram if it's not same length
     if not len(word) == len(possible_anagram):
         return False
@@ -81,6 +82,42 @@ def determine_anagram(word, possible_anagram):
         word_dist_matches_possible is True and
         possible_dist_matches_word is True
     )
+
+
+def unscramble(jumbled_word):
+    '''Returns a common English word, given a string that consists solely of
+       English letters.
+
+       Parameters:
+       jumbled_word(str): the str that represents a common English word, with
+                          its letters misspelled. This str has the following
+                          key characteristics:
+                          - it is composed entirely of English letters
+                          - letters may be repeated.
+                          - all letters are lower case
+                          - all letters will appear in correctly spelled word,
+                            with the same distribution as in the input str
+
+        Returns:
+        str: the unscrambled str
+
+    '''
+    # create the set of all words that could be the real spelling
+    possible_spellings_list = (
+        get_possible_words(jumbled_word).collection.keys()
+    )
+    # dump all these words into a listr
+    words = LinkedList(possible_spellings_list)
+    # DEBUGGING: print all the words we came up with
+    print(words)
+    # return the first spelling
+    if words.head is not None:
+        return words.head.data
+    else:
+        return "Sorry, couldn't find a real English word."
+"""
+
+# Solution using permutations, Sets, and LinkedLists
 
 
 def get_possible_words(jumbled_word):
@@ -119,37 +156,11 @@ def get_possible_words(jumbled_word):
     )
 
 
-def unscramble(jumbled_word):
-    """Returns a common English word, given a string that consists solely of
-       English letters.
-
-       Parameters:
-       jumbled_word(str): the str that represents a common English word, with
-                          its letters misspelled. This str has the following
-                          key characteristics:
-                          - it is composed entirely of English letters
-                          - letters may be repeated.
-                          - all letters are lower case
-                          - all letters will appear in correctly spelled word,
-                            with the same distribution as in the input str
-
-        Returns:
-        str: the unscrambled str
-
-    """
-    # create the set of all words that could be the real spelling
-    possible_spellings_list = (
-        get_possible_words(jumbled_word).collection.keys()
-    )
-    # dump all these words into a listr
-    words = LinkedList(possible_spellings_list)
-    # DEBUGGING: print all the words we came up with
-    print(words)
-    # return the first spelling
-    if words.head is not None:
-        return words.head.data
-    else:
-        return "Sorry, couldn't find a real English word."
+def unscramble(word):
+    '''Return intersection of all words, the set of all anagrams of word.'''
+    # generate the set of all possible anangrams of the word
+    # generate the set of all English words in the dictionary file
+    actual_words = get_possible_words()
 
 
 if __name__ == "__main__":
