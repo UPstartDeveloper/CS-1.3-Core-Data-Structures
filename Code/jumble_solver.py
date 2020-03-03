@@ -28,6 +28,36 @@ def get_words(length):
     )
 
 
+def determine_anagram(word, possible_anagram):
+    """Determines if a word might be the anagram of another word.
+       Credit for function comes from my CS 1.2 repo, can be found at
+       https://github.com/UPstartDeveloper/CS-1.2-Intro-Data-Structures/blob/master/Code/anagram_app/app.py#L17
+
+       Parameters:
+       word(str)
+       possible_anagram(str)
+
+       Returns: bool
+
+    """
+    # possible_anagram cannot be a anagram if it isn't the same length as word
+    if not len(word) == len(possible_anagram):
+        return False
+    # possible_anagram must be different from word
+    elif word == possible_anagram:
+        return False
+    # possible_anagram must have all same letters as word
+    for letter in possible_anagram:
+        if letter not in word:
+            return False
+
+    for letter in word:
+        if letter not in possible_anagram:
+            return False
+    # all tests passed, then return True
+    return True
+
+
 def unscramble(word):
     """Returns a common English word, given a string that consists solely of
        English letters.
@@ -45,6 +75,8 @@ def unscramble(word):
     # store the number of characters in the input str
     num_letters = len(word)
     pass
+
+
 
 
 if __name__ == "__main__":
