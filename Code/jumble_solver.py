@@ -73,9 +73,15 @@ def possible_words(jumbled_word):
 
        Returns: Set: the set of all words that are anagrams of jumbled_word
     """
-    # instaniate the set of all words with same length as jumbled_word
+    # instantiate the set of all words with same length as jumbled_word
     set_same_length = get_words(len(jumbled_word))
-    pass
+    # dump all these word into a list
+    words_list = set_same_length.collection.keys()
+    # return the subset of all the words who are anagrams of the jumbled_word
+    return Set(
+        [word for word in words_list
+            if determine_anagram(jumbled_word, word) is True]
+    )
 
 
 def unscramble(word):
