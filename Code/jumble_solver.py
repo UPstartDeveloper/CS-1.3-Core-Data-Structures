@@ -58,6 +58,26 @@ def determine_anagram(word, possible_anagram):
     return True
 
 
+def possible_words(jumbled_word):
+    """Returns the set of all anagrams of the jumbled word.
+
+       Parameters:
+       jumbled_word(str): the str that represents a common English word, with
+                          its letters misspelled. This str has the following
+                          key characteristics:
+                          - it is composed entirely of English letters only
+                          - letters may be repeated.
+                          - all letters are lower case
+                          - all letters will appear in correctly spelled word,
+                            with the same distribution as in the input st
+
+       Returns: Set: the set of all words that are anagrams of jumbled_word
+    """
+    # instaniate the set of all words with same length as jumbled_word
+    set_same_length = get_words(len(jumbled_word))
+    pass
+
+
 def unscramble(word):
     """Returns a common English word, given a string that consists solely of
        English letters.
