@@ -26,6 +26,29 @@ def letter_distribution(word):
     return histogram
 
 
+def compare_distributions(word_dist, possible_anagram_dist):
+    """Return True is all the letters in word appear in the same amount in the
+       other word.
+
+       Parameters:
+       word_dist(HashTable): keys are letters, values are the number of times
+                             that it appears in the word
+       possible_anagram_dist(HashTable): structured same way as word_dist
+
+       Returns: bool
+
+    """
+    letters_in_word = word_dist.keys()
+    letters_in_poss_anagram = possible_anagram_dist.keys()
+    # for each letter in word, be sure it exists in the other word
+    for letter in letters_in_word:
+        if letter not in letters_in_poss_anagram:
+            # also be sure that it appears the same number of times
+            if not word_dist[letter] == possible_anagram[letter]:
+                return False
+    return True
+
+
 def determine_anagram(word, possible_anagram):
     """Determines if a word might be the anagram of another word.
        Credit for function comes from my CS 1.2 repo, can be found at
@@ -44,23 +67,16 @@ def determine_anagram(word, possible_anagram):
     # make distributions of letters and counts of both str
     word_dist = letter_distribution(word)
     possible_anagram_dist = letter_distribution(possible_anagram)
+    # check to make sure the letter distributions are the same, both ways
+    word_dist_matches_possible = compare_distributions(word_dist,
+                                                       possible_anagram_dist)
+    possible_dist_matches_word = compare_distributions(possible_anagram_dist,
+                                                       word_dist)
     # all tests passed, then return True
-    return True
-    '''
-    # possible_anagram must be different from word
-    if word == possible_anagram:
-        return False
-    # possible_anagram must have all same letters as word, in same distribution
-    for letter in possible_anagram:
-        if letter not in word:
-            return False
-
-    for letter in word:
-        if letter not in possible_anagram:
-            return False
-    # all tests passed, then return True
-    return True
-    '''
+    return (
+        word_dist_matches_possible is True and
+        possible_dist_matches_word is True
+    )
 
 
 def get_possible_words(jumbled_word):
