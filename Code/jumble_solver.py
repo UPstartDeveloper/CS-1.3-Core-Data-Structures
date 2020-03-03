@@ -46,9 +46,10 @@ def compare_distributions(word_dist, possible_anagram_dist):
     # for each letter in word, be sure it exists in the other word
     for letter in letters_in_word:
         if letter not in letters_in_poss_anagram:
-            # also be sure that it appears the same number of times
-            if not word_dist.get(letter) == possible_anagram_dist.get(letter):
-                return False
+            return False
+        # also be sure that it appears the same number of times
+        if not word_dist.get(letter) == possible_anagram_dist.get(letter):
+            return False
     return True
 
 
