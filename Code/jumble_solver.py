@@ -69,7 +69,7 @@ def possible_words(jumbled_word):
                           - letters may be repeated.
                           - all letters are lower case
                           - all letters will appear in correctly spelled word,
-                            with the same distribution as in the input st
+                            with the same distribution as in the input str
 
        Returns: Set: the set of all words that are anagrams of jumbled_word
     """
@@ -84,25 +84,33 @@ def possible_words(jumbled_word):
     )
 
 
-def unscramble(word):
+def unscramble(jumbled_word):
     """Returns a common English word, given a string that consists solely of
        English letters.
 
        Parameters:
-       word(str): a str composed entirely of English letters. No other types of
-                  characters can appear. Letters may be repeated.
-                  All lower case. All letters will appear in output str, and
-                  in the same distribution as in the input str.
+       jumbled_word(str): the str that represents a common English word, with
+                          its letters misspelled. This str has the following
+                          key characteristics:
+                          - it is composed entirely of English letters only
+                          - letters may be repeated.
+                          - all letters are lower case
+                          - all letters will appear in correctly spelled word,
+                            with the same distribution as in the input str
 
         Returns:
         str: the unscrambled str
 
     """
-    # store the number of characters in the input str
-    num_letters = len(word)
-    pass
-
-
+    # create the set of all words that could be the real spelling
+    possible_spellings = possible_words(jumbled_word).collection.keys()
+    # dump all these words into a listr
+    words = LinkedList(possible_spellings)
+    # return the first spelling
+    if words.head is not None:
+        return words.head.data
+    else:
+        return "Sorry, couldn't find a real English word."
 
 
 if __name__ == "__main__":
