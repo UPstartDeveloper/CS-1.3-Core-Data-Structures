@@ -19,10 +19,13 @@ def letter_distribution(word):
     letters = histogram.keys()
     for letter in word:
         if letter not in letters:
-            histogram[letter] = 1
+            # add the intial entry of the letter into the hash table
+            histogram.set(letter, 1)
             letters.append(letter)
         else:
-            histogram[letter] += 1
+            # increment the current letter count by one
+            current_count = histogram.get(letter)
+            histogram.set(letter, current_count + 1)
     return histogram
 
 
@@ -44,7 +47,7 @@ def compare_distributions(word_dist, possible_anagram_dist):
     for letter in letters_in_word:
         if letter not in letters_in_poss_anagram:
             # also be sure that it appears the same number of times
-            if not word_dist[letter] == possible_anagram[letter]:
+            if not word_dist.get(letter) == possible_anagram_dist.get(letter):
                 return False
     return True
 
@@ -108,7 +111,10 @@ def get_possible_words(jumbled_word):
         clean_words.append(word)
     # return the set of all words with the appropiate length
     return Set(
-        [word for word in clean_words if determine_anagram(jumbled_word, word)]
+        [
+            word for word in clean_words
+            if determine_anagram(jumbled_word, word) is True
+        ]
     )
 
 
