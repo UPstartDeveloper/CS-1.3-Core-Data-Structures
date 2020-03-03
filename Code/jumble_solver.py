@@ -15,7 +15,15 @@ def letter_distribution(word):
        Returns: HashTable
 
     """
-    pass
+    histogram = HashTable()
+    letters = histogram.keys()
+    for letter in word:
+        if letter not in letters:
+            histogram[letter] = 1
+            letters.append(letter)
+        else:
+            histogram[letter] += 1
+    return histogram
 
 
 def determine_anagram(word, possible_anagram):
@@ -34,9 +42,25 @@ def determine_anagram(word, possible_anagram):
     if not len(word) == len(possible_anagram):
         return False
     # make distributions of letters and counts of both str
-    pass
+    word_dist = letter_distribution(word)
+    possible_anagram_dist = letter_distribution(possible_anagram)
     # all tests passed, then return True
     return True
+    '''
+    # possible_anagram must be different from word
+    if word == possible_anagram:
+        return False
+    # possible_anagram must have all same letters as word, in same distribution
+    for letter in possible_anagram:
+        if letter not in word:
+            return False
+
+    for letter in word:
+        if letter not in possible_anagram:
+            return False
+    # all tests passed, then return True
+    return True
+    '''
 
 
 def get_possible_words(jumbled_word):
