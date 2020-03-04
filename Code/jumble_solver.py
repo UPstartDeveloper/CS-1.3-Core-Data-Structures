@@ -44,6 +44,9 @@ def solve_jumble(list_of_jumbled):
     scrambled_unscrambled = HashTable(len(list_of_jumbled))
     # store unscrambled version of all word in a list
     list_of_unjumbled = [unscramble(word) for word in list_of_jumbled]
+    # print each of the words, jumbled and then unjumbled
+    for i in range(len(list_of_jumbled)):
+        print(f"'{list_of_jumbled[i]}' --> '{list_of_unjumbled[i]}'")
     # store indices we're interested in at each solved word
     letters_of_interest = [
         list_of_unjumbled[0][2] + list_of_unjumbled[0][4],
