@@ -370,7 +370,17 @@ def convert(digits, base1, base2):
     assert 2 <= base2 <= 36, 'base2 is out of range: {}'.format(base2)
     # if we're converting to base 10, only need to do a decode operation
     if base2 == 10:
-        return str(decode(digits, base1))
+        # take off the first digit to decide sign later
+        sign = digits[0]
+        # convert rest of digits
+        final_value = str(decode(digits[1:], base1))
+        # now add sign to the final return value
+        if sign == '0':
+            return final_value
+        elif sign == '1':
+            return '-' + final_value
+        else:
+            return "Invalid binary number."
     else:
         # decode into base 10 representation, if not already so
         if not base1 == 10:
