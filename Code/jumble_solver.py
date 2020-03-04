@@ -40,7 +40,23 @@ def unscramble(word):
 
 def solve_jumble(list_of_jumbled):
     '''Solves the whole jumble given a list of words that need unscrambling.'''
-    pass
+    # define a dictionary that will store information related to each word
+    scrambled_unscrambled = HashTable(len(list_of_jumbled))
+    # store unscrambled version of all word in a list
+    list_of_unjumbled = [unscramble(word) for word in list_of_jumbled]
+    # store indices we're interested in at each solved word
+    letters_of_interest = [
+        list_of_unjumbled[0][2] + list_of_unjumbled[0][4],
+        (list_of_unjumbled[1][0] + list_of_unjumbled[1][1] +
+         list_of_unjumbled[1][3]),
+        list_of_unjumbled[2][5],
+        list_of_unjumbled[3][3] + list_of_unjumbled[3][4],
+    ]
+    # return the final result of the jumble
+    answer = ''
+    for piece in letters_of_interest:
+        answer += piece
+    return answer
 
 
 if __name__ == "__main__":
@@ -52,3 +68,4 @@ if __name__ == "__main__":
         'niumem',
         'siconu'
     ]
+    print(f'The answer to the jumble is: {solve_jumble(jumbled)}')
