@@ -33,12 +33,22 @@ def unscramble(word):
     # dump all the words into a LinkedList, and return the head
     unscrambled_words = LinkedList(word for word in overlap.collection.keys())
     if unscrambled_words.head is not None:
-        print(unscrambled_words)  # shows all anagrams found
         return unscrambled_words.head.data
     else:
         return 'Sorry, no English word could be found.'
 
 
+def solve_jumble(list_of_jumbled):
+    '''Solves the whole jumble given a list of words that need unscrambling.'''
+    pass
+
+
 if __name__ == "__main__":
-    jumbled_word = sys.argv[1]
-    print(unscramble(jumbled_word))
+    # Solving the first four words of the jumble
+    scrambled_unscrambled = HashTable(4)
+    jumbled = [
+        'tefon',
+        'sokik',
+        'niumem',
+        'siconu'
+    ]
