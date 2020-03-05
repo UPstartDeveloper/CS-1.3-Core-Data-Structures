@@ -5,8 +5,6 @@ from hashtable import HashTable
 import sys
 from itertools import permutations
 
-# Solution using permutations, Sets, and LinkedLists
-
 
 def get_possible_words(length):
     '''Return the set of all words the same length as our input str.'''
@@ -52,7 +50,7 @@ def solve_jumble(list_of_jumbled):
         list_of_unjumbled[0][2] + list_of_unjumbled[0][4],
         (list_of_unjumbled[1][0] + list_of_unjumbled[1][1] +
          list_of_unjumbled[1][3]),
-        list_of_unjumbled[2][5],
+        list_of_unjumbled[2][4],
         list_of_unjumbled[3][3] + list_of_unjumbled[3][4],
     ]
     # return the final result of the jumble

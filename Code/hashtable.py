@@ -198,8 +198,8 @@ class HashTable(object):
         # reset size
         self.size = 0
         # Rehash each key-value entry into the new list of buckets,
-        for pair in key_value_pairs:
-            self.set(pair[0], pair[1])
+        for key, value in key_value_pairs:
+            self.set(key, value)
 
 
 class HashTableProbing(HashTable):
