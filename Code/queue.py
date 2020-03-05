@@ -190,6 +190,6 @@ class Deque(ArrayQueue):
 
 # Implement LinkedQueue and ArrayQueue above, then change the assignment below
 # to use each of your Queue implementations to verify they each pass all tests
-Queue = LinkedQueue
+# Queue = LinkedQueue
 # Queue = ArrayQueue
-# Queue = Deque
+Queue = Deque
