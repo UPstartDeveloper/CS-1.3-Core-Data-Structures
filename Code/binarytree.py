@@ -1,5 +1,6 @@
 #!python
 from queue import Queue
+from stack import Stack
 
 
 class BinaryTreeNode(object):
@@ -413,7 +414,7 @@ class BinarySearchTree(object):
         items = []
         if not self.is_empty():
             # Traverse tree in-order from root, appending each node's item
-            self._traverse_in_order_recursive(self.root, items.append)
+            self._traverse_in_order_iterative(self.root, items.append)
         # Return in-order list of all items in tree
         return items
 
@@ -466,6 +467,20 @@ class BinarySearchTree(object):
 
         """
         # TODO: Traverse in-order without using recursion (stretch challenge)
+        to_vist = Stack()
+        already_visited = list()
+        # go down the left subtree
+        while node.is_leaf() is False or node.left in already_visited:
+            to_vist.push(node)
+            node = node.left
+        # visiting a node
+        visit(node)
+        already_visited.append(node)
+        node = to_vist.pop()
+        # going down the right subtree
+        while node.is_leaf() is False or node.left in already_visited:
+            to_vist.push(node)
+            node = node.left
 
     def items_pre_order(self):
         """Return a pre-order list of all items in this binary search tree."""
