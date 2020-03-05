@@ -317,6 +317,20 @@ class LinkedList(object):
             # Otherwise raise an error to tell the user that delete has failed
             raise ValueError('Item not found: {}'.format(item))
 
+    def __iter__(self):
+        """Return a generator of the data referenced by the Nodes in this
+           LinkedList.
+
+           Credit to my old LinkedList class in my CS 1.2 repo:
+           https://github.com/UPstartDeveloper/CS-1.2-Intro-Data-Structures/blob/master/Code/linkedlist.py
+
+        """
+        node = self.head
+        while node is not None:
+            item = node.data
+            node = node.next
+            yield(item)
+
 
 def test_linked_list():
     ll = LinkedList()
@@ -333,6 +347,7 @@ def test_linked_list():
     print('tail: {}'.format(ll.tail))
     print('size: {}'.format(ll.size))
     print('length: {}'.format(ll.length()))
+    print([item for item in ll])
 
     print('Getting items by index:')
     for index in range(ll.size):
