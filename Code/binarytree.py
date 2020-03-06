@@ -466,22 +466,25 @@ class BinarySearchTree(object):
            using O(log(n)).
 
         """
+        # keep track of the nodes we have visited, and those yet to visit
         to_visit = Stack()
         already_visited = list()
         counter = 0
         while counter < self.size:
+            # if there's a left child, move to the left
             if node.left is not None and node.left not in already_visited:
                 to_visit.push(node)
                 node = node.left
+            # when we come back and have to visit the node itself
             elif node.left in already_visited or node.left is None:
+                visit(node.data)
                 already_visited.append(node)
                 counter += 1
+                # how we will move to the right node
                 if node.right is not None:
                     node = node.right
                 elif to_visit.is_empty() is False:
                     node = to_visit.pop()
-        for node in already_visited:
-            visit(node.data)
 
     def items_pre_order(self):
         """Return a pre-order list of all items in this binary search tree."""
