@@ -466,21 +466,22 @@ class BinarySearchTree(object):
            using O(log(n)).
 
         """
-        # TODO: Traverse in-order without using recursion (stretch challenge)
-        to_vist = Stack()
+        to_visit = Stack()
         already_visited = list()
-        # go down the left subtree
-        while node.is_leaf() is False or node.left in already_visited:
-            to_vist.push(node)
-            node = node.left
-        # visiting a node
-        visit(node)
-        already_visited.append(node)
-        node = to_vist.pop()
-        # going down the right subtree
-        while node.is_leaf() is False or node.left in already_visited:
-            to_vist.push(node)
-            node = node.left
+        counter = 0
+        while counter < self.size:
+            if node.left is not None and node.left not in already_visited:
+                to_visit.push(node)
+                node = node.left
+            elif node.left in already_visited or node.left is None:
+                already_visited.append(node)
+                counter += 1
+                if node.right is not None:
+                    node = node.right
+                elif to_visit.is_empty() is False:
+                    node = to_visit.pop()
+        for node in already_visited:
+            visit(node.data)
 
     def items_pre_order(self):
         """Return a pre-order list of all items in this binary search tree."""
@@ -640,7 +641,7 @@ class BinarySearchTree(object):
         # Enqueue given starting node
         queue.enqueue(start_node)
         # Loop until queue is empty
-        while not queue.list.length() == 0:
+        while not len(queue.list) == 0:
             # Dequeue node at front of queue
             node = queue.dequeue()
             # Visit this node's data with given function

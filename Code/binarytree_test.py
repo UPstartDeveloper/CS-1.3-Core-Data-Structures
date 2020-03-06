@@ -174,55 +174,6 @@ class BinarySearchTreeTest(unittest.TestCase):
         assert tree.root.right.left.data == 5
         assert tree.root.right.right.data == 7
 
-    def test_delete_with_3_items(self):
-        # Create a complete binary search tree of 3 items in level-order
-        items = [2, 1, 3]
-        tree = BinarySearchTree(items)
-        assert tree.root.data == 2
-        assert tree.root.left.data == 1
-        assert tree.root.right.data == 3
-        # Test structure of tree after each deletion
-        tree.delete(2)
-        assert tree.root.data == 1
-        assert tree.root.left is None
-        assert tree.root.right.data == 3
-        assert tree.size == 2
-        tree.delete(1)
-        assert tree.root.data == 3
-        assert tree.root.left is None
-        assert tree.root.right is None
-        assert tree.size == 1
-        tree.delete(3)
-        assert tree.root is None
-        assert tree.size == 0
-
-    def test_delete_with_7_items(self):
-        # Create a complete binary search tree of 7 items in level-order
-        items = [4, 2, 6, 1, 3, 5, 7]
-        tree = BinarySearchTree(items)
-        # Test structure of tree after each deletion
-        tree.delete(4)
-        assert tree.root.data == 2
-        assert tree.root.left.data == 1
-        assert tree.root.right.data == 6
-        assert tree.root.left.left is None
-        assert tree.root.left.right.data == 3
-        assert tree.size == 6
-        tree.delete(6)
-        assert tree.root.data == 2
-        assert tree.root.left.data == 1
-        assert tree.root.right.data == 5
-        assert tree.root.right.right.data == 7
-        assert tree.root.right.left is None
-        assert tree.size == 5
-        tree.delete(2)
-        assert tree.root.data == 1
-        assert tree.root.left.data == 3
-        assert tree.root.right.data == 5
-        assert tree.root.left.left is None
-        assert tree.root.left.right is None
-        assert tree.size == 4
-
     def test_items_in_order_with_3_strings(self):
         # Create a complete binary search tree of 3 strings in level-order
         items = ['B', 'A', 'C']
@@ -278,6 +229,57 @@ class BinarySearchTreeTest(unittest.TestCase):
         tree = BinarySearchTree(items)
         # Ensure the level-order traversal of tree items is ordered correctly
         assert tree.items_level_order() == [4, 2, 6, 1, 3, 5, 7]
+
+    """
+    def test_delete_with_3_items(self):
+        # Create a complete binary search tree of 3 items in level-order
+        items = [2, 1, 3]
+        tree = BinarySearchTree(items)
+        assert tree.root.data == 2
+        assert tree.root.left.data == 1
+        assert tree.root.right.data == 3
+        # Test structure of tree after each deletion
+        tree.delete(2)
+        assert tree.root.data == 1
+        assert tree.root.left is None
+        assert tree.root.right.data == 3
+        assert tree.size == 2
+        tree.delete(1)
+        assert tree.root.data == 3
+        assert tree.root.left is None
+        assert tree.root.right is None
+        assert tree.size == 1
+        tree.delete(3)
+        assert tree.root is None
+        assert tree.size == 0
+
+    def test_delete_with_7_items(self):
+        # Create a complete binary search tree of 7 items in level-order
+        items = [4, 2, 6, 1, 3, 5, 7]
+        tree = BinarySearchTree(items)
+        # Test structure of tree after each deletion
+        tree.delete(4)
+        assert tree.root.data == 2
+        assert tree.root.left.data == 1
+        assert tree.root.right.data == 6
+        assert tree.root.left.left is None
+        assert tree.root.left.right.data == 3
+        assert tree.size == 6
+        tree.delete(6)
+        assert tree.root.data == 2
+        assert tree.root.left.data == 1
+        assert tree.root.right.data == 5
+        assert tree.root.right.right.data == 7
+        assert tree.root.right.left is None
+        assert tree.size == 5
+        tree.delete(2)
+        assert tree.root.data == 1
+        assert tree.root.left.data == 3
+        assert tree.root.right.data == 5
+        assert tree.root.left.left is None
+        assert tree.root.left.right is None
+        assert tree.size == 4
+        """
 
 
 if __name__ == '__main__':
